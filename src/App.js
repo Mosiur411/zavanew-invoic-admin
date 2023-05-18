@@ -1,13 +1,7 @@
-import { Route, Routes, redirect, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AuthContext, ThemeContext } from './utils/Context';
 import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-
-// import './assets/css/vendors/bootstrap.css';
-// import './assets/css/vendors/bootstrap.css.map';
-// import './assets/css/vendors/material-icon-round.css';
-// import './assets/css/vendors/normalize.css';
-// import './assets/css/vendors/select2.min.css';
 import Home from './pages/Home';
 import List from './pages/products/List';
 import Grid from './pages/products/Grid';
@@ -31,7 +25,6 @@ import AddProduct2 from './pages/products/AddProduct2';
 import Transaction1 from './pages/transaction/Transaction1';
 import Transaction2 from './pages/transaction/Transaction2';
 import Brands from './pages/Brands';
-import Statistics from './pages/Statistics';
 import StarterPage from './pages/StarterPage';
 import Reviews from './pages/Reviews';
 import { ToastContainer } from 'react-toastify';
@@ -44,7 +37,14 @@ import PublicRoutes from './helpers/public/PublicRoutes';
 import Department from './pages/products/Department';
 import SubCategories from './pages/products/SubCategories';
 import ChildSubCategory from './pages/products/ChildSubCategory';
+import { onAuthStateChanged } from 'firebase/auth';
+import { decodeToken } from 'react-jwt';
+import { useDispatch } from 'react-redux';
+import { setToken } from './app/features/authSlice';
+import Cart from './pages/Cart';
+import InvoiceDownload from './pages/InvoiceDownload';
 function App() {
+  const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
   const [dark, setDark] = useState(false);
   const [handelClick, setSandelClick] = useState({
@@ -57,7 +57,16 @@ function App() {
 
   });
   useEffect(() => {
-   
+    // const subscribed = onAuthStateChanged(auth, async (user) => {
+    //   if (user) {
+    //     const token = await user?.getIdToken();
+    //     const users = decodeToken(token);
+    //     if (user?.accessToken) {
+    //       dispatch(setToken({ users, token }))
+    //     }
+    //   }
+    // });
+    // return () => subscribed;
   }, [user])
   if (loading) {
     return (
@@ -92,10 +101,12 @@ function App() {
                   <Route path="3" element={<AddProduct3 />} />
                   <Route path="4" element={<AddProduct4 />} />
                 </Route>
-
+                {/* card items  */}
+                <Route path='cart' element={<Cart />} />
                 {/* order  */}
                 <Route path='order'>
                   <Route path='list1' element={<OrderList1 />} />
+                  <Route path='list1/:Id' element={<InvoiceDownload/>} />
                   <Route path='list2' element={<OrderList2 />} />
                   <Route path='detail' element={<OrderDetail />} />
                 </Route>

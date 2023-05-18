@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const ProductApi = createApi({
     reducerPath: "product",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5001/",
+        baseUrl: "https://zavanew-invoic-server.vercel.app/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -15,8 +15,8 @@ export const ProductApi = createApi({
     endpoints: (builder) => ({
         /* ===========  add product ===========  */
         getproduct: builder.query({
-            query: () => ({
-                url: "product",
+            query: (pathname) => ({
+                url: `product?${pathname}`,
                 method: "GET",
             }),
             providesTags: ['Product']
@@ -57,5 +57,5 @@ export const ProductApi = createApi({
 
     }),
 });
-export const { useAddProductMutation, useGetproductQuery, useAddbulkProductMutation,useDeleteProductMutation} = ProductApi;
+export const { useAddProductMutation, useGetproductQuery, useAddbulkProductMutation, useDeleteProductMutation } = ProductApi;
 

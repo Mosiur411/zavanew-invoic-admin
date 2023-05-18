@@ -6,12 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { reisterSchema } from '../../helpers/validation/ResiterSchema';
 import { auth } from '../../firebase/Firebase.config';
 import { toast } from 'react-toastify';
+import { useAddUserMutation } from '../../app/services/authUser';
 
 function Register() {
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(reisterSchema) });
     const [createUserWithEmailAndPassword, loading,] = useCreateUserWithEmailAndPassword(auth);
     const [sendEmailVerification, sending, error] = useSendEmailVerification(auth);
+    const [addUser] = useAddUserMutation();
     if (error) {
         toast.error(error.message)
     }
@@ -21,7 +23,10 @@ function Register() {
     const onSubmit = async (data) => {
         const email = data?.email;
         const password = data?.password;
-        await createUserWithEmailAndPassword(email, password)
+        const user = await createUserWithEmailAndPassword(email, password)
+        await addUser(user?.user)
+        /* ================ user register ================  */
+
         await sendEmailVerification();
         toast.success("Plz check your email")
         navigate("/verifie")

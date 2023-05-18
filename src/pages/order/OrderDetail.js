@@ -4,7 +4,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout'
 function OrderDetail() {
     return (
         <DashboardLayout>
-  <section className="content-main">
+            <section className="content-main">
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Order detail</h2>
@@ -49,7 +49,7 @@ function OrderDetail() {
                                     </div>
                                 </article>
                             </div>
-                            
+
                             <div className="col-md-4">
                                 <article className="icontext align-items-start">
                                     <span className="icon icon-sm rounded-circle bg-primary-light">
@@ -66,7 +66,7 @@ function OrderDetail() {
                                     </div>
                                 </article>
                             </div>
-                            
+
                             <div className="col-md-4">
                                 <article className="icontext align-items-start">
                                     <span className="icon icon-sm rounded-circle bg-primary-light">
@@ -82,7 +82,7 @@ function OrderDetail() {
                                     </div>
                                 </article>
                             </div>
-                            
+
                         </div>
                         <div className="row">
                             <div className="col-lg-7">
@@ -176,9 +176,9 @@ function OrderDetail() {
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                             </div>
-                            
+
                             <div className="col-lg-1"></div>
                             <div className="col-lg-4">
                                 <div className="box shadow-sm bg-light">
@@ -197,12 +197,12 @@ function OrderDetail() {
                                     <button className="btn btn-primary">Save note</button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </section>
 
 

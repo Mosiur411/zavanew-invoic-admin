@@ -5,16 +5,14 @@ import logo from '../../assets/imgs/theme/logo.png'
 import { ThemeContext } from '../../utils/Context';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/Firebase.config';
+import { useGetToCartQuery } from '../../app/services/addToCart';
 
 const Header = ({ search }) => {
-    
+    const { data } = useGetToCartQuery()
     const [signOut, loading, error] = useSignOut(auth);
 
     const { dark, setDark, handelClick, setSandelClick } = useContext(ThemeContext)
     const { zoom, profile } = handelClick;
-
-
-
     return (
         <header className="main-header navbar">
             {search ? <div className="col-brand">
@@ -36,10 +34,16 @@ const Header = ({ search }) => {
                 </form>
             </div>
             }
-{/* width: 100%; height: 100%; overflow: hidden */}
+            {/* width: 100%; height: 100%; overflow: hidden */}
             <div className="col-nav">
                 <button className="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i className="material-icons md-apps"></i></button>
                 <ul className="nav">
+                    <li className="nav-item">
+                        <Link to='/cart' className="nav-link btn-icon" href="#">
+                            cart
+                            <span className="badge rounded-pill">{data?.items?.length}</span>
+                        </Link>
+                    </li>
                     <li className="nav-item">
                         <a className="nav-link btn-icon" href="#">
                             <i className="material-icons md-notifications animation-shake"></i>
@@ -70,8 +74,8 @@ const Header = ({ search }) => {
                             <a className="dropdown-item" href="#"><i className="material-icons md-receipt"></i>Billing</a>
                             <a className="dropdown-item" href="#"><i className="material-icons md-help_outline"></i>Help center</a>
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item text-danger" 
-                            onClick={async () => {await signOut()}}
+                            <a className="dropdown-item text-danger"
+                                onClick={async () => { await signOut() }}
                             ><i className="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>

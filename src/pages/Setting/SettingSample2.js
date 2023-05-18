@@ -1,133 +1,139 @@
 import React from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
+import { coustomerSchema } from '../../helpers/validation/CoustomerSchema';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAddCoustomerMutation } from '../../app/services/coustomer';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 function SettingSample2() {
+    const [AddCoustomer, { isError, isLoading, isSuccess }] = useAddCoustomerMutation()
+
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(coustomerSchema) });
+    const onSubmit = async (data) => {
+        console.log(data)
+        await AddCoustomer(data)
+    }
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('Coustomer Add ')
+        }
+        if (isError) {
+            toast.error('sorry  not add!')
+        }
+    }, [isError, isSuccess])
+
     return (
         <DashboardLayout>
             <section className="content-main">
                 <div className="content-header">
-                    <h2 className="content-title">Site settings</h2>
+                    <h2 className="content-title">Coustomer Add</h2>
                 </div>
                 <div className="card">
                     <div className="card-body">
-                        <div className="row gx-5">
-                            <aside className="col-lg-3 border-end">
-                                <nav className="nav nav-pills flex-lg-column mb-4">
-                                    <a className="nav-link active" aria-current="page" href="#">General</a>
-                                    <a className="nav-link" href="#">Moderators</a>
-                                    <a className="nav-link" href="#">Admin account</a>
-                                    <a className="nav-link" href="#">SEO settings</a>
-                                    <a className="nav-link" href="#">Mail settings</a>
-                                    <a className="nav-link" href="#">Newsletter</a>
-                                </nav>
-                            </aside>
-                            <div className="col-lg-9">
-                                <section className="content-body p-xl-4">
-                                    <form>
-                                        <div className="row border-bottom mb-4 pb-4">
-                                            <div className="col-md-5">
-                                                <h5>Website name</h5>
-                                                <p className="text-muted" style={{maxWidth: "90%"}}>Supported languages of all pages including each product lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                                            </div>
-                                            
-                                            <div className="col-md-7">
-                                                <div className="mb-3">
-                                                    <label className="form-label">Home page title</label>
-                                                    <input className="form-control" type="text" name="" placeholder="Type here" />
+                        <div className="col-lg-12">
+                            <section className="content-body p-xl-4">
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="row gx-3">
+                                                <div className="col-6 mb-3">
+                                                    <label className="form-label"> Name</label>
+                                                    <input className="form-control" type="text" placeholder="First name"
+                                                        {...register("name")} />
                                                 </div>
-                                                <div className="mb-3">
-                                                    <label className="form-label">Description</label>
-                                                    <textarea type="text" className="form-control"></textarea>
+                                                <div className="col-6 mb-3">
+                                                    <label className="form-label"> Comphony Name</label>
+                                                    <input className="form-control" type="text" placeholder="First name"
+                                                        {...register("comphonyName")} />
+                                                    {errors?.comphonyName && (
+                                                        <span className="form__error">{errors?.comphonyName.message}</span>
+                                                    )}
                                                 </div>
+
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">Email</label>
+                                                    <input className="form-control" type="email" placeholder="example@mail.com"
+                                                        {...register("email")} />
+
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">Phone</label>
+                                                    <input className="form-control" type="number" placeholder="+01751499634"
+                                                        {...register("phone")}
+
+                                                    />
+                                                    {errors?.phone && (
+                                                        <span className="form__error">{errors?.phone.message}</span>
+                                                    )}
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">ETIN</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("etin")}
+                                                    />
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">RESALE</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("resale")}
+                                                    />
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">TOBACCO</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("tobacco")}
+                                                    />
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">Country</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("country")}
+                                                    />
+                                                    {errors?.country && (
+                                                        <span className="form__error">{errors?.country.message}</span>
+                                                    )}
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">city</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("city")}
+                                                    />
+                                                    {errors?.city && (
+                                                        <span className="form__error">{errors?.city.message}</span>
+                                                    )}
+                                                </div>
+                                                <div className="col-lg-12 mb-3">
+                                                    <label className="form-label">Address</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("address")}
+                                                    />
+                                                    {errors?.address && (
+                                                        <span className="form__error">{errors?.address.message}</span>
+                                                    )}
+                                                </div>
+
+
                                             </div>
-                                            
+
                                         </div>
-                                        
-                                        <div className="row border-bottom mb-4 pb-4">
-                                            <div className="col-md-5">
-                                                <h5>Access</h5>
-                                                <p className="text-muted" style={{maxWidth: "90%"}}>Give access of all pages including each product lorem ipsum dolor sit amet, consectetur adipisicing</p>
-                                            </div>
-                                            
-                                            <div className="col-md-7">
-                                                <label className="mb-2 form-check">
-                                                    <input className="form-check-input" checked="" name="mycheck_a1" type="radio" />
-                                                    <span className="form-check-label"> All registration is enabled </span>
-                                                </label>
-                                                <label className="mb-2 form-check">
-                                                    <input className="form-check-input" name="mycheck_a1" type="radio" />
-                                                    <span className="form-check-label"> Only buyers is enabled </span>
-                                                </label>
-                                                <label className="mb-2 form-check">
-                                                    <input className="form-check-input" name="mycheck_a1" type="radio" />
-                                                    <span className="form-check-label"> Only buyers is enabled </span>
-                                                </label>
-                                                <label className="mb-2 form-check">
-                                                    <input className="form-check-input" name="mycheck_a1" type="radio" />
-                                                    <span className="form-check-label"> Stop new shop registration </span>
-                                                </label>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <div className="row border-bottom mb-4 pb-4">
-                                            <div className="col-md-5">
-                                                <h5>Notification</h5>
-                                                <p className="text-muted" style={{maxWidth: "90%"}}>Lorem ipsum dolor sit amet, consectetur adipisicing something about this</p>
-                                            </div>
-                                            <div className="col-md-7">
-                                                <div className="form-check mb-3">
-                                                    <input className="form-check-input" type="checkbox" defaultValue="" id="mycheck_notify" checked />
-                                                    <label className="form-check-label" htmlFor="mycheck_notify"> Send notification on each user registration </label>
-                                                </div>
-                                                <div className="mb-3">
-                                                    <input className="form-control" placeholder="Text" />
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <div className="row border-bottom mb-4 pb-4">
-                                            <div className="col-md-5">
-                                                <h5>Currency</h5>
-                                                <p className="text-muted" style={{maxWidth: "90%"}}>Lorem ipsum dolor sit amet, consectetur adipisicing something about this</p>
-                                            </div>
-                                            
-                                            <div className="col-md-7">
-                                                <div className="mb-3" style={{maxWidth: "200px"}}>
-                                                    <label className="form-label">Main currency </label>
-                                                    <select className="form-select">
-                                                        <option>US Dollar</option>
-                                                        <option>EU Euro</option>
-                                                        <option>RU Ruble</option>
-                                                        <option>UZ Som</option>
-                                                    </select>
-                                                </div>
-                                                <div className="mb-3" style={{maxWidth: "200px"}}>
-                                                    <label className="form-label">Supported curencies</label>
-                                                    <select className="form-select">
-                                                        <option>US dollar</option>
-                                                        <option>RUBG russia</option>
-                                                        <option>INR india</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        
-                                        <button className="btn btn-primary" type="submit">Save all changes</button> &nbsp;
-                                        <button className="btn btn-light rounded font-md" type="reset">Reset</button>
-                                    </form>
-                                </section>
-                                
-                            </div>
-                            
+
+                                    </div>
+
+                                    <br />
+                                    <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary" type="submit">User Add</button>
+                                </form>
+
+                            </section>
+
                         </div>
-                        
+
+
                     </div>
-                    
+
                 </div>
-                
+
             </section>
 
         </DashboardLayout>

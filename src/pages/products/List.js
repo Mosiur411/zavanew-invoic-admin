@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import Pagination from '../../components/elements/Pagination'
 import SingleProductList from '../../components/elements/product/SingleProductList'
@@ -9,17 +9,23 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 
 function List() {
+    /* paganitonm */
+    const [search, setSearchValue] = useState('')
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
+    const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const [Loading, setLoading] = useState(false)
-    const { data, isLoading } = useGetproductQuery()
+    const { data, isLoading } = useGetproductQuery(pathname)
     useEffect(() => {
         if (isLoading) {
             setLoading(true)
-        }else{
+        } else {
             setLoading(false)
         }
     }, [isLoading])
-
-
+    const ProductData = useMemo(() => (data ? data?.product : []), [
+        data,
+        search
+    ]);
 
     return (
         <DashboardLayout>
@@ -32,7 +38,7 @@ function List() {
                     <div>
                         <a href="#" className="btn btn-light rounded font-md">Export</a>
                         <a href="#" className="btn btn-light rounded font-md">Import</a>
-                        <Link to="/addproduct/3" className="btn btn-primary btn-sm rounded">Create new</Link>
+                        <Link to="/addproduct/1" className="btn btn-primary btn-sm rounded">Create new</Link>
 
                     </div>
                 </div>
@@ -40,12 +46,9 @@ function List() {
                     <header className="card-header">
                         <div className="row align-items-center">
                             <div className="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                                <select className="form-select">
-                                    <option selected>All category</option>
-                                    <option>Electronics</option>
-                                    <option>Clothes</option>
-                                    <option>Automobile</option>
-                                </select>
+                                <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control"
+
+                                />
                             </div>
                             <div className="col-md-2 col-6">
                                 <input type="date" defaultValue="02.05.2021" className="form-control" />
@@ -60,14 +63,30 @@ function List() {
                             </div>
                         </div>
                     </header>
-                    <div className="card-body">
-                        {Loading && <GetSpinner />}
-                        {
-                            data?.product?.map((data) => <SingleProductList data={data} key={data?._id} />)
-                        }
+                    <div className="col-md-12 px-4 ">
+                        <div className="table-responsive">
+                            <table className="table table-hover">
+                                <thead>
+                                    <tr className=''>
+                                        <th>Product Name</th>
+                                        <th>UPC</th>
+                                        <th>Cost</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Order</th>
+                                        <th className="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Loading && <GetSpinner />}
+                                    {ProductData.map(data => <SingleProductList data={data} key={data.key} />
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <Pagination />
+                <Pagination totalPages={data?.totalPages} setPagination={setPagination} pageIndex={pageIndex} pageSize={pageSize} />
             </section>
 
 

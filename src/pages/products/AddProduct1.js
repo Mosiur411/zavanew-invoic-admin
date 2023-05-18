@@ -1,148 +1,114 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
+import { ProductSchema } from '../../helpers/validation/ProductSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useAddProductMutation, useAddbulkProductMutation } from '../../app/services/product';
+import { toast } from 'react-toastify';
 
 function AddProduct1() {
+    const [AddProduct, { isError, isLoading, isSuccess }] = useAddProductMutation()
+    /* bulk product upload api  */
+    const [AddbulkProduct, { isError: bulkisError, isLoading: bulkisLoading, isSuccess: bulkisSuccess }] = useAddbulkProductMutation()
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
+    const onSubmit = async (data) => {
+        await AddProduct(data)
+    }
+    /*  bulk product upload  */
+    const handleBullkFileSelect = async (event) => {
+        const files = event.target.files;
+        const formData = new FormData();
+        formData.append('product.csv', files[0])
+        await AddbulkProduct(formData)
+    };
+
+
+
+
+    useEffect(() => {
+        if (isSuccess || bulkisSuccess) {
+            toast.success('Add Product ')
+        }
+        if (isError || bulkisError) {
+            toast.error('sorry  not add!')
+        }
+    }, [isError, isSuccess, bulkisSuccess, bulkisError])
+
+
+
     return (
         <DashboardLayout>
             <section className="content-main">
                 <div className="row">
                     <div className="col-9">
                         <div className="content-header">
-                            <h2 className="content-title">Add New Product</h2>
+                            <h2 className="content-title">Add New Product </h2>
                             <div>
-                                <button className="btn btn-light rounded font-sm mr-5 text-body hover-up">Save to draft</button>
-                                <button className="btn btn-md rounded font-sm hover-up">Publich</button>
+                                <button className="btn btn-md rounded font-sm hover-up"
+                                    style={{ cursor: bulkisLoading ? 'no-drop' : 'pointer' }}
+                                ><label htmlFor='BullkProduct'>Bullk Product</label></button>
+                                <input style={{ display: 'none' }} id='BullkProduct' type='file' name="products_csv" accept=".csv, .txt, text/csv, text/plain"
+                                    onChange={(event) => handleBullkFileSelect(event)}
+                                />
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6">
-                        <div className="card mb-4">
-                            <div className="card-header">
-                                <h4>Basic</h4>
-                            </div>
-                            <div className="card-body">
-                                <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="col-lg-12">
+                            <div className="card mb-4">
+                                <div className="card-body">
                                     <div className="mb-4">
-                                        <label htmlFor="product_name" className="form-label">Product title</label>
-                                        <input type="text" placeholder="Type here" className="form-control" id="product_name" />
+                                        <label htmlFor="product_title" className="form-label">Product Title <span style={{ color: 'red' }}>*</span></label>
+                                        <input type="text" placeholder="Product Title" className="form-control" id="product_title"
+                                            {...register("product_name")}
+                                        />
+                                        {errors?.product_name && (
+                                            <span className="form__error">{errors?.product_name.message}</span>
+                                        )}
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="form-label">Full description</label>
-                                        <textarea placeholder="Type here" className="form-control" rows="4"></textarea>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-lg-4">
-                                            <div className="mb-4">
-                                                <label className="form-label">Regular price</label>
-                                                <div className="row gx-2">
-                                                    <input placeholder="$" type="text" className="form-control" />
-                                                </div>
-                                            </div>
+                                    <div className="row gx-2">
+                                        <div className="col-md-6 mb-3">
+                                            <label htmlFor="product_UPC" className="form-label">UPC (Single)</label>
+                                            <input type="text" placeholder="Product_UPC" className="form-control" id="product_UPC"
+                                                {...register("upc")}
+                                            />
+
                                         </div>
-                                        <div className="col-lg-4">
-                                            <div className="mb-4">
-                                                <label className="form-label">Promotional price</label>
-                                                <input placeholder="$" type="text" className="form-control" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <label className="form-label">Currency</label>
-                                            <select className="form-select">
-                                                <option>USD</option>
-                                                <option>EUR</option>
-                                                <option>RUBL</option>
-                                            </select>
+                                        <div className="col-md-6 mb-3">
+                                            <label htmlFor="product_UPC_Box" className="form-label">UPC(Box)</label>
+                                            <input type="text" placeholder="Product_UPC_Box" className="form-control" id="product_UPC_Box"
+                                                {...register("upcBox")}
+                                            />
                                         </div>
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="form-label">Tax rate</label>
-                                        <input type="text" placeholder="%" className="form-control" id="product_name" />
-                                    </div>
-                                    <label className="form-check mb-4">
-                                        <input className="form-check-input" type="checkbox" defaultValue="" />
-                                        <span className="form-check-label"> Make a template </span>
-                                    </label>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="card mb-4">
-                            <div className="card-header">
-                                <h4>Shipping</h4>
-                            </div>
-                            <div className="card-body">
-                                <form>
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <div className="mb-4">
-                                                <label htmlFor="product_name" className="form-label">Width</label>
-                                                <input type="text" placeholder="inch" className="form-control" id="product_name" />
-                                            </div>
+                                    <div className="row gx-2">
+                                        <div className="col-md-6 mb-3">
+                                            <label htmlFor="product_cost" className="form-label">Cost</label>
+                                            <input type="number" placeholder="Product_cost" className="form-control" id="product_cost"
+                                                {...register("cost")}
+                                            />
+
                                         </div>
-                                        <div className="col-lg-6">
-                                            <div className="mb-4">
-                                                <label htmlFor="product_name" className="form-label">Height</label>
-                                                <input type="text" placeholder="inch" className="form-control" id="product_name" />
-                                            </div>
+                                        <div className="col-md-6 mb-3">
+                                            <label htmlFor="product_price" className="form-label">Prices</label>
+                                            <input type="number" placeholder="Product_prics" className="form-control" id="product_price"
+                                                {...register("price")}
+                                            />
                                         </div>
                                     </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="product_name" className="form-label">Weight</label>
-                                        <input type="text" placeholder="gam" className="form-control" id="product_name" />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="product_name" className="form-label">Shipping fees</label>
-                                        <input type="text" placeholder="$" className="form-control" id="product_name" />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-3">
-                        <div className="card mb-4">
-                            <div className="card-header">
-                                <h4>Media</h4>
-                            </div>
-                            <div className="card-body">
-                                <div className="input-upload">
-                                    <img src="assets/imgs/theme/upload.svg" alt="" />
-                                    <input className="form-control" type="file" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card mb-4">
-                            <div className="card-header">
-                                <h4>Organization</h4>
-                            </div>
-                            <div className="card-body">
-                                <div className="row gx-2">
-                                    <div className="col-sm-6 mb-3">
-                                        <label className="form-label">Category</label>
-                                        <select className="form-select">
-                                            <option>Automobiles</option>
-                                            <option>Home items</option>
-                                            <option>Electronics</option>
-                                            <option>Smartphones</option>
-                                            <option>Sport items</option>
-                                            <option>Baby and Tous</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-sm-6 mb-3">
-                                        <label className="form-label">Sub-category</label>
-                                        <select className="form-select">
-                                            <option>Nissan</option>
-                                            <option>Honda</option>
-                                            <option>Mercedes</option>
-                                            <option>Chevrolet</option>
-                                        </select>
-                                    </div>
-                                    <div className="mb-4">
-                                        <label htmlFor="product_name" className="form-label">Tags</label>
-                                        <input type="text" className="form-control" />
+                                    <div className="row gx-2">
+                                        <div className="col-md-6 mb-3">
+                                            <label htmlFor="product_quantity" className="form-label">Quantity</label>
+                                            <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
+                                                {...register("quantity")}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-md rounded font-sm hover-up">Submit</button>
+                    </form>
                 </div>
             </section>
 

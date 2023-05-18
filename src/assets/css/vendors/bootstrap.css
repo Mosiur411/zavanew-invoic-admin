@@ -11755,3 +11755,100 @@ fieldset:disabled .btn {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+
+.order_container {
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  padding: 30px;
+  border: 1px solid;
+
+}
+
+.order_topContect {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+span {
+  font-weight: normal;
+  font-size: 15px;
+}
+
+strong span {
+  margin-left: 20px;
+}
+
+ .invoic_contect {
+  margin: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+} 
+
+
+
+/* table */
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+} 
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+ 
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #3BB77E;
+  color: white;
+} 
+
+.customersHisabContct {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 5px;
+}
+
+.customersHisab {
+  max-width: 100% !important;
+ 
+}
+
+.customersHisab div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 130px;
+}
+
+.cashCheck {
+  width: fit-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.cashCheck div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}

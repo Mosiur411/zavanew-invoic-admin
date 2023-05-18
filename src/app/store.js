@@ -5,6 +5,11 @@ import { CategoriesApi } from "./services/categories";
 import { SubCategoriesApi } from "./services/subCategories";
 import { ChildSubCategoriesApi } from "./services/childsubCategories";
 import { ProductApi } from "./services/product";
+import { AuthApi } from "./services/authUser";
+import { AddToCartApi } from "./services/addToCart";
+import { OrderApi } from "./services/order";
+import { EmployeeApi } from "./services/employee";
+import { CoustomerApi } from "./services/coustomer";
 export const store = configureStore({
   reducer: {
     [DepartmentApi.reducerPath]: DepartmentApi.reducer,
@@ -12,7 +17,12 @@ export const store = configureStore({
     [SubCategoriesApi.reducerPath]: SubCategoriesApi.reducer,
     [ChildSubCategoriesApi.reducerPath]: ChildSubCategoriesApi.reducer,
     [ProductApi.reducerPath]: ProductApi.reducer,
-    auth:authSlice
+    [AuthApi.reducerPath]: AuthApi.reducer,
+    [AddToCartApi.reducerPath]: AddToCartApi.reducer,
+    [OrderApi.reducerPath]: OrderApi.reducer,
+    [EmployeeApi.reducerPath]: EmployeeApi.reducer,
+    [CoustomerApi.reducerPath]: CoustomerApi.reducer,
+    auth: authSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -21,5 +31,10 @@ export const store = configureStore({
       SubCategoriesApi.middleware,
       ChildSubCategoriesApi.middleware,
       ProductApi.middleware,
+      AuthApi.middleware,
+      AddToCartApi.middleware,
+      OrderApi.middleware,
+      EmployeeApi.middleware,
+      CoustomerApi.middleware,
     ]),
 });
