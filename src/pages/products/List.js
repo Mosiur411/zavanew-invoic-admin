@@ -7,8 +7,15 @@ import { Link } from 'react-router-dom'
 import GetSpinner from '../../helpers/shared/GetSpinner'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import ProductModal from '../../components/elements/modal/ProductModal'
 
 function List() {
+    /* open modeal */
+    const [open, setOpen] = useState({
+        type: false,
+        data: null
+    })
+
     /* paganitonm */
     const [search, setSearchValue] = useState('')
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
@@ -26,6 +33,7 @@ function List() {
         data,
         search
     ]);
+
 
     return (
         <DashboardLayout>
@@ -79,7 +87,7 @@ function List() {
                                 </thead>
                                 <tbody>
                                     {Loading && <GetSpinner />}
-                                    {ProductData.map(data => <SingleProductList data={data} key={data.key} />
+                                    {ProductData.map(data => <SingleProductList open={open} setOpen={setOpen} data={data} key={data.key} />
                                     )}
                                 </tbody>
                             </table>
@@ -89,8 +97,12 @@ function List() {
                 <Pagination totalPages={data?.totalPages} setPagination={setPagination} pageIndex={pageIndex} pageSize={pageSize} />
             </section>
 
+            <ProductModal
+                modal={open}
+                setOpen={setOpen}
 
 
+            />
 
         </DashboardLayout>
     )

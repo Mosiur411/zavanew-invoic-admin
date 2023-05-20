@@ -31,6 +31,7 @@ const DashboardLayout = ({ children }) => {
                     <Footer />
                 </main>
             </div>
+            
         </div>
 
     );

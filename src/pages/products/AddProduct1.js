@@ -10,7 +10,9 @@ function AddProduct1() {
     const [AddProduct, { isError, isLoading, isSuccess }] = useAddProductMutation()
     /* bulk product upload api  */
     const [AddbulkProduct, { isError: bulkisError, isLoading: bulkisLoading, isSuccess: bulkisSuccess }] = useAddbulkProductMutation()
+    
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
+
     const onSubmit = async (data) => {
         await AddProduct(data)
     }

@@ -6,8 +6,11 @@ import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts"
 import Pagination from "../components/elements/Pagination";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useGetRrecordQuery } from "../app/services/order";
 
 const Home = () => {
+    const { data: record, isLoading } = useGetRrecordQuery()
+
     const [selected, setSelected] = useState('');
 
 
@@ -97,9 +100,8 @@ const Home = () => {
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-primary-light"><i className="text-primary material-icons md-monetization_on"></i></span>
                             <div className="text">
-                                <h6 className="mb-1 card-title">Revenue</h6>
-                                <span>$13,456.5</span>
-                                <span className="text-sm"> Shipping fees are not included </span>
+                                <h6 className="mb-1 card-title">Total Cost</h6>
+                                <span>${record?.products?.[0]?.cost}</span>
                             </div>
                         </article>
                     </div>
@@ -109,9 +111,8 @@ const Home = () => {
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-success-light"><i className="text-success material-icons md-local_shipping"></i></span>
                             <div className="text">
-                                <h6 className="mb-1 card-title">Orders</h6>
-                                <span>53.668</span>
-                                <span className="text-sm"> Excluding orders in transit </span>
+                                <h6 className="mb-1 card-title">Total Sales</h6>
+                                <span>${record?.sales?.[0]?.total}</span>
                             </div>
                         </article>
                     </div>
@@ -121,9 +122,8 @@ const Home = () => {
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-warning-light"><i className="text-warning material-icons md-qr_code"></i></span>
                             <div className="text">
-                                <h6 className="mb-1 card-title">Products</h6>
-                                <span>9.856</span>
-                                <span className="text-sm"> In 19 Categories </span>
+                                <h6 className="mb-1 card-title">Products Quantity</h6>
+                                <span>{record?.products?.[0]?.quantity}</span>
                             </div>
                         </article>
                     </div>
@@ -133,9 +133,8 @@ const Home = () => {
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-info-light"><i className="text-info material-icons md-shopping_basket"></i></span>
                             <div className="text">
-                                <h6 className="mb-1 card-title">Monthly Earning</h6>
-                                <span>$6,982</span>
-                                <span className="text-sm"> Based in your local time. </span>
+                            <h6 className="mb-1 card-title">Sales Quantity</h6>
+                                <span>{record?.sales?.[0]?.quantity}</span>
                             </div>
                         </article>
                     </div>
@@ -343,8 +342,8 @@ const Home = () => {
                         </div>
                         <div className="col-md-2 col-6">
                             <div className="custom_select">
-                                <select  className="form-select select-nice">
-                                    <option  defaultValue={selected}>Status</option>
+                                <select className="form-select select-nice">
+                                    <option defaultValue={selected}>Status</option>
                                     <option>All</option>
                                     <option>Paid</option>
                                     <option>Chargeback</option>
