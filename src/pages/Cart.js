@@ -1,30 +1,46 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import DashboardLayout from '../components/layout/DashboardLayout'
-import { useAddOrderMutation, useGetToCartQuery } from '../app/services/addToCart'
+import { useAddOrderMutation, useDeleteToCartMutation, useGetToCartQuery, useUpdateToCartMutation } from '../app/services/addToCart'
 import { OrderSchema } from '../helpers/validation/OrderSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useGetCoustomerQuery } from '../app/services/coustomer';
+import { number } from 'yup';
 function Cart() {
     const { data } = useGetToCartQuery()
     const [search, setSearchValue] = useState('')
+    const [bankCheck, setBankCheck] = useState('')
+    const [CartQantity, setCartQantity] = useState()
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const { data: coustomer } = useGetCoustomerQuery(pathname)
-
-    const [PorusctOrder, { isLoading, isSuccess, isError }] = useAddOrderMutation()
+    const [PorductOder, { isLoading, isSuccess, isError }] = useAddOrderMutation()
+    const [CartDelete, { isLoading: deleteIsLoading, isSuccess: deleteIsSuccess }] = useDeleteToCartMutation()
+    const [CartUpdate, { isLoading: updateIsLoading, isSuccess: updateIsSuccess }] = useUpdateToCartMutation()
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
 
     /* coustomer id need  */
     const [coustomerId, setCoustomerId] = useState()
 
+    /* data post  */
     const onSubmit = async (value) => {
         if (coustomerId) {
             const items = { ...value, totalPrice: data?.totalPrice, coustomerId: coustomerId }
-            await PorusctOrder(items)
+            await PorductOder(items)
         } else {
             toast.error('coustomer not select')
+        }
+    }
+    /* card product delete  */
+    const CartDeletes = async (id) => {
+        await CartDelete(id)
+    }
+    const CartUpdates = async (id) => {
+        if (Number(CartQantity)) {
+            const data = { CartQantity, id }
+            await CartUpdate(data)
+
         }
     }
     useEffect(() => {
@@ -34,7 +50,13 @@ function Cart() {
         if (isError) {
             toast.error('sorry  not add!')
         }
-    }, [isError, isSuccess])
+        if (deleteIsSuccess) {
+            toast.success('card Product Remove ')
+        }
+        if (updateIsSuccess) {
+            toast.success('card Product Update ')
+        }
+    }, [isError, isSuccess, deleteIsSuccess, updateIsSuccess])
     const coustomerData = useMemo(() => (coustomer ? coustomer?.coustomer : []), [
         coustomer,
         search
@@ -60,24 +82,41 @@ function Cart() {
                                                     <th width="40%">Product</th>
                                                     <th width="20%">Unit Price</th>
                                                     <th width="20%">Quantity</th>
-                                                    <th width="20%" className="text-end">Total</th>
+                                                    <th width="20%">Total</th>
+                                                    <th className="text-end">Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {data?.items.map(data => <tr key={data?._id}>
-                                                    <td>{data?.product_id?.product_name}</td>
-                                                    <td>${data?.product_id?.price}</td>
-                                                    <td>{data?.quantity}</td>
-                                                    <td className="text-end">${(data?.price)}</td>
+                                                    <td>{data?.product_id?.product_name.toUpperCase()}</td>
+                                                    <td>${data?.product_id?.price?.toFixed(2)}</td>
+                                                    <td>
+                                                        <input style={{ width: '50px' }} type='number'
+                                                            onChange={(e) => setCartQantity(e.target.value)}
+                                                            min="1" defaultValue={data?.quantity} />
+                                                    </td>
+                                                    <td >${data?.price?.toFixed(2)}</td>
+                                                    <td className="text-end"
+                                                        style={{
+                                                            display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                                            , gap: '5px'
+                                                        }}
+                                                    >
+                                                        <a onClick={() => CartUpdates(data?._id)} className="btn btn-sm font-sm rounded btn-brand"
+                                                            hidden={Number(CartQantity) > Number(data?.product_id?.quantity)}
+                                                        >  Add </a>
+                                                        <a onClick={() => CartDeletes(data?._id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>
+                                                    </td>
                                                 </tr>
                                                 )}
 
-                                                <tr>
-                                                    <td colspan="4">
+                                                <tr className="text-end">
+                                                    <td colspan="6">
                                                         <article className="float-end">
                                                             <dl className="dlist">
                                                                 <dt>Grand total:</dt>
-                                                                <dd><b className="h5">${data?.totalPrice}</b></dd>
+                                                                <dd><b className="h5">${data?.totalPrice?.toFixed(2)}</b></dd>
                                                             </dl>
                                                         </article>
                                                     </td>
@@ -89,12 +128,24 @@ function Cart() {
                                         <form onSubmit={handleSubmit(onSubmit)}>
                                             <div className="box shadow-sm bg-light">
                                                 <h6 className="mb-15">Payment info</h6>
-                                                <select className="form-select" {...register("payment")}>
-                                                    <option selected value='cash'>cash</option>
+                                                <select className="form-select" {...register("payment")}
+                                                    onChange={(e) => setBankCheck(e.target.value)}
+                                                >
+                                                    <option selected value='cash'>CASH</option>
+                                                    <option value='check' >CHECK</option>
+                                                    <option value='due'>DUE</option>
                                                     {errors?.payment && (
                                                         <span className="form__error">{errors?.payment.message}</span>
                                                     )}
                                                 </select>
+                                                {bankCheck === 'check' ? <div>
+                                                    <input type="text" placeholder="Check Number" className="form-control"
+                                                        {...register("checkNumber")}
+                                                    />
+                                                    <input type="text" placeholder="Your Names" className="form-control"
+                                                        {...register("checkProviderName")}
+                                                    />
+                                                </div> : ''}
                                             </div>
                                             <div className="h-25 pt-4">
                                                 <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>

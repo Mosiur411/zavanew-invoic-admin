@@ -28,7 +28,7 @@ const DashboardLayout = ({ children }) => {
                     <section className="content-main">
                         {children}
                     </section>
-                    <Footer />
+                   {/*  <Footer /> */}
                 </main>
             </div>
             

@@ -5,11 +5,32 @@ import logo from '../assets/imgs/theme/logo.png'
 import { useParams } from 'react-router-dom';
 import { useGetToOrderQuery } from '../app/services/order';
 function InvoiceDownload() {
+    /*  date time ganaret  */
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.toLocaleString('default', { month: 'long' });
+    const day = currentDate.getDate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const { Id } = useParams();
     const ref = React.createRef();
     const { data } = useGetToOrderQuery(Id)
     /* coustomerId data  */
-    console.log(data?.order[0])
+
 
     return (
         <DashboardLayout>
@@ -54,18 +75,18 @@ function InvoiceDownload() {
                         </div>
                         <div>
                             <img src={logo} alt="logo" />
-                            <p>Order by Retwho</p>
+                            <p>Order by retwho.com</p>
                         </div>
                     </div>
                     <div className="invoic_contect">
                         <p><strong>Invoice</strong> #{Id}</p>
                         <div>
                             <strong>Issue date</strong> <br />
-                            <span>01 Jan, 2022</span>
+                            <span>{`${day}  ${month},   ${year}`}</span>
                         </div>
                         <div>
                             <strong>Due date</strong><br />
-                            <span>01 Jan, 2022</span>
+                            <span>{`${day}  ${month},   ${year}`}</span>
                         </div>
                     </div>
                     <div>
@@ -80,32 +101,71 @@ function InvoiceDownload() {
                                 <td>{data?.product_name}</td>
                                 <td>{data?.quantity}</td>
                                 <td>{data?.price / data?.quantity}</td>
-                                <td>{data?.price}</td>
+                                <td>{data?.price.toFixed(2)}</td>
                             </tr>)}
                         </table>
                     </div>
-                    <div className="customersHisabContct">
-                        <div className="cashCheck">
-                            <div >
-                                <p>PAID BY # CASH</p>
-                                <span>___________</span>
-                            </div>
-                            <div >
-                                <p>CHECK</p>
-                                <span>___________</span>
-                            </div>
-                            <div >
-                                <p>CARD</p>
-                                <span>___________</span>
-                            </div>
-                        </div>
-                        <div className="customersHisab">
-                            <div>
-                                <strong>Invoice total</strong>
-                                <span>{data?.order[0]?.totalPrice}</span>
-                            </div>
-                        </div>
+                    <div className='invoicPayment'>
+                        <p style={{ textTransform: 'uppercase' }}>PAID BY # {data?.order[0]?.payment}</p>
+                        <div className="customersHisabContct">
+                            <div className="customersHisab">
+                                <div className="customersHisab">
+                                    {
+                                        data?.order[0]?.payment == 'cash' && <div >
+                                            <p>Cash</p>
+                                            <span className='paid' style={{ textDecoration: 'underline' }}>Paid</span>
+                                        </div>
+                                    }
+                                    {
+                                        data?.order[0]?.payment == 'check' && <div>
+                                            <div>
+                                                <p>CHECK NO :</p>
+                                                <span style={{ textDecoration: 'underline' }}>{data?.order[0]?.checkNumber}</span>
+                                            </div>
+                                            <div>
+                                                <p>CHECK NAME :</p>
+                                                <span style={{ textDecoration: 'underline' }}>{data?.order[0]?.checkProviderName}</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    {
+                                        data?.order[0]?.payment == 'due' && <div >
+                                            <p>Due</p>
+                                            <span style={{ textDecoration: 'underline' }}>Due</span>
+                                        </div>
+                                    }
+                                </div>
 
+
+
+                            </div>
+                            <div>
+                                <div className="customersHisab">
+                                    <div>
+                                        <strong>Invoice total</strong>
+                                        <span>{data?.order[0]?.totalPrice.toFixed(2)}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {/* <div className="cashCheck">
+                                <div >
+                                    <p>CHECK</p>
+                                    <span >{data?.order[0]?.checkNumber}</span>
+                                </div>
+                                <div >
+                                    <p>CARD</p>
+                                    <span>___________</span>
+                                </div>
+
+                                <div className="customersHisab">
+                                    <div>
+                                        <strong>Invoice total</strong>
+                                        <span>{data?.order[0]?.totalPrice.toFixed(2)}</span>
+                                    </div>
+                                </div>
+                            </div> */}
+                        </div>
                     </div>
                 </div>
 
