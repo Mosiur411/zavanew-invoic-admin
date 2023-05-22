@@ -79,7 +79,33 @@ function SettingSample1() {
                                                         <span className="form__error">{errors?.nid.message}</span>
                                                     )}
                                                 </div>
-
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">Address</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("address")}
+                                                    />
+                                                    {errors?.address && (
+                                                        <span className="form__error">{errors?.address.message}</span>
+                                                    )}
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">City</label>
+                                                    <input className="form-control" type="text" placeholder="Type here"
+                                                        {...register("city")}
+                                                    />
+                                                    {errors?.city && (
+                                                        <span className="form__error">{errors?.city.message}</span>
+                                                    )}
+                                                </div>
+                                                <div className="col-lg-6 mb-3">
+                                                    <label className="form-label">Zip Code</label>
+                                                    <input className="form-control" type="text" placeholder="Zip code "
+                                                        {...register("zip_code")}
+                                                    />
+                                                    {errors?.city && (
+                                                        <span className="form__error">{errors?.city.message}</span>
+                                                    )}
+                                                </div>
                                                 <div className="col-lg-6 mb-3">
                                                     <label className="form-label">Country</label>
                                                     <input className="form-control" type="text" placeholder="Type here"
@@ -89,24 +115,7 @@ function SettingSample1() {
                                                         <span className="form__error">{errors?.country.message}</span>
                                                     )}
                                                 </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">city</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("city")}
-                                                    />
-                                                    {errors?.city && (
-                                                        <span className="form__error">{errors?.city.message}</span>
-                                                    )}
-                                                </div>
-                                                <div className="col-lg-12 mb-3">
-                                                    <label className="form-label">Address</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("address")}
-                                                    />
-                                                    {errors?.address && (
-                                                        <span className="form__error">{errors?.address.message}</span>
-                                                    )}
-                                                </div>
+
 
 
                                             </div>

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const AddToCartApi = createApi({
     reducerPath: "carts",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://zavanew-invoic-server.vercel.app/",
+        baseUrl: "http://localhost:5001/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -46,8 +46,8 @@ export const AddToCartApi = createApi({
             invalidatesTags: ["Cart"],
         }),
         updateToCart: builder.mutation({
-            query: ({ CartQantity, id }) => ({
-                url: `cart?_id=${id}&data=${CartQantity}`,
+            query: ({ CartQantity, id, CartPrices }) => ({
+                url: `cart?_id=${id}&data=${CartQantity}&price=${CartPrices}`,
                 method: "PUT",
             }),
             invalidatesTags: ["Cart"],

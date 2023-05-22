@@ -16,7 +16,7 @@ export const SideMenu = [
                 to: '/product/list',
                 link: "Product List",
             },
-            {
+           /*  {
                 id: 2,
                 _id: 2,
                 to: '/product/grid',
@@ -51,7 +51,7 @@ export const SideMenu = [
                 _id: 7,
                 to: '/product/childsubcategory',
                 link: "Child Sub Category",
-            },
+            }, */
 
         ]
     },
@@ -66,7 +66,7 @@ export const SideMenu = [
                 to: '/order/list1',
                 link: "Order list 1",
             },
-            {
+            /* {
                 id: 3,
                 _id: 2,
                 to: '/order/list2',
@@ -77,10 +77,10 @@ export const SideMenu = [
                 _id: 3,
                 to: '/order/detail',
                 link: "Order detail",
-            }
+            } */
         ]
     },
-    {
+  /*   {
         id: 4,
 
         link: "Sellers",
@@ -105,7 +105,7 @@ export const SideMenu = [
                 link: "Sellers profile",
             }
         ]
-    },
+    }, */
     {
         id: 5,
 
@@ -118,7 +118,7 @@ export const SideMenu = [
                 to: '/addproduct/1',
                 link: "Add product 1",
             },
-            {
+           /*  {
                 id: 5,
                 _id: 2,
                 to: '/addproduct/2',
@@ -135,10 +135,10 @@ export const SideMenu = [
                 _id: 4,
                 to: '/addproduct/4',
                 link: "Add product 4",
-            }
+            } */
         ]
     },
-    {
+    /* {
         id: 6,
         link: "Transactions",
         icon: "icon material-icons md-monetization_on",
@@ -156,19 +156,19 @@ export const SideMenu = [
                 link: "Transaction 2",
             }
         ]
-    },
-    {
+    }, */
+    /* {
         id: 7,
         to: '/reviews',
         link: "Reviews",
         icon: "icon material-icons md-comment",
-    },
-    {
+    }, */
+    /* {
         id: 8,
         to: '/brands',
         link: "Brands",
         icon: "icon material-icons md-stars",
-    },
+    }, */
     /*     {
             link: "Statistics",
             icon: "icon material-icons md-pie_chart",
@@ -193,11 +193,11 @@ export const SideMenu = [
             }
         ]
     },
-    {
+    /* {
         id: 11,
         to: '/starterpage',
         link: "Starter page ",
         icon: "icon material-icons md-local_offer",
 
-    },
+    }, */
 ]

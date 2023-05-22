@@ -12,6 +12,7 @@ function Cart() {
     const [search, setSearchValue] = useState('')
     const [bankCheck, setBankCheck] = useState('')
     const [CartQantity, setCartQantity] = useState()
+    const [CartPrices, setCartPrices] = useState()// CartPrices CartQantity
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const { data: coustomer } = useGetCoustomerQuery(pathname)
@@ -36,9 +37,9 @@ function Cart() {
     const CartDeletes = async (id) => {
         await CartDelete(id)
     }
-    const CartUpdates = async (id) => {
+    const CartUpdates = async (id, CartQantity, CartPrices) => {
         if (Number(CartQantity)) {
-            const data = { CartQantity, id }
+            const data = { CartQantity, id, CartPrices }
             await CartUpdate(data)
 
         }
@@ -90,7 +91,14 @@ function Cart() {
                                             <tbody>
                                                 {data?.items.map(data => <tr key={data?._id}>
                                                     <td>{data?.product_id?.product_name.toUpperCase()}</td>
-                                                    <td>${data?.product_id?.price?.toFixed(2)}</td>
+                                                    <td>
+                                                        <input style={{ width: '50px' }} type='number'
+                                                            onChange={(e) => setCartPrices(e.target.value)}
+                                                            min="1" defaultValue={data?.price?.toFixed(2)}
+                                                            setCartPrices={data?.price?.toFixed(2)}
+                                                            selected
+                                                        />
+                                                    </td>
                                                     <td>
                                                         <input style={{ width: '50px' }} type='number'
                                                             onChange={(e) => setCartQantity(e.target.value)}
@@ -103,7 +111,7 @@ function Cart() {
                                                             , gap: '5px'
                                                         }}
                                                     >
-                                                        <a onClick={() => CartUpdates(data?._id)} className="btn btn-sm font-sm rounded btn-brand"
+                                                        <a onClick={() => CartUpdates(data?._id, CartQantity, CartPrices)} className="btn btn-sm font-sm rounded btn-brand"
                                                             hidden={Number(CartQantity) > Number(data?.product_id?.quantity)}
                                                         >  Add </a>
                                                         <a onClick={() => CartDeletes(data?._id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>

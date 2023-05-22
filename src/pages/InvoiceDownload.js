@@ -61,6 +61,7 @@ function InvoiceDownload() {
                                 <span>{data?.order[0]?.coustomerId?.comphonyName}</span><br />
                                 <span>{data?.order[0]?.coustomerId?.address}</span><br />
                                 <span>{data?.order[0]?.coustomerId?.city}</span><br />
+                                <span>{data?.order[0]?.coustomerId?.zip_code}</span><br />
                                 <span>{data?.order[0]?.coustomerId?.country}</span><br />
                                 <span>{data?.order[0]?.coustomerId?.phone}</span><br />
                             </div>
@@ -100,8 +101,8 @@ function InvoiceDownload() {
                             {data?.order[0]?.item?.map(data => <tr>
                                 <td>{data?.product_name}</td>
                                 <td>{data?.quantity}</td>
-                                <td>{data?.price / data?.quantity}</td>
-                                <td>{data?.price.toFixed(2)}</td>
+                                <td>${data?.price / data?.quantity}</td>
+                                <td>${data?.price.toFixed(2)}</td>
                             </tr>)}
                         </table>
                     </div>
@@ -113,25 +114,25 @@ function InvoiceDownload() {
                                     {
                                         data?.order[0]?.payment == 'cash' && <div >
                                             <p>Cash</p>
-                                            <span className='paid' style={{ textDecoration: 'underline' }}>Paid</span>
+                                            <span className='paid'>Paid</span>
                                         </div>
                                     }
                                     {
                                         data?.order[0]?.payment == 'check' && <div>
                                             <div>
                                                 <p>CHECK NO :</p>
-                                                <span style={{ textDecoration: 'underline' }}>{data?.order[0]?.checkNumber}</span>
+                                                <span >{data?.order[0]?.checkNumber}</span>
                                             </div>
                                             <div>
-                                                <p>CHECK NAME :</p>
-                                                <span style={{ textDecoration: 'underline' }}>{data?.order[0]?.checkProviderName}</span>
+                                                <p>RECEIVED  NAME :</p>
+                                                <span >{data?.order[0]?.checkProviderName}</span>
                                             </div>
                                         </div>
                                     }
                                     {
                                         data?.order[0]?.payment == 'due' && <div >
                                             <p>Due</p>
-                                            <span style={{ textDecoration: 'underline' }}>Due</span>
+                                            <span className='paid'>Paid</span>
                                         </div>
                                     }
                                 </div>
@@ -143,7 +144,7 @@ function InvoiceDownload() {
                                 <div className="customersHisab">
                                     <div>
                                         <strong>Invoice total</strong>
-                                        <span>{data?.order[0]?.totalPrice.toFixed(2)}</span>
+                                        <span>${data?.order[0]?.totalPrice.toFixed(2)}</span>
                                     </div>
                                 </div>
 

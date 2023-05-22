@@ -17,6 +17,7 @@ export const employeeSchema = yup.object().shape({
         .min(6, "password must contain at least 6 characters."),
     country: yup.string(),
     city: yup.string(),
-    address: yup.string()
+    address: yup.string(),
+    zip_code: yup.string()
 
 })

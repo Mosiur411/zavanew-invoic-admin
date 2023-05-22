@@ -29,13 +29,14 @@ function SingleProductList({ data, open, setOpen }) {
     }
     /* open product show  */
 
+    
     return (
         <tr >
             <td>{data?.product_name?.toUpperCase()}</td>
             <td>{data?.upc}</td>
-            <td>{data?.price}</td>
-            <td>{data?.quantity}</td>
             <td>{data?.cost}</td>
+            <td>{data?.quantity}</td>
+            <td>{`$${data?.price}`}</td>
             <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 <h3>+</h3>
                 <input style={{ width: '50px' }} type='number'
@@ -44,7 +45,9 @@ function SingleProductList({ data, open, setOpen }) {
                     onChange={handleQuantityChange}
                 />
                 <h3>-</h3>
-                <a onClick={() => addToCarts(data?._id, quantity, data?.price, data?.product_name)} className="btn btn-sm font-sm rounded btn-brand">Add to Cart </a>
+                <a
+                   /*  hidden={Number(quantity) > Number(data?.quantity)} */
+                    onClick={() => addToCarts(data?._id, quantity, data?.price, data?.product_name)} className="btn btn-sm font-sm rounded btn-brand">Add to Cart </a>
             </td>
             <td className="text-end">
                 <div className="text-end">
