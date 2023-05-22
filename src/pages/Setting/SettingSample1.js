@@ -25,7 +25,7 @@ function SettingSample1() {
         <DashboardLayout>
             <section className="content-main">
                 <div className="content-header">
-                    <h2 className="content-title">Profile setting</h2>
+                    <h2 className="content-title">Employees Add</h2>
                 </div>
                 <div className="card">
                     <div className="card-body">

@@ -43,10 +43,10 @@ export default function Login() {
               </div>
               <div className="mb-3">
                 <a href="#" className="float-end font-sm text-muted">Forgot password?</a>
-                <label className="form-check">
+                {/* <label className="form-check">
                   <input type="checkbox" className="form-check-input" checked="" />
                   <span className="form-check-label">Remember</span>
-                </label>
+                </label> */}
               </div>
               <div className="mb-4">
                 <button type="submit" className="btn-primary w-100">Login</button>

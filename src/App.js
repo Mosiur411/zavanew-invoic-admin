@@ -57,17 +57,17 @@ function App() {
 
   });
   useEffect(() => {
-    // const subscribed = onAuthStateChanged(auth, async (user) => {
-    //   if (user) {
-    //     const token = await user?.getIdToken();
-    //     const users = decodeToken(token);
-    //     if (user?.accessToken) {
-    //       dispatch(setToken({ users, token }))
-    //     }
-    //   }
-    // });
-    // return () => subscribed;
-  }, [user])
+    const subscribed = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await user?.getIdToken();
+        const users = decodeToken(token);
+        if (user?.accessToken) {
+          dispatch(setToken({ user, users }))
+        }
+      }
+    });
+    return () => subscribed();
+  }, [user, loading, dispatch])
   if (loading) {
     return (
       <Spinner />
@@ -106,7 +106,7 @@ function App() {
                 {/* order  */}
                 <Route path='order'>
                   <Route path='list1' element={<OrderList1 />} />
-                  <Route path='list1/:Id' element={<InvoiceDownload/>} />
+                  <Route path='list1/:Id' element={<InvoiceDownload />} />
                   <Route path='list2' element={<OrderList2 />} />
                   <Route path='detail' element={<OrderDetail />} />
                 </Route>
@@ -134,7 +134,7 @@ function App() {
               </Route> : <Route path="" element={<PublicRoutes />}>
                 <Route path='/' element={<Login />} />
                 <Route path='login' element={<Login />} />
-                <Route path='register' element={<Register />} />
+              {/*   <Route path='register' element={<Register />} /> */}
               </Route>
             }
             {/* auth  */}

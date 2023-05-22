@@ -66,13 +66,20 @@ function InvoiceDownload() {
                                 <span>{data?.order[0]?.coustomerId?.phone}</span><br />
                             </div>
                         </div>
-                        <div>
-                            <strong>ORDER# <span>{Id.slice(0, 5)}</span></strong> <br />
-                            <strong>FEIN# <span>{data?.order[0]?.coustomerId?.etin}</span></strong> <br />
-                            <strong>RESALE# <span>{data?.order[0]?.coustomerId?.resale}</span></strong> <br />
-                            <strong>TOBACCO# <span>{data?.order[0]?.coustomerId?.tobacco}</span></strong><br />
-                            <span>{data?.order[0]?.coustomerId?.email}</span><br />
 
+                        <div>
+                            <strong>ORDER# </strong> <br />
+                            <strong>FEIN# </strong> <br />
+                            <strong>RESALE# </strong> <br />
+                            <strong>TOBACCO#</strong><br />
+                            <strong>Email#</strong><br />
+                        </div>
+                        <div>
+                            <strong><span >{Id.slice(0, 10)}</span></strong> <br />
+                            <strong><span>{data?.order[0]?.coustomerId?.etin}</span></strong> <br />
+                            <strong> <span>{data?.order[0]?.coustomerId?.resale}</span></strong> <br />
+                            <strong> <span>{data?.order[0]?.coustomerId?.tobacco}</span></strong><br />
+                            <strong> <span>{data?.order[0]?.coustomerId?.email}</span></strong><br />
                         </div>
                         <div>
                             <img src={logo} alt="logo" />
@@ -112,27 +119,27 @@ function InvoiceDownload() {
                             <div className="customersHisab">
                                 <div className="customersHisab">
                                     {
-                                        data?.order[0]?.payment == 'cash' && <div >
+                                        data?.order[0]?.payment == 'cash' && <div className="paymentTypeStyles">
                                             <p>Cash</p>
-                                            <span className='paid'>Paid</span>
+                                            <p className='paid'>Paid</p>
                                         </div>
                                     }
                                     {
                                         data?.order[0]?.payment == 'check' && <div>
-                                            <div>
+                                            <div className="paymentTypeStyles">
                                                 <p>CHECK NO :</p>
-                                                <span >{data?.order[0]?.checkNumber}</span>
+                                                <p className='paid'>{data?.order[0]?.checkNumber}</p>
                                             </div>
-                                            <div>
-                                                <p>RECEIVED  NAME :</p>
-                                                <span >{data?.order[0]?.checkProviderName}</span>
+                                            <div className="paymentTypeStyles">
+                                                <p>RECEIVED  BY :</p>
+                                                <p className='paid'>{data?.order[0]?.checkProviderName}</p>
                                             </div>
                                         </div>
                                     }
                                     {
-                                        data?.order[0]?.payment == 'due' && <div >
+                                        data?.order[0]?.payment == 'due' && <div className="paymentTypeStyles">
                                             <p>Due</p>
-                                            <span className='paid'>Paid</span>
+                                            <p className='paid'>Paid</p>
                                         </div>
                                     }
                                 </div>

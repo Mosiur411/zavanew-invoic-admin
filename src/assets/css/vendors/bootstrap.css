@@ -13327,7 +13327,10 @@ strong span {
 .customersHisab div {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  gap: 10px;
+}
+.paymentTypeStyles div{
+  display: flex;
   gap: 10px;
 }
 

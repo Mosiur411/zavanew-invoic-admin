@@ -47,7 +47,7 @@ const Header = ({ search }) => {
                     <li className="nav-item">
                         <a className="nav-link btn-icon" href="#">
                             <i className="material-icons md-notifications animation-shake"></i>
-                            <span className="badge rounded-pill">3</span>
+                            <span className="badge rounded-pill">0</span>
                         </a>
                     </li>
                     <li className="nav-item">

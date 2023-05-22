@@ -7,9 +7,13 @@ import Pagination from "../components/elements/Pagination";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useGetRrecordQuery } from "../app/services/order";
+import { useSelector } from "react-redux";
+import { auth } from "../firebase/Firebase.config";
 
 const Home = () => {
     const { data: record, isLoading } = useGetRrecordQuery()
+    const { userInfo } = useSelector(state => state.auth);
+    const { role } = userInfo.users;
 
     const [selected, setSelected] = useState('');
 
@@ -95,45 +99,51 @@ const Home = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-lg-3">
-                    <div className="card card-body mb-4">
-                        <article className="icontext">
-                            <span className="icon icon-sm rounded-circle bg-primary-light"><i className="text-primary material-icons md-monetization_on"></i></span>
-                            <div className="text">
-                                <h6 className="mb-1 card-title">Total Cost</h6>
-                                <span>${record?.products?.[0]?.cost}</span>
-                            </div>
-                        </article>
+                {
+                    role == 'admin' && <div className="col-lg-3">
+                        <div className="card card-body mb-4">
+                            <article className="icontext">
+                                <span className="icon icon-sm rounded-circle bg-primary-light"><i className="text-primary material-icons md-monetization_on"></i></span>
+                                <div className="text">
+                                    <h6 className="mb-1 card-title">Total Cost</h6>
+                                    <span>${record?.products?.[0]?.cost}</span>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </div>
+                }
+
                 <div className="col-lg-3">
                     <div className="card card-body mb-4">
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-success-light"><i className="text-success material-icons md-local_shipping"></i></span>
                             <div className="text">
                                 <h6 className="mb-1 card-title">Total Sales</h6>
-                                <span>${record?.sales?.[0]?.total}</span>
+                                <span>${record?.sales?.[0]?.total.toFixed(2)}</span>
                             </div>
                         </article>
                     </div>
                 </div>
-                <div className="col-lg-3">
-                    <div className="card card-body mb-4">
-                        <article className="icontext">
-                            <span className="icon icon-sm rounded-circle bg-warning-light"><i className="text-warning material-icons md-qr_code"></i></span>
-                            <div className="text">
-                                <h6 className="mb-1 card-title">Products Quantity</h6>
-                                <span>{record?.products?.[0]?.quantity}</span>
-                            </div>
-                        </article>
+                {
+                    role == 'admin' && <div className="col-lg-3">
+                        <div className="card card-body mb-4">
+                            <article className="icontext">
+                                <span className="icon icon-sm rounded-circle bg-warning-light"><i className="text-warning material-icons md-qr_code"></i></span>
+                                <div className="text">
+                                    <h6 className="mb-1 card-title">Products Quantity</h6>
+                                    <span>{record?.products?.[0]?.quantity}</span>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </div>
+                }
+
                 <div className="col-lg-3">
                     <div className="card card-body mb-4">
                         <article className="icontext">
                             <span className="icon icon-sm rounded-circle bg-info-light"><i className="text-info material-icons md-shopping_basket"></i></span>
                             <div className="text">
-                            <h6 className="mb-1 card-title">Sales Quantity</h6>
+                                <h6 className="mb-1 card-title">Sales Quantity</h6>
                                 <span>{record?.sales?.[0]?.quantity}</span>
                             </div>
                         </article>
@@ -500,7 +510,7 @@ const Home = () => {
 
 
 
-        </DashboardLayout>
+        </DashboardLayout >
     );
 }
 

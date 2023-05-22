@@ -16,42 +16,42 @@ export const SideMenu = [
                 to: '/product/list',
                 link: "Product List",
             },
-           /*  {
-                id: 2,
-                _id: 2,
-                to: '/product/grid',
-                link: "Product grid",
-            },
-            {
-                id: 2,
-                _id: 3,
-                to: '/product/grid2',
-                link: "Product grid 2",
-            },
-            {
-                id: 2,
-                _id: 4,
-                to: '/product/department',
-                link: "Department",
-            },
-            {
-                id: 2,
-                _id: 5,
-                to: '/product/categorie',
-                link: "Categories",
-            },
-            {
-                id: 2,
-                _id: 6,
-                to: '/product/subcategorie',
-                link: "Sub Categorie",
-            },
-            {
-                id: 2,
-                _id: 7,
-                to: '/product/childsubcategory',
-                link: "Child Sub Category",
-            }, */
+            /*  {
+                 id: 2,
+                 _id: 2,
+                 to: '/product/grid',
+                 link: "Product grid",
+             },
+             {
+                 id: 2,
+                 _id: 3,
+                 to: '/product/grid2',
+                 link: "Product grid 2",
+             },
+             {
+                 id: 2,
+                 _id: 4,
+                 to: '/product/department',
+                 link: "Department",
+             },
+             {
+                 id: 2,
+                 _id: 5,
+                 to: '/product/categorie',
+                 link: "Categories",
+             },
+             {
+                 id: 2,
+                 _id: 6,
+                 to: '/product/subcategorie',
+                 link: "Sub Categorie",
+             },
+             {
+                 id: 2,
+                 _id: 7,
+                 to: '/product/childsubcategory',
+                 link: "Child Sub Category",
+             }, */
 
         ]
     },
@@ -80,32 +80,32 @@ export const SideMenu = [
             } */
         ]
     },
-  /*   {
-        id: 4,
-
-        link: "Sellers",
-        icon: "icon material-icons md-store",
-        children: [
-            {
-                id: 4,
-                _id: 1,
-                to: '/seller/cards',
-                link: "Sellers cards",
-            },
-            {
-                id: 4,
-                _id: 2,
-                to: '/seller/list',
-                link: "Sellers list",
-            },
-            {
-                id: 4,
-                _id: 3,
-                to: '/seller/profile',
-                link: "Sellers profile",
-            }
-        ]
-    }, */
+    /*   {
+          id: 4,
+  
+          link: "Sellers",
+          icon: "icon material-icons md-store",
+          children: [
+              {
+                  id: 4,
+                  _id: 1,
+                  to: '/seller/cards',
+                  link: "Sellers cards",
+              },
+              {
+                  id: 4,
+                  _id: 2,
+                  to: '/seller/list',
+                  link: "Sellers list",
+              },
+              {
+                  id: 4,
+                  _id: 3,
+                  to: '/seller/profile',
+                  link: "Sellers profile",
+              }
+          ]
+      }, */
     {
         id: 5,
 
@@ -118,24 +118,24 @@ export const SideMenu = [
                 to: '/addproduct/1',
                 link: "Add product 1",
             },
-           /*  {
-                id: 5,
-                _id: 2,
-                to: '/addproduct/2',
-                link: "Add product 2",
-            },
-            {
-                id: 5,
-                _id: 3,
-                to: '/addproduct/3',
-                link: "Add product 3",
-            },
-            {
-                id: 5,
-                _id: 4,
-                to: '/addproduct/4',
-                link: "Add product 4",
-            } */
+            /*  {
+                 id: 5,
+                 _id: 2,
+                 to: '/addproduct/2',
+                 link: "Add product 2",
+             },
+             {
+                 id: 5,
+                 _id: 3,
+                 to: '/addproduct/3',
+                 link: "Add product 3",
+             },
+             {
+                 id: 5,
+                 _id: 4,
+                 to: '/addproduct/4',
+                 link: "Add product 4",
+             } */
         ]
     },
     /* {
@@ -176,7 +176,7 @@ export const SideMenu = [
         }, */
     {
         id: 10,
-        link: "Settings",
+        link: "User",
         icon: "icon material-icons md-settings",
         children: [
             {

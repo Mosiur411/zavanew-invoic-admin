@@ -8,14 +8,19 @@ import GetSpinner from '../../helpers/shared/GetSpinner'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import ProductModal from '../../components/elements/modal/ProductModal'
+import { useSelector } from 'react-redux'
+import { auth } from '../../firebase/Firebase.config'
 
 function List() {
+
+    // const { userInfo } = useSelector(()=>auth);
+    const { userInfo } = useSelector(state => state.auth);
+
     /* open modeal */
     const [open, setOpen] = useState({
         type: false,
         data: null
     })
-
     /* paganitonm */
     const [search, setSearchValue] = useState('')
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
@@ -33,6 +38,9 @@ function List() {
         data,
         search
     ]);
+
+
+
 
 
     return (
@@ -78,7 +86,9 @@ function List() {
                                     <tr className=''>
                                         <th>Product Name</th>
                                         <th>UPC</th>
-                                        <th>Cost</th>
+                                        {
+                                            userInfo.users?.role == 'admin' && <th>Cost</th>
+                                        }
                                         <th>Quantity</th>
                                         <th>Price</th>
                                         <th>Order</th>
@@ -87,7 +97,9 @@ function List() {
                                 </thead>
                                 <tbody>
                                     {Loading && <GetSpinner />}
-                                    {ProductData.map(data => <SingleProductList open={open} setOpen={setOpen} data={data} key={data.key} />
+                                    {ProductData.map(data => <SingleProductList open={open} setOpen={setOpen} data={data} key={data.key}
+                                        userRole={userInfo.users?.role}
+                                    />
                                     )}
                                 </tbody>
                             </table>
