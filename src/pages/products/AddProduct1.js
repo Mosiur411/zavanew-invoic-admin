@@ -10,11 +10,12 @@ function AddProduct1() {
     const [AddProduct, { isError, isLoading, isSuccess }] = useAddProductMutation()
     /* bulk product upload api  */
     const [AddbulkProduct, { isError: bulkisError, isLoading: bulkisLoading, isSuccess: bulkisSuccess }] = useAddbulkProductMutation()
-    
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
 
-    const onSubmit = async (data) => {
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
+
+    const onSubmit = async (data, e) => {
         await AddProduct(data)
+        e.target.value.reset()
     }
     /*  bulk product upload  */
     const handleBullkFileSelect = async (event) => {
@@ -30,6 +31,7 @@ function AddProduct1() {
     useEffect(() => {
         if (isSuccess || bulkisSuccess) {
             toast.success('Add Product ')
+            reset()
         }
         if (isError || bulkisError) {
             toast.error('sorry  not add!')
@@ -86,14 +88,14 @@ function AddProduct1() {
                                     <div className="row gx-2">
                                         <div className="col-md-6 mb-3">
                                             <label htmlFor="product_cost" className="form-label">Cost</label>
-                                            <input type="number" placeholder="Product_cost" className="form-control" id="product_cost"
+                                            <input type="text" placeholder="Product_cost" className="form-control" id="product_cost"
                                                 {...register("cost")}
                                             />
 
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <label htmlFor="product_price" className="form-label">Prices</label>
-                                            <input type="number" placeholder="Product_prics" className="form-control" id="product_price"
+                                            <input type="text" placeholder="Product_prics" className="form-control" id="product_price"
                                                 {...register("price")}
                                             />
                                         </div>

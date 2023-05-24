@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const AddToCartApi = createApi({
     reducerPath: "carts",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://zavanew-invoic-server.vercel.app/",
+        baseUrl: "http://localhost:5001/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {

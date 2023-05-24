@@ -10,6 +10,8 @@ function ProductModal({ modal, setOpen }) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
     const [UpdateProcut, { isSuccess ,isLoading}] = useUpdateProductMutation()
 
+    console.log(data)
+
     const onSubmit = async (value, e) => {
         const productdata = { value, _id: data?._id }
         await UpdateProcut(productdata)
@@ -33,7 +35,7 @@ function ProductModal({ modal, setOpen }) {
                         <div className="col-12">
                             <div className="content-header">
                                 <h2 className="content-title">Update Product</h2>
-                                <button onClick={() => setOpen({ type: false })}>X</button>
+                                <button onClick={() => setOpen({ type: false },reset())}>X</button>
                             </div>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)}>

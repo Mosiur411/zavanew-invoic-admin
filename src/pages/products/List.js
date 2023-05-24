@@ -23,7 +23,7 @@ function List() {
     })
     /* paganitonm */
     const [search, setSearchValue] = useState('')
-    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 1, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const [Loading, setLoading] = useState(false)
     const { data, isLoading } = useGetproductQuery(pathname)
@@ -39,8 +39,7 @@ function List() {
         search
     ]);
 
-
-
+    console.log(data?.totalPages)
 
 
     return (
