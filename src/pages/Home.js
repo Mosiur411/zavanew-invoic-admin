@@ -91,7 +91,7 @@ const Home = () => {
         <DashboardLayout>
             <div className=" content-header">
                 <div>
-                    <h2 className="content-title card-title" onClick={() => toast('hello')}>Dashboards</h2>
+                    <h2 className="content-title card-title">Dashboards</h2>
                     <p>Whole data about your business here</p>
                 </div>
                 <div>

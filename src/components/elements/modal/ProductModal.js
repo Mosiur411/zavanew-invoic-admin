@@ -8,18 +8,19 @@ import { toast } from 'react-toastify';
 function ProductModal({ modal, setOpen }) {
     const { type, data } = modal;
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
-    const [UpdateProcut, { isSuccess ,isLoading}] = useUpdateProductMutation()
+    const [UpdateProcut, { isSuccess, isLoading }] = useUpdateProductMutation()
 
     console.log(data)
 
     const onSubmit = async (value, e) => {
         const productdata = { value, _id: data?._id }
         await UpdateProcut(productdata)
-        e.target.reset();
+        reset();
     }
     useEffect(() => {
         if (isSuccess) {
             toast.success('Product Update !')
+            reset()
             setOpen({ type: false })
         }
     }, [isSuccess])
@@ -35,7 +36,7 @@ function ProductModal({ modal, setOpen }) {
                         <div className="col-12">
                             <div className="content-header">
                                 <h2 className="content-title">Update Product</h2>
-                                <button onClick={() => setOpen({ type: false },reset())}>X</button>
+                                <button onClick={() => setOpen({ type: false }, reset())}>X</button>
                             </div>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)}>
