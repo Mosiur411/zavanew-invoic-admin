@@ -13,6 +13,14 @@ export const EmployeeApi = createApi({
         },
     }),
     endpoints: (builder) => ({
+        getemployee: builder.query({
+            query: (pathname) => ({
+                url: `employee?${pathname}`,
+                method: "GET",
+            }),
+            providesTags: ['Employee']
+        }),
+
         addEmployee: builder.mutation({
             query: (user) => ({
                 url: "employee",
@@ -21,7 +29,24 @@ export const EmployeeApi = createApi({
             }),
             invalidatesTags: ["Employee"],
         }),
+        /* update product */
+        updateEmployee: builder.mutation({
+            query: ({ value, _id }) => ({
+                url: `employee?_id=${_id}`,
+                method: "PUT",
+                body: value,
+            }),
+            invalidatesTags: ["Employee"],
+        }),
+
+        deleteEmployee: builder.mutation({
+            query: (employee) => ({
+                url: `employee?_id=${employee}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Employee"],
+        }),
     }),
 });
-export const { useAddEmployeeMutation } = EmployeeApi;
+export const { useAddEmployeeMutation, useGetemployeeQuery, useDeleteEmployeeMutation,useUpdateEmployeeMutation } = EmployeeApi;
 

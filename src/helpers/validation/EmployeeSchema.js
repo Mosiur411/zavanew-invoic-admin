@@ -21,3 +21,15 @@ export const employeeSchema = yup.object().shape({
     zip_code: yup.string()
 
 })
+export const employeeEditSchema = yup.object().shape({
+    name: yup.string()
+        .required("name field can not be empty."),
+    phone: yup.number(),
+    nid: yup.string().required("nid field can not be empty.")
+        .min(6, "password must contain at least 6 characters."),
+    country: yup.string(),
+    city: yup.string(),
+    address: yup.string(),
+    zip_code: yup.string()
+
+})

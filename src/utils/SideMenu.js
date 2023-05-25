@@ -183,13 +183,13 @@ export const SideMenu = [
                 id: 10,
                 _id: 1,
                 to: '/settings/sample1',
-                link: "Employee Add",
+                link: "Employee",
             },
             {
                 id: 10,
                 _id: 2,
                 to: '/settings/sample2',
-                link: "Costomer Add",
+                link: "Costomer",
             }
         ]
     },

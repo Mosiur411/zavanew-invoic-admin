@@ -39,7 +39,6 @@ function List() {
         search
     ]);
 
-    console.log(data?.totalPages)
 
 
     return (
