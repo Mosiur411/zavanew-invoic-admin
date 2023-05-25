@@ -28,7 +28,23 @@ export const CoustomerApi = createApi({
             }),
             invalidatesTags: ["Coustomer"],
         }),
+        /* update */
+        updateCoustomer: builder.mutation({
+            query: ({ value, _id }) => ({
+                url: `coustomer?_id=${_id}`,
+                method: "PUT",
+                body: value,
+            }),
+            invalidatesTags: ["Coustomer"],
+        }),
+        deleteCoustomer: builder.mutation({
+            query: (coustomer) => ({
+                url: `coustomer?_id=${coustomer}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Coustomer"],
+        }),
     }),
 });
-export const { useAddCoustomerMutation,useGetCoustomerQuery } = CoustomerApi;
+export const { useAddCoustomerMutation, useGetCoustomerQuery, useUpdateCoustomerMutation,useDeleteCoustomerMutation } = CoustomerApi;
 

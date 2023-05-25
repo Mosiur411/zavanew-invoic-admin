@@ -1,153 +1,109 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
-import { coustomerSchema } from '../../helpers/validation/CoustomerSchema';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useAddCoustomerMutation } from '../../app/services/coustomer';
-import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-
-function SettingSample2() {
-    const [AddCoustomer, { isError, isLoading, isSuccess }] = useAddCoustomerMutation()
-
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(coustomerSchema) });
-    const onSubmit = async (data) => {
-        console.log(data)
-        await AddCoustomer(data)
-    }
+import GetSpinner from '../../helpers/shared/GetSpinner';
+import Pagination from '../../components/elements/Pagination';
+import SingleCoustomer from '../../components/elements/user/SingleCoustomer';
+import CoustomerCreate from '../../components/elements/modal/CoustomerCreate';
+import CoustomerEdit from '../../components/elements/modal/CoustomerEdit';
+import { useGetCoustomerQuery } from '../../app/services/coustomer';
+function SettingSample1() {
+    /* employ list add  */
+    const [search, setSearchValue] = useState('')
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 1, pageSize: 10, });
+    const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
+    const [Loading, setLoading] = useState(false)
+    const { data, isLoading } = useGetCoustomerQuery(pathname)
     useEffect(() => {
-        if (isSuccess) {
-            toast.success('Coustomer Add ')
+        if (isLoading) {
+            setLoading(true)
+        } else {
+            setLoading(false)
         }
-        if (isError) {
-            toast.error('sorry  not add!')
-        }
-    }, [isError, isSuccess])
+    }, [isLoading])
+    const EmployeeData = useMemo(() => (data ? data?.coustomer : []), [
+        data,
+        search
+    ]);
+
+    /* add modal section ==============  */
+    const [employeeCreateModal, setEmployeeCreateModal] = useState({ type: false, data: null })
+    const [employeeEditModal, setEmployeeEditModal] = useState({ type: false, data: null })
 
     return (
         <DashboardLayout>
             <section className="content-main">
                 <div className="content-header">
-                    <h2 className="content-title">Coustomer Add</h2>
+                    <div>
+                        <h2 className="content-title card-title">Coustomer  List</h2>
+                    </div>
+                    <div>
+                        <a onClick={() => setEmployeeCreateModal({ type: !employeeCreateModal.type })} className="btn btn-primary btn-sm rounded">Create Coustomer</a>
+                    </div>
                 </div>
-                <div className="card">
-                    <div className="card-body">
-                        <div className="col-lg-12">
-                            <section className="content-body p-xl-4">
-                                <form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className="row gx-3">
-                                                <div className="col-6 mb-3">
-                                                    <label className="form-label"> Name</label>
-                                                    <input className="form-control" type="text" placeholder="First name"
-                                                        {...register("name")} />
-                                                </div>
-                                                <div className="col-6 mb-3">
-                                                    <label className="form-label"> Comphony Name</label>
-                                                    <input className="form-control" type="text" placeholder="First name"
-                                                        {...register("comphonyName")} />
-                                                    {errors?.comphonyName && (
-                                                        <span className="form__error">{errors?.comphonyName.message}</span>
-                                                    )}
-                                                </div>
+                <div className="card mb-4">
+                    <header className="card-header">
+                        <div className="row align-items-center">
+                            <div className="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                                <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control"
 
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">Email</label>
-                                                    <input className="form-control" type="email" placeholder="example@mail.com"
-                                                        {...register("email")} />
-
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">Phone</label>
-                                                    <input className="form-control" type="number" placeholder="+01751499634"
-                                                        {...register("phone")}
-
-                                                    />
-                                                    {errors?.phone && (
-                                                        <span className="form__error">{errors?.phone.message}</span>
-                                                    )}
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">ETIN</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("etin")}
-                                                    />
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">RESALE</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("resale")}
-                                                    />
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">TOBACCO</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("tobacco")}
-                                                    />
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">Address</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("address")}
-                                                    />
-                                                    {errors?.address && (
-                                                        <span className="form__error">{errors?.address.message}</span>
-                                                    )}
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">City</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("city")}
-                                                    />
-                                                    {errors?.city && (
-                                                        <span className="form__error">{errors?.city.message}</span>
-                                                    )}
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">Zip Code</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("zip_code")}
-                                                    />
-                                                    {errors?.zip_code && (
-                                                        <span className="form__error">{errors?.zip_code.message}</span>
-                                                    )}
-                                                </div>
-                                                <div className="col-lg-6 mb-3">
-                                                    <label className="form-label">Country</label>
-                                                    <input className="form-control" type="text" placeholder="Type here"
-                                                        {...register("country")}
-                                                    />
-                                                    {errors?.country && (
-                                                        <span className="form__error">{errors?.country.message}</span>
-                                                    )}
-                                                </div>
-
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <br />
-                                    <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary" type="submit">User Add</button>
-                                </form>
-
-                            </section>
-
+                                />
+                            </div>
+                            <div className="col-md-2 col-6">
+                                <input type="date" defaultValue="02.05.2021" className="form-control" />
+                            </div>
+                            <div className="col-md-2 col-6">
+                                <select className="form-select">
+                                    <option selected>Status</option>
+                                </select>
+                            </div>
                         </div>
-
-
+                    </header>
+                    <div className="col-md-12 px-4 ">
+                        <div className="table-responsive">
+                            <table className="table table-hover">
+                                <thead>
+                                    <tr className=''>
+                                        <th>Name</th>
+                                        <th>ComphonyName</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th className="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Loading && <GetSpinner />}
+                                    {EmployeeData.map(data => <SingleCoustomer employeeEditModal={employeeEditModal} setEmployeeEditModal={setEmployeeEditModal} data={data} key={data.key}
+                                    />
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
-
+                <Pagination totalPages={data?.totalPages} setPagination={setPagination} pageIndex={pageIndex} pageSize={pageSize} />
             </section>
-
+            <CoustomerCreate
+                modal={employeeCreateModal}
+                setOpen={setEmployeeCreateModal}
+            />
+            <CoustomerEdit
+                modal={employeeEditModal}
+                setOpen={setEmployeeEditModal}
+            />
         </DashboardLayout>
     )
 }
 
-export default SettingSample2
+export default SettingSample1
+
+
+
+
+
+
+
+
+
+
+

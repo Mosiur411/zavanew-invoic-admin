@@ -39,7 +39,7 @@ import SubCategories from './pages/products/SubCategories';
 import ChildSubCategory from './pages/products/ChildSubCategory';
 import { onAuthStateChanged } from 'firebase/auth';
 import { decodeToken } from 'react-jwt';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from './app/features/authSlice';
 import Cart from './pages/Cart';
 import InvoiceDownload from './pages/InvoiceDownload';
@@ -56,6 +56,8 @@ function App() {
     }
 
   });
+  const { userInfo } = useSelector(state => state.auth);
+
   useEffect(() => {
     const subscribed = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -123,10 +125,15 @@ function App() {
                 </Route>
 
                 {/* settings  */}
-                <Route path='settings'>
-                  <Route path='sample1' element={<SettingSample1 />} />
-                  <Route path='sample2' element={<SettingSample2 />} />
-                </Route>
+
+                {
+                  userInfo.users?.role == 'admin' && <Route path='settings'>
+                    <Route path='sample1' element={<SettingSample1 />} />
+                    <Route path='sample2' element={<SettingSample2 />} />
+                  </Route>
+                }
+
+
                 {/* single */}
                 <Route path='brands' element={<Brands />} />
                 <Route path='reviews' element={<Reviews />} />
@@ -134,7 +141,7 @@ function App() {
               </Route> : <Route path="" element={<PublicRoutes />}>
                 <Route path='/' element={<Login />} />
                 <Route path='login' element={<Login />} />
-              {/*   <Route path='register' element={<Register />} /> */}
+                {/*   <Route path='register' element={<Register />} /> */}
               </Route>
             }
             {/* auth  */}

@@ -12,3 +12,4 @@ export const coustomerSchema = yup.object().shape({
     address: yup.string().required("address field can not be empty."),
     zip_code: yup.string()
 })
+
