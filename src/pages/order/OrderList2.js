@@ -9,7 +9,7 @@ function OrderList2() {
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Order List</h2>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                        <p></p>
                     </div>
                 </div>
                 <div className="row">

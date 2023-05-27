@@ -34,7 +34,7 @@ function SettingSample1() {
             <section className="content-main">
                 <div className="content-header">
                     <div>
-                        <h2 className="content-title card-title">Coustomer  List</h2>
+                        <h2 className="content-title card-title">Customer  List</h2>
                     </div>
                     <div>
                         <a onClick={() => setEmployeeCreateModal({ type: !employeeCreateModal.type })} className="btn btn-primary btn-sm rounded">Create Coustomer</a>

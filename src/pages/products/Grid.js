@@ -9,7 +9,7 @@ function Grid() {
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Products grid</h2>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                        <p></p>
                     </div>
                     <div>
                         <a href="#" className="btn btn-light rounded font-md">Export</a>

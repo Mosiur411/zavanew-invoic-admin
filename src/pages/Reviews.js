@@ -9,7 +9,7 @@ function Reviews() {
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Reviews</h2>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                        <p></p>
                     </div>
                     <div>
                         <input type="text" placeholder="Search by name" className="form-control bg-white" />

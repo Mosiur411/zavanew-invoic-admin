@@ -34,7 +34,8 @@ function SingleProductList({ data, open, setOpen, userRole }) {
         <tr >
             <td>{data?.product_name?.toUpperCase()}</td>
             <td>{data?.upc}</td>
-            <td>{data?.cost}</td>
+            {userRole == 'admin' && <td>{data?.cost}</td>}
+
             <td>{data?.quantity}</td>
             <td>{`$${data?.price}`}</td>
             <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>

@@ -62,7 +62,7 @@ export const SideMenu = [
                 id: 10,
                 _id: 2,
                 to: '/settings/sample2',
-                link: "Costomer",
+                link: "Customer",
             }
         ]
     },

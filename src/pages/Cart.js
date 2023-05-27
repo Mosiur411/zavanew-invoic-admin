@@ -10,7 +10,8 @@ import { number } from 'yup';
 function Cart() {
     const { data } = useGetToCartQuery()
     const [search, setSearchValue] = useState('')
-    const [bankCheck, setBankCheck] = useState('')
+    console.log(search)
+    const [bank, setBank] = useState('')
     const [CartQantity, setCartQantity] = useState()
     const [CartPrices, setCartPrices] = useState()// CartPrices CartQantity
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
@@ -68,7 +69,7 @@ function Cart() {
             <section className="content-main">
                 <div className="content-header">
                     <div>
-                        <h2 className="content-title card-title">Card detail</h2>
+                        <h2 className="content-title card-title">Cart Details</h2>
                     </div>
                 </div>
                 {
@@ -137,7 +138,7 @@ function Cart() {
                                             <div className="box shadow-sm bg-light">
                                                 <h6 className="mb-15">Payment info</h6>
                                                 <select className="form-select" {...register("payment")}
-                                                    onChange={(e) => setBankCheck(e.target.value)}
+                                                    onChange={(e) => setBank(e.target.value)}
                                                 >
                                                     <option selected value='cash'>CASH</option>
                                                     <option value='check' >CHECK</option>
@@ -146,14 +147,26 @@ function Cart() {
                                                         <span className="form__error">{errors?.payment.message}</span>
                                                     )}
                                                 </select>
-                                                {bankCheck === 'check' ? <div>
+                                                {bank === 'check' ? <div>
                                                     <input type="text" placeholder="Check Number" className="form-control"
                                                         {...register("checkNumber")}
                                                     />
-                                                    <input type="text" placeholder="Your Names" className="form-control"
+                                                    <input type="text" placeholder="Your check Names" className="form-control"
                                                         {...register("checkProviderName")}
                                                     />
                                                 </div> : ''}
+                                                {bank === 'cash' ? <div>
+                                                    <input type="text" placeholder="Your cash Names" className="form-control"
+                                                        {...register("checkProviderName")}
+                                                    />
+                                                </div> : ''}
+                                                {bank === 'due' ? <div>
+                                                    <input type="text" placeholder="Your due Names" className="form-control"
+                                                        {...register("checkProviderName")}
+                                                    />
+                                                </div> : ''}
+
+
                                             </div>
                                             <div className="h-25 pt-4">
                                                 <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>
@@ -167,7 +180,7 @@ function Cart() {
                                     <div className="box shadow-sm ">
                                         <h6 className="mb-15">Coustomer info</h6>
                                         <div className="col-lg-12 me-auto">
-                                            <input onClick={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control" />
+                                            <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control" />
                                         </div>
                                         {
                                             coustomerData?.map((data) =>
