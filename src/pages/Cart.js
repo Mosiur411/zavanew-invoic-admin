@@ -7,19 +7,16 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useGetCoustomerQuery } from '../app/services/coustomer';
 import { number } from 'yup';
+import CartItem from './CartItem';
+import CoustomerItm from './CoustomerItm';
 function Cart() {
     const { data } = useGetToCartQuery()
     const [search, setSearchValue] = useState('')
-    console.log(search)
     const [bank, setBank] = useState('')
-    const [CartQantity, setCartQantity] = useState()
-    const [CartPrices, setCartPrices] = useState()// CartPrices CartQantity
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const { data: coustomer } = useGetCoustomerQuery(pathname)
     const [PorductOder, { isLoading, isSuccess, isError }] = useAddOrderMutation()
-    const [CartDelete, { isLoading: deleteIsLoading, isSuccess: deleteIsSuccess }] = useDeleteToCartMutation()
-    const [CartUpdate, { isLoading: updateIsLoading, isSuccess: updateIsSuccess }] = useUpdateToCartMutation()
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
 
     /* coustomer id need  */
@@ -34,17 +31,7 @@ function Cart() {
             toast.error('coustomer not select')
         }
     }
-    /* card product delete  */
-    const CartDeletes = async (id) => {
-        await CartDelete(id)
-    }
-    const CartUpdates = async (id, CartQantity, CartPrices) => {
-        if (Number(CartQantity)) {
-            const data = { CartQantity, id, CartPrices }
-            await CartUpdate(data)
 
-        }
-    }
     useEffect(() => {
         if (isSuccess) {
             toast.success('Order add  ')
@@ -52,18 +39,12 @@ function Cart() {
         if (isError) {
             toast.error('sorry  not add!')
         }
-        if (deleteIsSuccess) {
-            toast.success('card Product Remove ')
-        }
-        if (updateIsSuccess) {
-            toast.success('card Product Update ')
-        }
-    }, [isError, isSuccess, deleteIsSuccess, updateIsSuccess])
+    }, [isError, isSuccess])
     const coustomerData = useMemo(() => (coustomer ? coustomer?.coustomer : []), [
         coustomer,
         search
     ]);
-
+    console.log(data?.items?.length)
     return (
         <DashboardLayout>
             <section className="content-main">
@@ -90,35 +71,7 @@ function Cart() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data?.items.map(data => <tr key={data?._id}>
-                                                    <td>{data?.product_id?.product_name.toUpperCase()}</td>
-                                                    <td>
-                                                        <input style={{ width: '50px' }} type='number'
-                                                            onChange={(e) => setCartPrices(e.target.value)}
-                                                            min="1" defaultValue={data?.price?.toFixed(2)}
-                                                            setCartPrices={data?.price?.toFixed(2)}
-                                                            selected
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <input style={{ width: '50px' }} type='number'
-                                                            onChange={(e) => setCartQantity(e.target.value)}
-                                                            min="1" defaultValue={data?.quantity} />
-                                                    </td>
-                                                    <td >${data?.price?.toFixed(2)}</td>
-                                                    <td className="text-end"
-                                                        style={{
-                                                            display: 'flex', justifyContent: 'center', alignItems: 'center'
-                                                            , gap: '5px'
-                                                        }}
-                                                    >
-                                                        <a onClick={() => CartUpdates(data?._id, CartQantity, CartPrices)} className="btn btn-sm font-sm rounded btn-brand"
-                                                            hidden={Number(CartQantity) > Number(data?.product_id?.quantity)}
-                                                        >  Add </a>
-                                                        <a onClick={() => CartDeletes(data?._id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>
-                                                    </td>
-                                                </tr>
-                                                )}
+                                                {data?.items.map(data => <CartItem key={data?._id} cartItem={data} />)}
 
                                                 <tr className="text-end">
                                                     <td colspan="6">
@@ -140,7 +93,9 @@ function Cart() {
                                                 <select className="form-select" {...register("payment")}
                                                     onChange={(e) => setBank(e.target.value)}
                                                 >
-                                                    <option selected value='cash'>CASH</option>
+                                                    <option selected>Selected Payment</option>
+                                                    <option value='cash'>CASH</option>{/* Payment info
+ */}
                                                     <option value='check' >CHECK</option>
                                                     <option value='due'>DUE</option>
                                                     {errors?.payment && (
@@ -151,17 +106,17 @@ function Cart() {
                                                     <input type="text" placeholder="Check Number" className="form-control"
                                                         {...register("checkNumber")}
                                                     />
-                                                    <input type="text" placeholder="Your check Names" className="form-control"
+                                                    <input type="text" placeholder="Your Check Names" className="form-control"
                                                         {...register("checkProviderName")}
                                                     />
                                                 </div> : ''}
                                                 {bank === 'cash' ? <div>
-                                                    <input type="text" placeholder="Your cash Names" className="form-control"
+                                                    <input type="text" placeholder="Your Cash Names" className="form-control"
                                                         {...register("checkProviderName")}
                                                     />
                                                 </div> : ''}
                                                 {bank === 'due' ? <div>
-                                                    <input type="text" placeholder="Your due Names" className="form-control"
+                                                    <input type="text" placeholder="Your Due Names" className="form-control"
                                                         {...register("checkProviderName")}
                                                     />
                                                 </div> : ''}
@@ -169,7 +124,10 @@ function Cart() {
 
                                             </div>
                                             <div className="h-25 pt-4">
-                                                <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>
+                                                {
+                                                    !data?.items?.length == 0 && <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>
+                                                }
+
                                             </div>
                                         </form>
 
@@ -183,16 +141,9 @@ function Cart() {
                                             <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control" />
                                         </div>
                                         {
-                                            coustomerData?.map((data) =>
-                                                <div key={data?._id} className="d-flex align-items-center justify-content-between mb-4">
-                                                    <div className="d-flex align-items-center">
-                                                        <div>
-                                                            <h6>{data?.comphonyName}</h6>
-                                                            <p className="text-muted font-xs">{data?.name}</p>
-                                                        </div>
-                                                    </div>
-                                                    <a onClick={() => setCoustomerId(data?._id)} className="btn btn-xs"><i className="material-icons md-add"></i> Add</a>
-                                                </div>
+                                            coustomerData?.map((data) => <CoustomerItm key={data?._id} CoustomerItm={data}
+                                                coustomerId={coustomerId} setCoustomerId={setCoustomerId}
+                                            />
                                             )
                                         }
                                     </div>

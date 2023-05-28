@@ -5,8 +5,9 @@ import { useDeleteProductMutation } from '../../../app/services/product'
 import { useAddToCartMutation } from '../../../app/services/addToCart'
 
 function SingleProductList({ data, open, setOpen, userRole }) {
+
     const [deleteProduct, { isSuccess, isLoading }] = useDeleteProductMutation()
-    const [AddToCart] = useAddToCartMutation()
+    const [AddToCart, { isLoading: addTOcartLoading, isSuccess: addTOcartSuccess }] = useAddToCartMutation()
 
     const ProductDelete = async (id) => {
         await deleteProduct(id)
@@ -15,7 +16,10 @@ function SingleProductList({ data, open, setOpen, userRole }) {
         if (isSuccess) {
             toast.success('Product Delete !')
         }
-    }, [isSuccess])
+        if (addTOcartSuccess) {
+            toast.success('Product Cart To Add ')
+        }
+    }, [isSuccess, addTOcartSuccess])
     /* product card add  */
     const [quantity, setQuantity] = useState(1);
     const handleQuantityChange = (event) => {
@@ -47,8 +51,10 @@ function SingleProductList({ data, open, setOpen, userRole }) {
                 />
                 <h3>-</h3>
                 <a
-                    /*  hidden={Number(quantity) > Number(data?.quantity)} */
-                    onClick={() => addToCarts(data?._id, quantity, data?.price, data?.product_name)} className="btn btn-sm font-sm rounded btn-brand">Add to Cart </a>
+                    style={{ cursor: addTOcartLoading ? 'no-drop' : 'pointer' }}
+                    onClick={() => addToCarts(data?._id, quantity, data?.price, data?.product_name)}
+                    hidden={quantity > data?.quantity ? true : quantity <= 0 ? true : false}
+                    className="btn btn-sm font-sm rounded btn-brand">Add to Cart </a>
             </td>
             {
                 userRole == 'admin' && <td className="text-end">

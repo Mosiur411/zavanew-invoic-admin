@@ -8,6 +8,7 @@ import { auth } from '../../firebase/Firebase.config';
 import { useAddToCartMutation, useGetToCartQuery } from '../../app/services/addToCart';
 import { useGetproductQuery } from '../../app/services/product';
 import HeaderCartProductModal from '../elements/modal/HeaderCartProductModal';
+import { toast } from 'react-toastify';
 
 const Header = ({ search, productCartAdd }) => {
     const location = useLocation();
@@ -17,14 +18,6 @@ const Header = ({ search, productCartAdd }) => {
     const { dark, setDark, handelClick, setSandelClick } = useContext(ThemeContext)
     const { zoom, profile } = handelClick;
 
-
-
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         toast.success('Product Cart Add !')
-    //     }
-
-    // }, [isLoading, isSuccess])
 
     const [productSarch, setProductSarch] = useState()
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 1, pageSize: 10, });
@@ -36,18 +29,20 @@ const Header = ({ search, productCartAdd }) => {
     const [Loading, setLoading] = useState(false)
     useEffect(() => {
         if (isLoading) {
-
             setLoading(true)
         } else {
             setLoading(false)
         }
         if (productData?.product?.length == '1' && productSarch) {
             const { upcBox, upc, _id: id, quantity, price, product_name } = productData?.product[0]
-            if (productSarch == (upcBox || upc)) {
+            console.log(upcBox)
+            console.log(upc)
+            if (productSarch == upcBox || upc) {
                 if (quantity && price) {
                     const item = { product_id: id, quantity: 1, price: price, product_name: product_name }
-                    productCartAdd(item)
-
+                    productCartAdd(item) /* 819913012594 */
+                } else {
+                    toast.error('Product quantity ')
                 }
             }
         }

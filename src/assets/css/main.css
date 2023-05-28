@@ -4489,7 +4489,7 @@ footer.main-footer {
 /* opoop menu ber  */
 .modal_product {
   position: fixed;
-  z-index: 9000000000000000000000;
+  z-index: 1070;
   left: 0;
   top: 0;
   right: 0;
@@ -4536,7 +4536,7 @@ footer.main-footer {
   position: absolute;
   top: 70px;
   left: 0;
-  z-index: 9999999999999999999999999999999999;
+  z-index: 1070;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Right shadow */
 
 
