@@ -126,12 +126,14 @@ function App() {
 
                 {/* settings  */}
 
-                {
-                  userInfo.users?.role == 'admin' && <Route path='settings'>
-                    <Route path='sample1' element={<SettingSample1 />} />
-                    <Route path='sample2' element={<SettingSample2 />} />
-                  </Route>
-                }
+                <Route path='settings'>
+                  {
+                    userInfo.users?.role == 'admin' && <Route path='sample1' element={<SettingSample1 />} />
+                  }
+
+                  <Route path='sample2' element={<SettingSample2 />} />
+                </Route>
+
 
 
                 {/* single */}
