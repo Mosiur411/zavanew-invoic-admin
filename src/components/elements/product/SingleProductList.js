@@ -27,8 +27,8 @@ function SingleProductList({ data, open, setOpen, userRole }) {
         setQuantity(value);
     };
     /*  add to card  */
-    const addToCarts = async (id, quantity, price, name) => {
-        const item = { product_id: id, quantity: quantity, price: price * quantity, product_name: name }
+    const addToCarts = async (id, quantity, saleing_Price, name) => {
+        const item = { product_id: id, quantity: quantity, saleing_Price: saleing_Price * quantity, product_name: name }
         await AddToCart(item)
     }
     /* open product show  */
@@ -41,7 +41,7 @@ function SingleProductList({ data, open, setOpen, userRole }) {
             {userRole == 'admin' && <td>{data?.cost}</td>}
 
             <td>{data?.quantity}</td>
-            <td>{`$${data?.price}`}</td>
+            <td>{`$${data?.saleing_Price}`}</td>
             <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 <h3>+</h3>
                 <input style={{ width: '50px' }} type='number'
@@ -52,7 +52,7 @@ function SingleProductList({ data, open, setOpen, userRole }) {
                 <h3>-</h3>
                 <a
                     style={{ cursor: addTOcartLoading ? 'no-drop' : 'pointer' }}
-                    onClick={() => addToCarts(data?._id, quantity, data?.price, data?.product_name)}
+                    onClick={() => addToCarts(data?._id, quantity, data?.saleing_Price, data?.product_name)}
                     hidden={quantity > data?.quantity ? true : quantity <= 0 ? true : false}
                     className="btn btn-sm font-sm rounded btn-brand">Add to Cart </a>
             </td>

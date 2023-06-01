@@ -96,7 +96,7 @@ function AddProduct1() {
                                         <div className="col-md-6 mb-3">
                                             <label htmlFor="product_price" className="form-label">Prices</label>
                                             <input type="text" placeholder="Product_prics" className="form-control" id="product_price"
-                                                {...register("price")}
+                                                {...register("saleing_Price")}
                                             />
                                         </div>
                                     </div>

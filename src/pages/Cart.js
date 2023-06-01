@@ -11,6 +11,9 @@ import CartItem from './CartItem';
 import CoustomerItm from './CoustomerItm';
 function Cart() {
     const { data } = useGetToCartQuery()
+
+    console.log('data', data)
+
     const [search, setSearchValue] = useState('')
     const [bank, setBank] = useState('')
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
@@ -44,7 +47,6 @@ function Cart() {
         coustomer,
         search
     ]);
-    console.log(data?.items?.length)
     return (
         <DashboardLayout>
             <section className="content-main">

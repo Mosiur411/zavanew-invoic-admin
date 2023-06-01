@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 function CartItem({ cartItem }) {
     const [CartDelete, { isLoading: deleteIsLoading, isSuccess: deleteIsSuccess, isErrorDelete }] = useDeleteToCartMutation()
     const [CartUpdate, { isLoading: updateIsLoading, isSuccess: updateIsSuccess, isErrorUpdate }] = useUpdateToCartMutation()
-    const { _id, product_id, price } = cartItem;
+    const { _id, product_id, saleing_Price } = cartItem;
     const [quantity, setQuantity] = useState(cartItem?.quantity);
-    const [productPrices, setProductPrices] = useState(product_id?.price);
+    const [productPrices, setProductPrices] = useState(product_id?.saleing_Price);
     const setCartQantity = (value) => {
         setQuantity(value);
     };
@@ -42,17 +42,17 @@ function CartItem({ cartItem }) {
             <td>
                 <input style={{ width: '50px' }} type='number'
                     onChange={(e) => setCartPrices(e.target.value)}
-                    defaultValue={price?.toFixed(2) / cartItem?.quantity}
-                    setCartPrices={product_id?.price?.toFixed(2)}
+                    defaultValue={saleing_Price?.toFixed(2) / cartItem?.quantity}
+                    setCartPrices={product_id?.saleing_Price?.toFixed(2)}
                     selected
                 />
             </td>
             <td>
-                <input value={cartItem?.quantity} style={{ width: '50px' }} type='number'
+                <input defaultValue={cartItem?.quantity} style={{ width: '50px' }} type='number'
                     onChange={(e) => setCartQantity(e.target.value)}
                 />
             </td>
-            <td >${price?.toFixed(2)}</td>
+            <td >${saleing_Price?.toFixed(2)}</td>
             <td className="text-end"
                 style={{
                     display: 'flex', justifyContent: 'center', alignItems: 'center'
