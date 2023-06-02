@@ -12,7 +12,7 @@ function SingleOrder({ data }) {
             <td>{data?.coustomerId?.comphonyName}</td>
             <td>{data?.totalPrice.toFixed(2)}</td>
             <td><span className="badge rounded-pill alert-warning">{data?.payment}</span></td>
-            <td>{data?.item?.map(data => `${data?.quantity},`)} </td>
+            <td>{data?.totalQuantity} </td>
             <td className="text-end">
                 <a onClick={() => navigate(data?._id)} className="btn btn-md rounded font-sm">Detail</a>            </td>
         </tr>

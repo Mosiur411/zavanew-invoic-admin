@@ -78,7 +78,7 @@ function ProductModal({ modal, setOpen }) {
                                                 <label htmlFor="product_price" className="form-label">Prices</label>
                                                 <input type="text" placeholder="Product_prics" className="form-control" id="product_price"
                                                     defaultValue={data?.price}
-                                                    {...register("price")}
+                                                    {...register("saleing_Price")}
                                                 />
                                             </div>
                                         </div>

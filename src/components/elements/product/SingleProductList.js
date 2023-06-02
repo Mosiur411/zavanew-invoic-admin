@@ -32,13 +32,13 @@ function SingleProductList({ data, open, setOpen, userRole }) {
         await AddToCart(item)
     }
     /* open product show  */
-
+    console.log('quantity', quantity)
 
     return (
         <tr >
             <td>{data?.product_name?.toUpperCase()}</td>
             <td>{data?.upc}</td>
-            {userRole == 'admin' && <td>{data?.cost}</td>}
+            {userRole == 'admin' && <td> {`$${data?.cost}`}</td>}
 
             <td>{data?.quantity}</td>
             <td>{`$${data?.saleing_Price}`}</td>

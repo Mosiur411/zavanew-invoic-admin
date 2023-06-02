@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const AuthApi = createApi({
     reducerPath: "user",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5001/",
+        baseUrl: "https://zavanew-invoic-server.vercel.app/",
     }),
     endpoints: (builder) => ({
         addUser: builder.mutation({

@@ -34,12 +34,12 @@ const Header = ({ search, productCartAdd }) => {
             setLoading(false)
         }
         if (productData?.product?.length == '1' && productSarch) {
-            const { upcBox, upc, _id: id, quantity, price, product_name } = productData?.product[0]
+            const { upcBox, upc, _id: id, quantity, saleing_Price, product_name } = productData?.product[0]
             console.log(upcBox)
             console.log(upc)
             if (productSarch == upcBox || upc) {
-                if (quantity && price) {
-                    const item = { product_id: id, quantity: 1, price: price, product_name: product_name }
+                if (quantity && saleing_Price) {
+                    const item = { product_id: id, quantity: 1, saleing_Price: saleing_Price, product_name: product_name }
                     productCartAdd(item) /* 819913012594 */
                 } else {
                     toast.error('Product quantity ')

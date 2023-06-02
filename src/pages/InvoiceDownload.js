@@ -7,11 +7,28 @@ import { useGetToOrderQuery } from '../app/services/order';
 import PdfFile from '../helpers/pdfFile/PdfFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 function InvoiceDownload() {
-  /*  date time ganaret  */
+  /*  date time  handel  */
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = currentDate.toLocaleString('default', { month: 'long' });
   const day = currentDate.getDate();
+  /*  due handel  handel  */
+  const Duemonth = currentDate.setDate(currentDate.getDate() + 7);
+  const monthss = Duemonth.toLocaleString('default', { month: 'long' });
+
+  /* 
+    const month = currentDate.toLocaleString('default', { month: 'long' });
+
+  */
+  var finalDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
+
+
+
+  console.log(monthss)
+  console.log(Duemonth)
+  console.log(finalDate)
+
+
 
   const { Id } = useParams();
   const ref = React.createRef();
@@ -34,7 +51,7 @@ function InvoiceDownload() {
           
           }
           .img_handel{
-            max-width: 120px;
+            max-width: 220px;
           }
           
           .order_topContect {
@@ -56,9 +73,9 @@ function InvoiceDownload() {
             margin: 5px 0px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             gap: 14px;
           }
-          
           
           
           /* table */
@@ -133,8 +150,8 @@ function InvoiceDownload() {
             align-items: center;
             gap: 5px;
           }
-          .paid{
-            color: #3BB77E;
+          .totalQuantity{
+            text-align: end;
           }
     
         `);
@@ -160,45 +177,45 @@ function InvoiceDownload() {
               </span><br />
               <span>USA</span><br />
             </div>
-            <strong>9544495289</strong><br />
-            <strong>{data?.order[0]?.user?.name}</strong>
-
+            <span>{data?.order[0]?.user?.name} : 9544495289</span><br />
           </div>
           <div>
             <strong>SOLD TO</strong>
             <div>
               <strong>{data?.order[0]?.coustomerId?.comphonyName}</strong><br />
               <span>{data?.order[0]?.coustomerId?.address}</span><br />
-              <span>{data?.order[0]?.coustomerId?.city}</span><br />
-              <span>{data?.order[0]?.coustomerId?.zip_code}</span><br />
+              <span>{data?.order[0]?.coustomerId?.city} {data?.order[0]?.coustomerId?.zip_code}</span><br />
               <span>{data?.order[0]?.coustomerId?.country}</span><br />
               <span>{data?.order[0]?.coustomerId?.phone}</span><br />
             </div>
           </div>
 
-          <div>
+          {/*  <div>
             <strong>ORDER# </strong> <br />
             <strong>FEIN# </strong> <br />
             <strong>RESALE# </strong> <br />
             <strong>TOBACCO#</strong><br />
             <span>Email#</span><br />
-          </div>
-          <div>
+          </div> */}
+          {/*  <div>
             <strong><span >{Id.slice(0, 10)}</span></strong> <br />
             <strong><span>{data?.order[0]?.coustomerId?.etin}</span></strong> <br />
             <strong> <span>{data?.order[0]?.coustomerId?.resale}</span></strong> <br />
             <strong> <span>{data?.order[0]?.coustomerId?.tobacco}</span></strong><br />
             <strong> <span>{data?.order[0]?.coustomerId?.email}</span></strong><br />
-          </div>
+          </div> */}
 
           <div>
 
             <img className='img_handel' src={logo} />
-            <p>Order by retwho.com</p>
+            <p><strong>Order by </strong> retwho.com</p>
           </div>
         </div>
         <div className="invoic_contect">
-          <p><strong>Invoice</strong> #{Id}</p>
+          <div>
+            <span><strong>ORDER</strong> # {Id.slice(-9)}</span> <br />
+            <span><strong>Invoice</strong> # {Id}</span>
+          </div>
           <div>
             <strong>Issue date</strong> <br />
             <span>{`${day}  ${month},   ${year}`}</span>
@@ -219,9 +236,20 @@ function InvoiceDownload() {
             {data?.order[0]?.item?.map(data => <tr>
               <td>{data?.product_name}</td>
               <td>{data?.quantity}</td>
-              <td>${data?.price / data?.quantity}</td>
-              <td>${data?.price.toFixed(2)}</td>
+              <td>${data?.saleing_Price / data?.quantity}</td>
+              <td>${data?.saleing_Price.toFixed(2)}</td>
             </tr>)}
+            <tr>
+              <td style={{ textAlign: 'end' }}
+                className='totalQuantity'
+              >Total Qty</td>
+              <td>{data?.order[0]?.totalQuantity}</td>
+              <td></td>
+              <td></td>
+            </tr>
+
+
+            {/* totalQuantity */}
           </table>
         </div>
         <div className='invoicPayment'>
@@ -233,12 +261,12 @@ function InvoiceDownload() {
                   data?.order[0]?.payment == 'cash' && <div>
 
                     <div className="paymentTypeStyles">
-                      <p>Cash</p>
-                      <p className='paid'>Paid</p>
+                      <p>CASH</p>
+                      <p>Paid</p>
                     </div>
                     <div className="paymentTypeStyles">
                       <p>RECEIVED  BY :</p>
-                      <p className='paid'>{data?.order[0]?.checkProviderName}</p>
+                      <p>{data?.order[0]?.checkProviderName}</p>
                     </div>
                   </div>
                 }
@@ -247,23 +275,23 @@ function InvoiceDownload() {
                   data?.order[0]?.payment == 'check' && <div>
                     <div className="paymentTypeStyles">
                       <p>CHECK NO :</p>
-                      <p className='paid'>{data?.order[0]?.checkNumber}</p>
+                      <p >{data?.order[0]?.checkNumber}</p>
                     </div>
                     <div className="paymentTypeStyles">
                       <p>RECEIVED  BY :</p>
-                      <p className='paid'>{data?.order[0]?.checkProviderName}</p>
+                      <p>{data?.order[0]?.checkProviderName}</p>
                     </div>
                   </div>
                 }
                 {
                   data?.order[0]?.payment == 'due' && <div>
                     <div className="paymentTypeStyles">
-                      <p>Due</p>
-                      <p className='paid'>Paid</p>
+                      <p>DUE</p>
+                      <p ></p>
                     </div>
                     <div className="paymentTypeStyles">
                       <p>RECEIVED  BY :</p>
-                      <p className='paid'>{data?.order[0]?.checkProviderName}</p>
+                      <p>{data?.order[0]?.checkProviderName}</p>
                     </div>
                   </div>
                 }

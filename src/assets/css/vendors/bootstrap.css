@@ -13270,6 +13270,7 @@ strong span {
   margin: 5px 0px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 14px;
 }
 
@@ -13290,7 +13291,7 @@ strong span {
 
 #customers tr:nth-child(even) {
   background-color: #f2f2f2;
-  color: black  !important;
+  color: black !important;
 }
 
 #customers tr:hover {
@@ -13310,10 +13311,12 @@ strong span {
 .invoicPayment {
   margin-top: 10px;
 }
+
 /* img */
-.img_handel{
-  max-width: 120px;
+.img_handel {
+  max-width: 220px;
 }
+
 .customersHisabContct {
   margin-top: 10px;
   display: flex;
