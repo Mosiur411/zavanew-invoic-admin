@@ -12,7 +12,6 @@ import CoustomerItm from './CoustomerItm';
 function Cart() {
     const { data } = useGetToCartQuery()
 
-    console.log('data', data)
 
     const [search, setSearchValue] = useState('')
     const [bank, setBank] = useState('')
@@ -73,13 +72,17 @@ function Cart() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data?.items.map(data => <CartItem key={data?._id} cartItem={data} />)}
+                                                {data?.items.map(cart => <CartItem key={cart?._id} cartItem={cart} />)}
 
                                                 <tr className="text-end">
                                                     <td colspan="6">
                                                         <article className="float-end">
                                                             <dl className="dlist">
-                                                                <dt>Grand total:</dt>
+                                                                <dt>Total Quantity :</dt>
+                                                                <dd><b className="h5">{data?.totalQuantity}</b></dd>
+                                                            </dl>
+                                                            <dl className="dlist">
+                                                                <dt>Total Prices :</dt>
                                                                 <dd><b className="h5">${data?.totalPrice?.toFixed(2)}</b></dd>
                                                             </dl>
                                                         </article>

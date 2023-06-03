@@ -10,7 +10,7 @@ import { useGetproductQuery } from '../../app/services/product';
 import HeaderCartProductModal from '../elements/modal/HeaderCartProductModal';
 import { toast } from 'react-toastify';
 
-const Header = ({ search, productCartAdd }) => {
+const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
     const location = useLocation();
     const currentPath = location.pathname;
     const { data } = useGetToCartQuery()
@@ -52,6 +52,9 @@ const Header = ({ search, productCartAdd }) => {
         productSarch
     ]);
 
+    /* total product quntiti  */
+
+
     return (
         <header className="main-header navbar">
             {search ? <div className="col-brand">
@@ -76,21 +79,15 @@ const Header = ({ search, productCartAdd }) => {
 
             </div>
             }
-            {/* width: 100%; height: 100%; overflow: hidden */}
+            {/* width: 100%; height: 100%; overflow: hidden  onClick={() => setSideOpen(!sideOpen)}*/}
             <div className="col-nav">
-                <button className="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"><i className="material-icons md-apps"></i></button>
+                <button onClick={() => setSideOpen(!sideOpen)} className="btn btn-icon btn-mobile me-auto" ><i className="material-icons md-apps"></i></button>
                 <ul className="nav">
                     <li className="nav-item">
                         <Link to='/cart' className="nav-link btn-icon" href="#">
-                            cart
-                            <span className="badge rounded-pill">{data?.items?.length}</span>
+                            Cart
+                            <span className="badge rounded-pill">{data?.totalQuantity}</span>
                         </Link>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link btn-icon" href="#">
-                            <i className="material-icons md-notifications animation-shake"></i>
-                            <span className="badge rounded-pill">0</span>
-                        </a>
                     </li>
                     <li className="nav-item">
                         <a onClick={() => setDark(!dark)} className="nav-link btn-icon darkmode"> <i className="material-icons md-nights_stay"></i> </a>
@@ -102,9 +99,6 @@ const Header = ({ search, productCartAdd }) => {
                         <a className="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i className="material-icons md-public"></i></a>
                         <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
                             <a className="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English" />English</a>
-                            <a className="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français" />Français</a>
-                            <a className="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français" />日本語</a>
-                            <a className="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français" />中国人</a>
                         </div>
                     </li>
                     <li className="dropdown nav-item">
