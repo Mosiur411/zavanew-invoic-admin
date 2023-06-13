@@ -55,7 +55,7 @@ const Home = () => {
                             <span className="icon icon-sm rounded-circle bg-success-light"><i className="text-success material-icons md-local_shipping"></i></span>
                             <div className="text">
                                 <h6 className="mb-1 card-title">Total Sales</h6>
-                                <span>${record?.sale[0]?.total ? record?.sale[0]?.total : 0}</span>
+                                <span>${record?.sale[0]?.total ? record?.sale[0]?.total.toFixed(2) : 0}</span>
                             </div>
                         </article>
                     </div>
