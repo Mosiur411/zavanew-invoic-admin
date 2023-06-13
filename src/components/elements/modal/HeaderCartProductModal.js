@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useAddToCartMutation } from '../../../app/services/addToCart'
 import { toast } from 'react-toastify'
+import { useAddToCartMutation } from '../../../app/services/product'
 
 function HeaderCartProductModal({ productData }) {
     const [AddToCart] = useAddToCartMutation()

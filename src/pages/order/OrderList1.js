@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import Pagination from '../../components/elements/Pagination'
 import { useGetToOrderQuery } from '../../app/services/order'
 import SingleOrder from '../../components/elements/product/SingleOrder'
+import GetSpinner from '../../helpers/shared/GetSpinner'
+import { useEffect } from 'react'
 function OrderList1() {
+  const [Loading, setLoading] = useState(false)
+  const [search, setSearchValue] = useState('')
   const Id = '12'
-  const { data, isLoading } = useGetToOrderQuery(Id)
-  console.log(data)
+  const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
+  const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}&id=${Id}`;
+  const { data, isLoading } = useGetToOrderQuery(pathname)
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+  }, [isLoading])
 
   return (
     <DashboardLayout>
       <section className="content-main">
         <div className="content-header">
           <div>
-            <h2 className="content-title card-title">Order List</h2>
+            <h2 className="content-title card-title">All Ordered Invoice</h2>
             <p></p>
           </div>
           <div>
@@ -49,7 +61,7 @@ function OrderList1() {
                 <thead>
                   <tr>
                     <th>#ID</th>
-                    <th scope="col">comphonyName</th>
+                    <th scope="col">Company Name</th>
                     <th scope="col">Total</th>
                     <th scope="col">Payment</th>
                     <th scope="col">quantity</th>
@@ -57,13 +69,14 @@ function OrderList1() {
                   </tr>
                 </thead>
                 <tbody>
+                  {Loading && <GetSpinner />}
                   {data?.order.map((data) => <SingleOrder data={data} key={data?._id} />)}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-        <Pagination />
+        <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
       </section>
     </DashboardLayout>
   )

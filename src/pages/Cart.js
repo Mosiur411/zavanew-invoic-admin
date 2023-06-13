@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import DashboardLayout from '../components/layout/DashboardLayout'
-import { useAddOrderMutation, useDeleteToCartMutation, useGetToCartQuery, useUpdateToCartMutation } from '../app/services/addToCart'
 import { OrderSchema } from '../helpers/validation/OrderSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -9,6 +8,7 @@ import { useGetCoustomerQuery } from '../app/services/coustomer';
 import { number } from 'yup';
 import CartItem from './CartItem';
 import CoustomerItm from './CoustomerItm';
+import { useAddOrderMutation, useGetToCartQuery } from '../app/services/product';
 function Cart() {
     const { data } = useGetToCartQuery()
 

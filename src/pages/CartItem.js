@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDeleteToCartMutation, useUpdateToCartMutation } from '../app/services/addToCart';
 import { toast } from 'react-toastify';
+import { useDeleteToCartMutation, useUpdateToCartMutation } from '../app/services/product';
 
 function CartItem({ cartItem }) {
     const [CartDelete, { isLoading: deleteIsLoading, isSuccess: deleteIsSuccess, isErrorDelete }] = useDeleteToCartMutation()

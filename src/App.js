@@ -43,6 +43,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from './app/features/authSlice';
 import Cart from './pages/Cart';
 import InvoiceDownload from './pages/InvoiceDownload';
+import OrderEdit from './components/elements/order/OrderEdit';
+import OrderCash from './pages/order/OrderCash';
+import OrderCheck from './pages/order/OrderCheck';
+import OrderDue from './pages/order/OrderDue';
 function App() {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
@@ -54,7 +58,6 @@ function App() {
     profile: {
       open: false
     }
-
   });
   const { userInfo } = useSelector(state => state.auth);
 
@@ -107,9 +110,16 @@ function App() {
                 <Route path='cart' element={<Cart />} />
                 {/* order  */}
                 <Route path='order'>
-                  <Route path='list1' element={<OrderList1 />} />
-                  <Route path='list1/:Id' element={<InvoiceDownload />} />
-                  <Route path='list2' element={<OrderList2 />} />
+                  <Route path='all' element={<OrderList1 />} />
+                  <Route path='cash' element={<OrderCash />} />
+                  <Route path='check' element={<OrderCheck />} />
+                  <Route path='due' element={<OrderDue />} />
+
+
+
+
+                  <Route path='all/:Id' element={<InvoiceDownload />} />
+                  <Route path='update/:Id' element={<OrderEdit />} />
                   <Route path='detail' element={<OrderDetail />} />
                 </Route>
                 {/* seller  */}

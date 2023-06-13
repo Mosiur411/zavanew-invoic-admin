@@ -2,7 +2,7 @@ import { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { useAddToCartMutation } from "../../app/services/addToCart";
+import { useAddToCartMutation } from "../../app/services/product";
 
 const DashboardLayout = ({ children }) => {
     const [sideOpen, setSideOpen] = useState(false)

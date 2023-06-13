@@ -24,15 +24,9 @@ function InvoiceDownload() {
 
 
 
-  console.log(monthss)
-  console.log(Duemonth)
-  console.log(finalDate)
-
-
-
   const { Id } = useParams();
   const ref = React.createRef();
-  const { data } = useGetToOrderQuery(Id)
+  const { data } = useGetToOrderQuery(`id=${Id}`)
   /* coustomerId data  */
   const printAreaRef = useRef(null);
 

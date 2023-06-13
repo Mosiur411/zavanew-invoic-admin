@@ -27,8 +27,26 @@ export const SideMenu = [
             {
                 id: 3,
                 _id: 1,
-                to: '/order/list1',
-                link: "Order list 1",
+                to: '/order/all',
+                link: "All Ordered Invoice",
+            },
+            {
+                id: 3,
+                _id: 2,
+                to: '/order/due',
+                link: "Due Invoice",
+            },
+            {
+                id: 3,
+                _id: 3,
+                to: '/order/check',
+                link: "Check Invoice",
+            },
+            {
+                id: 3,
+                _id: 4,
+                to: '/order/cash',
+                link: "Cash Invoice",
             },
         ]
     },
@@ -44,7 +62,7 @@ export const SideMenu = [
                 to: '/addproduct/1',
                 link: "Add product 1",
             },
-            
+
         ]
     },
     {
@@ -66,5 +84,5 @@ export const SideMenu = [
             }
         ]
     },
-   
+
 ]

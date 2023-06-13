@@ -5,8 +5,7 @@ import logo from '../../assets/imgs/theme/logo.png'
 import { ThemeContext } from '../../utils/Context';
 import { Link, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase/Firebase.config';
-import { useAddToCartMutation, useGetToCartQuery } from '../../app/services/addToCart';
-import { useGetproductQuery } from '../../app/services/product';
+import { useGetToCartQuery, useGetproductQuery } from '../../app/services/product';
 import HeaderCartProductModal from '../elements/modal/HeaderCartProductModal';
 import { toast } from 'react-toastify';
 
@@ -20,7 +19,7 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
 
 
     const [productSarch, setProductSarch] = useState()
-    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 1, pageSize: 10, });
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${productSarch}`;
     const { data: productData, isLoading } = useGetproductQuery(pathname)
 
@@ -35,8 +34,6 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
         }
         if (productData?.product?.length == '1' && productSarch) {
             const { upcBox, upc, _id: id, quantity, saleing_Price, product_name } = productData?.product[0]
-            console.log(upcBox)
-            console.log(upc)
             if (productSarch == upcBox || upc) {
                 if (quantity && saleing_Price) {
                     const item = { product_id: id, quantity: 1, saleing_Price: saleing_Price, product_name: product_name }

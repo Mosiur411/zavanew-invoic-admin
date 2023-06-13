@@ -1,37 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ProductSchema } from '../../../helpers/validation/ProductSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useUpdateProductMutation } from '../../../app/services/product';
+import { useAddExtraCostMutation, useUpdateProductMutation } from '../../../app/services/product';
 import { toast } from 'react-toastify';
 
 function ProductModal({ modal, setOpen }) {
-    const { type, data } = modal;
+    console.log(modal)
+    const { type, data, extra } = modal;
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
     const [UpdateProcut, { isSuccess, isLoading }] = useUpdateProductMutation()
-
+    const [ExtraCostAdd, { isSuccess: extraSuccess, isLoading: extraLoading }] = useAddExtraCostMutation()
+    const [cost, setCost] = useState(null)
+    const [quantity, setQuantity] = useState(null)
+    const extraCostAdd = async (cost, quantity, _id) => {
+        if (cost && quantity && _id) {
+            const data = { cost: cost, quantity: quantity, product_id: _id }
+            await ExtraCostAdd(data)
+        }
+    }
     const onSubmit = async (value, e) => {
         const productdata = { value, _id: data?._id }
         await UpdateProcut(productdata)
         reset();
     }
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess || extraSuccess) {
             toast.success('Product Update !')
             reset()
-            setOpen({ type: false })
+            setOpen({ type: false, extra: false })
         }
-    }, [isSuccess])
-
-
-
-
+    }, [isSuccess, extraSuccess])
     return (
         <>{
-            type && <div className='modal_product'>
+            type &&
+            <div className='modal_product'>
                 <section className="content-main">
                     <div className="row">
                         <div className="col-12">
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <button className="btn btn-md rounded font-sm hover-up" onClick={() => setOpen({ extra: true, data: data })}>Extra cost</button>
+                            </div>
                             <div className="content-header">
                                 <h2 className="content-title">Update Product</h2>
                                 <button onClick={() => setOpen({ type: false }, reset())}>X</button>
@@ -77,7 +86,7 @@ function ProductModal({ modal, setOpen }) {
                                             <div className="col-md-6 mb-3">
                                                 <label htmlFor="product_price" className="form-label">Prices</label>
                                                 <input type="text" placeholder="Product_prics" className="form-control" id="product_price"
-                                                    defaultValue={data?.price}
+                                                    defaultValue={data?.saleing_Price}
                                                     {...register("saleing_Price")}
                                                 />
                                             </div>
@@ -100,6 +109,46 @@ function ProductModal({ modal, setOpen }) {
                 </section>
             </div>
         }
+            {extra && <div className='modal_product'>
+                <section className="content-main">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="content-header">
+                                <h2 className="content-title">Extra Cost Add</h2>
+                                <button onClick={() => setOpen({ type: false, extra: false })}>X</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="col-lg-12">
+                                <div className="card mb-4">
+                                    <div className="card-body">
+                                        <div className="row gx-2">
+                                            <div className="col-md-12 mb-3">
+                                                <label htmlFor="product_cost" className="form-label">Cost</label>
+                                                <input type="text" placeholder="Product_cost" className="form-control" id="product_cost"
+                                                    defaultValue={data?.cost}
+                                                    onChange={(e) => setCost(e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="row gx-2">
+                                            <div className="col-md-12 mb-3">
+                                                <label htmlFor="product_quantity" className="form-label">Quantity</label>
+                                                <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
+                                                    defaultValue={data?.quantity}
+                                                    onChange={(e) => setQuantity(e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onClick={() => extraCostAdd(cost, quantity, data?._id)} style={{ cursor: extraLoading ? 'no-drop' : 'pointer', width: 'fit-content' }} className="btn btn-md rounded font-sm hover-up">Submit</button>
+                    </div>
+                </section>
+            </div>}
         </>
     )
 }

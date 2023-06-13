@@ -2,8 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // users service
 export const ProductApi = createApi({
     reducerPath: "product",
+    tagTypes: ['Product', 'Cart'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5001/",
+        baseUrl: "https://zavanew-invoic-server.vercel.app/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -52,9 +53,9 @@ export const ProductApi = createApi({
             }),
             invalidatesTags: ["Product"],
         }),
-        /* update product  */
+        /* update product  ===================  */
         updateProduct: builder.mutation({
-            query: ({value,_id}) => ({
+            query: ({ value, _id }) => ({
                 url: `product?_id=${_id}`,
                 method: "PUT",
                 body: value,
@@ -62,9 +63,75 @@ export const ProductApi = createApi({
             invalidatesTags: ["Product"],
         }),
 
+        getToCart: builder.query({
+            query: () => ({
+                url: "cart",
+                method: "GET",
+            }),
+            providesTags: ["Cart"],
+        }),
+
+        /*  addd to cart  */
+        addToCart: builder.mutation({
+            query: (cart) => ({
+                url: "cart",
+                method: "POST",
+                body: cart,
+            }),
+            invalidatesTags: ["Cart"],
+        }),
+
+        deleteToCart: builder.mutation({
+            query: (id) => ({
+                url: `cart?_id=${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Cart"],
+        }),
+        updateToCart: builder.mutation({
+            query: ({ quantity, _id, productPrices }) => ({
+                url: `cart?_id=${_id}&data=${quantity}&price=${productPrices}`,
+                method: "PUT",
+            }),
+            invalidatesTags: ["Cart"],
+        }),
+        /* order  */
+        addOrder: builder.mutation({
+            query: (order) => ({
+                url: "order",
+                method: "POST",
+                body: order,
+            }),
+            invalidatesTags: ["Product"],
+        }),
+
+
+
+
+        /* add Extra cost  */
+        addExtraCost: builder.mutation({
+            query: (data) => ({
+                url: "product/purchases",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Product"],
+        }),
+
+
+
+
+
 
 
     }),
 });
-export const { useAddProductMutation, useGetproductQuery, useAddbulkProductMutation, useDeleteProductMutation,useUpdateProductMutation } = ProductApi;
+export const { useAddProductMutation, useGetproductQuery, useAddbulkProductMutation, useDeleteProductMutation, useUpdateProductMutation,
+    /* cart section */ useGetToCartQuery, useAddToCartMutation, useDeleteToCartMutation, useUpdateToCartMutation,
+    /* order   */
+    useAddOrderMutation,
+    /* extra cost handel */
+    useAddExtraCostMutation
+} = ProductApi;
+
 

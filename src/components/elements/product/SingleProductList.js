@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import item from '../../../assets/imgs/items/1.jpg'
 import { toast } from 'react-toastify'
-import { useDeleteProductMutation } from '../../../app/services/product'
-import { useAddToCartMutation } from '../../../app/services/addToCart'
+import { useAddToCartMutation, useDeleteProductMutation } from '../../../app/services/product'
 
 function SingleProductList({ data, open, setOpen, userRole }) {
 
@@ -32,7 +31,6 @@ function SingleProductList({ data, open, setOpen, userRole }) {
         await AddToCart(item)
     }
     /* open product show  */
-    console.log('quantity', quantity)
 
     return (
         <tr >
@@ -59,7 +57,7 @@ function SingleProductList({ data, open, setOpen, userRole }) {
             {
                 userRole == 'admin' && <td className="text-end">
                     <div className="text-end">
-                        <a onClick={() => setOpen({ type: !open.type, data: data })} className="btn btn-sm font-sm rounded btn-brand"> <i className="material-icons md-edit"></i> Edit </a>
+                        <a onClick={() => setOpen({ type: !open.type, data: data, extra: false })} className="btn btn-sm font-sm rounded btn-brand"> <i className="material-icons md-edit"></i> Edit </a>
                         <a style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} onClick={() => ProductDelete(data?._id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i> Delete </a>
                     </div>
                 </td>

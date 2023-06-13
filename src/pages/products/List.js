@@ -19,11 +19,12 @@ function List() {
     /* open modeal */
     const [open, setOpen] = useState({
         type: false,
-        data: null
+        data: null,
+        extra: false
     })
     /* paganitonm */
     const [search, setSearchValue] = useState('')
-    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 1, pageSize: 10, });
+    const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
     const [Loading, setLoading] = useState(false)
     const { data, isLoading } = useGetproductQuery(pathname)
@@ -104,7 +105,7 @@ function List() {
                         </div>
                     </div>
                 </div>
-                <Pagination totalPages={data?.totalPages} setPagination={setPagination} pageIndex={pageIndex} pageSize={pageSize} />
+                <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
             </section>
 
             <ProductModal
