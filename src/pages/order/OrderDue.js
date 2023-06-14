@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import { useState } from 'react';
 import { useGetAllInvoceQuery } from '../../app/services/order';
 import Pagination from '../../components/elements/Pagination';
 import SingleOrder from '../../components/elements/product/SingleOrder';
+import GetSpinner from '../../helpers/shared/GetSpinner';
 
 function OrderDue() {
     const [Loading, setLoading] = useState(false)
@@ -11,15 +12,21 @@ function OrderDue() {
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}&invoice=due`;
 
+
     const { data, isLoading } = useGetAllInvoceQuery(pathname)
 
-    // useEffect(() => {
-    //     if (isLoading) {
-    //         setLoading(true)
-    //     } else {
-    //         setLoading(false)
-    //     }
-    // }, [isLoading])
+    const invoice = useMemo(() => (data ? data?.invoice : []), [
+        data,
+        search
+    ]);
+
+    useEffect(() => {
+        if (isLoading) {
+            setLoading(true)
+        } else {
+            setLoading(false)
+        }
+    }, [isLoading])
     return (
         <DashboardLayout>
             <section className="content-main">
@@ -36,7 +43,7 @@ function OrderDue() {
                     <header className="card-header">
                         <div className="row gx-3">
                             <div className="col-lg-4 col-md-6 me-auto">
-                                <input type="text" placeholder="Search..." className="form-control" />
+                                <input type="text" onChange={(e) => setSearchValue(e.target.value)} placeholder="Search..." className="form-control" />
                             </div>
                             <div className="col-lg-2 col-6 col-md-3">
                                 <select className="form-select">
@@ -68,15 +75,15 @@ function OrderDue() {
                                         <th scope="col" className="text-end">Action</th>
                                     </tr>
                                 </thead>
-                                 <tbody>
-                                   {/*  {Loading && <GetSpinner/>} */}
-                                    {data?.invoice.map((data) => <SingleOrder data={data} key={data?._id}/>)}
+                                <tbody>
+                                    {Loading && <GetSpinner/>}
+                                    {invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                  <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
+                <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
             </section>
         </DashboardLayout>
     )

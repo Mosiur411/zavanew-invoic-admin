@@ -102,7 +102,7 @@ export const ProductApi = createApi({
                 method: "POST",
                 body: order,
             }),
-            invalidatesTags: ["Product"],
+            invalidatesTags: ["Cart"],
         }),
 
 

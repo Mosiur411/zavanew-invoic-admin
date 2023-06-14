@@ -5,6 +5,7 @@ import { useGetToOrderQuery } from '../../app/services/order'
 import SingleOrder from '../../components/elements/product/SingleOrder'
 import GetSpinner from '../../helpers/shared/GetSpinner'
 import { useEffect } from 'react'
+import { useMemo } from 'react'
 function OrderList1() {
   const [Loading, setLoading] = useState(false)
   const [search, setSearchValue] = useState('')
@@ -12,6 +13,13 @@ function OrderList1() {
   const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
   const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}&id=${Id}`;
   const { data, isLoading } = useGetToOrderQuery(pathname)
+
+  const invoice = useMemo(() => (data ? data?.order : []), [
+    data,
+    search
+  ]);
+
+
   useEffect(() => {
     if (isLoading) {
       setLoading(true)
@@ -36,7 +44,7 @@ function OrderList1() {
           <header className="card-header">
             <div className="row gx-3">
               <div className="col-lg-4 col-md-6 me-auto">
-                <input type="text" placeholder="Search..." className="form-control" />
+                <input type="text" onChange={(e) => setSearchValue(e.target.value)} placeholder="Search..." className="form-control" />
               </div>
               <div className="col-lg-2 col-6 col-md-3">
                 <select className="form-select">
@@ -70,7 +78,7 @@ function OrderList1() {
                 </thead>
                 <tbody>
                   {Loading && <GetSpinner />}
-                  {data?.order.map((data) => <SingleOrder data={data} key={data?._id} />)}
+                  {invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
                 </tbody>
               </table>
             </div>

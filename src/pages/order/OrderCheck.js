@@ -4,6 +4,9 @@ import { useState } from 'react';
 import Pagination from '../../components/elements/Pagination';
 import { useGetAllInvoceQuery } from '../../app/services/order';
 import SingleOrder from '../../components/elements/product/SingleOrder';
+import { useMemo } from 'react';
+import GetSpinner from '../../helpers/shared/GetSpinner';
+import { useEffect } from 'react';
 
 function OrderCheck() {
     const [Loading, setLoading] = useState(false)
@@ -12,15 +15,18 @@ function OrderCheck() {
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}&invoice=check`;
 
     const { data, isLoading } = useGetAllInvoceQuery(pathname)
+    const invoice = useMemo(() => (data ? data?.invoice : []), [
+        data,
+        search
+    ]);
 
-
-    // useEffect(() => {
-    //     if (isLoading) {
-    //         setLoading(true)
-    //     } else {
-    //         setLoading(false)
-    //     }
-    // }, [isLoading])
+    useEffect(() => {
+        if (isLoading) {
+            setLoading(true)
+        } else {
+            setLoading(false)
+        }
+    }, [isLoading])
 
     return (
         <DashboardLayout>
@@ -31,14 +37,14 @@ function OrderCheck() {
                         <p></p>
                     </div>
                     <div>
-                        <input type="text" placeholder="Search order ID" className="form-control bg-white" />
+                        <input  type="text"  placeholder="Search order ID"  className="form-control bg-white" />
                     </div>
                 </div>
                 <div className="card mb-4">
                     <header className="card-header">
                         <div className="row gx-3">
                             <div className="col-lg-4 col-md-6 me-auto">
-                                <input type="text" placeholder="Search..." className="form-control" />
+                                <input type="text" onChange={(e) => setSearchValue(e.target.value)} placeholder="Search..." className="form-control" />
                             </div>
                             <div className="col-lg-2 col-6 col-md-3">
                                 <select className="form-select">
@@ -71,8 +77,8 @@ function OrderCheck() {
                                     </tr>
                                 </thead>
                                  <tbody>
-                                    {/* {Loading && <GetSpinner/>} */}
-                                    {data?.invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
+                                 {Loading && <GetSpinner/>} 
+                                    {invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
                                 </tbody>
                             </table>
                         </div>
