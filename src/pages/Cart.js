@@ -30,7 +30,7 @@ function Cart() {
             const items = { ...value, totalPrice: data?.totalPrice, coustomerId: coustomerId }
             await PorductOder(items)
         } else {
-            toast.error('coustomer not select')
+            toast.error('coustomer  cant not select')
         }
     }
 
