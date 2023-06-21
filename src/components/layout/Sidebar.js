@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import logo from '../../assets/imgs/theme/logo.png'
 
 const Sidebar = ({ sideOpen, setSideOpen, sideOpenMobile, setSideOpenMobille }) => {
-    console.log(sideOpenMobile)
     const { pathname } = useLocation()
     const [subMenu, setSubMenu] = useState({
         open: false,

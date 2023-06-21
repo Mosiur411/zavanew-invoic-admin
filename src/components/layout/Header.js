@@ -9,22 +9,17 @@ import { useGetToCartQuery, useGetproductQuery } from '../../app/services/produc
 import HeaderCartProductModal from '../elements/modal/HeaderCartProductModal';
 import { toast } from 'react-toastify';
 
-const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
+const Header = ({ search, productCartAdd, sideOpen, setSideOpen, productSarch, setProductSarch }) => {
     const location = useLocation();
     const currentPath = location.pathname;
     const { data } = useGetToCartQuery()
     const [signOut, loading, error] = useSignOut(auth);
     const { dark, setDark, handelClick, setSandelClick } = useContext(ThemeContext)
     const { zoom, profile } = handelClick;
-
-
-    const [productSarch, setProductSarch] = useState()
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
     const pathname = `page=${pageIndex}&limit=${pageSize}&search=${productSarch}`;
-    const { data: productData, isLoading } = useGetproductQuery(pathname)
-
+    const { data: productData, isLoading, isSuccess } = useGetproductQuery(pathname)
     /* 300450449108 */
-
     const [Loading, setLoading] = useState(false)
     useEffect(() => {
         if (isLoading) {
@@ -37,13 +32,15 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
             if (productSarch == upcBox || upc) {
                 if (quantity && saleing_Price) {
                     const item = { product_id: id, quantity: 1, saleing_Price: saleing_Price, product_name: product_name }
-                    productCartAdd(item) /* 819913012594 */
+                    productCartAdd(item)
                 } else {
                     toast.error('Product quantity ')
                 }
             }
         }
     }, [isLoading, productData])
+
+
     const ProductDatas = useMemo(() => (productData ? productData?.product : []), [
         productData,
         productSarch
@@ -60,9 +57,11 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
                 </Link>
             </div> : <div className="col-search">
                 {
-                    currentPath == '/cart' && <form className="searchform">
+                    currentPath == '/cart' && <div className="searchform">
                         <div className="input-group">
-                            <input onChange={(e) => setProductSarch(e.target.value)} list="search_terms" type="text" className="form-control" placeholder="Search term" />
+                            <input onChange={(e) => setProductSarch(e.target.value)} type="text" className="form-control" placeholder="Search term"
+                                value={productSarch}
+                            />
                             <button className="btn btn-light bg" type="button"><i className="material-icons md-search"></i></button>
                         </div>
                         <datalist id="search_terms">
@@ -71,7 +70,7 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen }) => {
                             <option defaultValue="Apple iphone"></option>
                             <option defaultValue="Ahmed Hassan"></option>
                         </datalist>
-                    </form>
+                    </div>
                 }
 
             </div>

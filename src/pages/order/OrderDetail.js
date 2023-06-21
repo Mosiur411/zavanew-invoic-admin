@@ -150,7 +150,7 @@ function OrderDetail() {
                                                 <td className="text-end">$297.00</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="4">
+                                                <td colSpan="4">
                                                     <article className="float-end">
                                                         <dl className="dlist">
                                                             <dt>Subtotal:</dt>

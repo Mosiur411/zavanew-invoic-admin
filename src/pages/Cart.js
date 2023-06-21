@@ -9,10 +9,10 @@ import { number } from 'yup';
 import CartItem from './CartItem';
 import CoustomerItm from './CoustomerItm';
 import { useAddOrderMutation, useGetToCartQuery } from '../app/services/product';
+import { Navigate, useNavigate } from 'react-router-dom';
 function Cart() {
+    const navigate = useNavigate();
     const { data } = useGetToCartQuery()
-
-
     const [search, setSearchValue] = useState('')
     const [bank, setBank] = useState('')
     const [{ pageIndex, pageSize }, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
@@ -28,7 +28,8 @@ function Cart() {
     const onSubmit = async (value) => {
         if (coustomerId) {
             const items = { ...value, totalPrice: data?.totalPrice, coustomerId: coustomerId }
-            await PorductOder(items)
+            const result = await PorductOder(items)
+            navigate(`/order/all/${result?.data._id}`);
         } else {
             toast.error('coustomer  cant not select')
         }
@@ -46,16 +47,21 @@ function Cart() {
         coustomer,
         search
     ]);
+    const cartData = useMemo(() => (data?.items ? data?.items : []), [
+        data,
+    ]);
+    /* cart item data  */
     return (
         <DashboardLayout>
             <section className="content-main">
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Cart Details</h2>
+
                     </div>
                 </div>
                 {
-                    data == undefined ? <h1>Not items Add</h1> : <div className="card">
+                    cartData == undefined ? <h1>Not items Add</h1> : <div className="card">
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-lg-7">
@@ -72,10 +78,10 @@ function Cart() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data?.items.map(cart => <CartItem key={cart?._id} cartItem={cart} />)}
+                                                {cartData.map(cart => <CartItem key={cart?._id} cartItem={cart} />)}
 
                                                 <tr className="text-end">
-                                                    <td colspan="6">
+                                                    <td colSpan="6">
                                                         <article className="float-end">
                                                             <dl className="dlist">
                                                                 <dt>Total Quantity :</dt>
@@ -130,7 +136,7 @@ function Cart() {
                                             </div>
                                             <div className="h-25 pt-4">
                                                 {
-                                                    !data?.items?.length == 0 && <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>
+                                                    !cartData?.length == 0 && <button style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Order</button>
                                                 }
 
                                             </div>

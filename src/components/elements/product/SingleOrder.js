@@ -6,7 +6,7 @@ function SingleOrder({ data }) {
         <tr>
             <td onClick={() => navigate(`/order/all/${data?._id}`)}>{data?.orderId ? data?.orderId : data?._id}</td>
             <td>{data?.coustomerId?.comphonyName}</td>
-            <td>{data?.totalPrice.toFixed(2)}</td>
+            <td>{data?.totalPrice?.toFixed(2)}</td>
             <td><span className="badge rounded-pill alert-warning">{data?.payment}</span></td>
             <td>{data?.totalQuantity} </td>
             <td className="text-end">

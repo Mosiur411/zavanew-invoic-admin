@@ -245,7 +245,7 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Department <span style={{ color: 'red' }}>*</span></label>
                                                 <select className="form-select" {...register("development_id")} onChange={(e) => selectDepartment(e.target.value)}>
-                                                    {data?.development?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                                    {data?.development?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                                 </select>
                                                 {errors?.development_id && (
                                                     <span className="form__error">{errors?.development_id.message}</span>
@@ -256,7 +256,7 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Category</label>
                                                 <select className="form-select" {...register("categorie_id")} onChange={(e) => selectCategory(e.target.value)}>
-                                                    {categorieData?.categorie?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                                    {categorieData?.categorie?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                                 </select>
                                             </div>
                                         </div>
@@ -264,7 +264,7 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Sub Category</label>
                                                 <select className="form-select" {...register("sub_id")} onChange={(e) => selectSubCategory(e.target.value)}>
-                                                    {subCategorieData?.subCategorie?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                                    {subCategorieData?.subCategorie?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                                 </select>
                                             </div>
                                         </div>
@@ -274,7 +274,7 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Child Sub Category</label>
                                                 <select className="form-select" {...register("childSub_id")}>
-                                                    {child?.childSub?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                                    {child?.childSub?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                                 </select>
                                             </div>
                                         </div>
@@ -282,8 +282,8 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Brand</label>
                                                 <select className="form-select" {...register("brand_id")}>
-                                                    <option value='108123129123123'>itel</option>
-                                                    <option value='1081231sr29123123'>samsone</option>
+                                                    <option defaultValue='108123129123123'>itel</option>
+                                                    <option defaultValue='1081231sr29123123'>samsone</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -291,8 +291,8 @@ function AddProduct3() {
                                             <div className="mb-4">
                                                 <label className="form-label">Status</label>
                                                 <select className="form-select" {...register("status")}>
-                                                    <option value={true}>active</option>
-                                                    <option value={false}>inactive</option>
+                                                    <option defaultValue={true}>active</option>
+                                                    <option defaultValue={false}>inactive</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -483,8 +483,8 @@ function AddProduct3() {
                                                     {...register("sale_offer_type")}
                                                     onChange={(e) => SetsaleOfferType(e.target.value)}
                                                 >
-                                                    <option value='$' selected>$</option>
-                                                    <option value='%'>%</option>
+                                                    <option  selected defaultValue='$'>$</option>
+                                                    <option defaultValue='%'>%</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -517,8 +517,8 @@ function AddProduct3() {
                                                 <select className="form-select"
                                                     {...register("coupon_offer_type")}
                                                 >
-                                                    <option value='$' selected>$</option>
-                                                    <option value='%'>%</option>
+                                                    <option  selected defaultValue='$'>$</option>
+                                                    <option defaultValue='%'>%</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -527,8 +527,8 @@ function AddProduct3() {
                                             <select className="form-select"
                                                 {...register("coupon_offer")}
                                             >
-                                                <option value={false} selected>$</option>
-                                                <option value={true}>%</option>
+                                                <option  selected defaultValue={false}>$</option>
+                                                <option defaultValue={true}>%</option>
                                             </select>
                                         </div>
                                         <div className="col-md-4 mb-3">
@@ -553,8 +553,8 @@ function AddProduct3() {
                                                 <select className="form-select"
                                                     {...register("promo_offer_type")}
                                                 >
-                                                    <option value='$' selected>$</option>
-                                                    <option value='%'>%</option>
+                                                    <option  selected defaultValue='$'>$</option>
+                                                    <option defaultValue='%'>%</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -585,8 +585,8 @@ function AddProduct3() {
                                                 <select className="form-select"
                                                     {...register("deal_offer_type")}
                                                 >
-                                                    <option value='$' selected>$</option>
-                                                    <option value='%'>%</option>
+                                                    <option  selected defaultValue='$'>$</option>
+                                                    <option defaultValue='%'>%</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -595,9 +595,9 @@ function AddProduct3() {
                                             <select className="form-select"
                                                 {...register("deal_time_type")}
                                             >
-                                                <option value='day' selected>day</option>
-                                                <option value='weekday'>week</option>
-                                                <option value='month'>month</option>
+                                                <option  selected defaultValue='day'>day</option>
+                                                <option defaultValue='weekday'>week</option>
+                                                <option defaultValue='month'>month</option>
                                             </select>
                                         </div>
                                         <div className="col-md-4 mb-3">

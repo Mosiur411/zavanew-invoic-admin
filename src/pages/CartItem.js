@@ -11,7 +11,7 @@ function CartItem({ cartItem }) {
     const setCartQantity = (value) => {
         setQuantity(value);
     };
-    const setCartPrices = (value) => {
+    const setcartprices = (value) => {
         setProductPrices(value);
     };
     /* Update Product  */
@@ -41,15 +41,16 @@ function CartItem({ cartItem }) {
             <td>{product_id?.product_name.toUpperCase()}</td>
             <td>
                 <input style={{ width: '50px' }} type='number'
-                    onChange={(e) => setCartPrices(e.target.value)}
-                    defaultValue={saleing_Price?.toFixed(2) / cartItem?.quantity}
-                    setCartPrices={product_id?.saleing_Price?.toFixed(2)}
+                    onChange={(e) => setcartprices(e.target.value)}
+                    setcartprices={product_id?.saleing_Price?.toFixed(2)}
                     selected
+                    defaultValue={saleing_Price?.toFixed(2) / cartItem?.quantity}
                 />
             </td>
             <td>
-                <input defaultValue={cartItem?.quantity} style={{ width: '50px' }} type='number'
+                <input style={{ width: '50px' }} type='number'
                     onChange={(e) => setCartQantity(e.target.value)}
+                    defaultValue={cartItem?.quantity}
                 />
             </td>
             <td >${saleing_Price?.toFixed(2)}</td>

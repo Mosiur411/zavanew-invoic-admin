@@ -68,19 +68,19 @@ function ChildSubCategory() {
                                     <div className="mb-4">
                                         <label className="form-label">Department</label>
                                         <select className="form-select"  {...register("development_id")} onChange={(e) => selectDepartment(e.target.value)}>
-                                            {data?.development?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                            {data?.development?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="mb-4">
                                         <label className="form-label">Category</label>
                                         <select className="form-select" {...register("categorie_id")} onChange={(e) => selectCategory(e.target.value)}>
-                                            {categorieData?.categorie?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                            {categorieData?.categorie?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                         </select>
                                     </div>
                                     <div className="mb-4">
                                         <label className="form-label">Sub Categorie</label>
                                         <select className="form-select" {...register("sub_id")}>
-                                            {subCategorieData?.subCategorie?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                            {subCategorieData?.subCategorie?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                         </select>
                                        
                                     </div>

@@ -5,11 +5,13 @@ import Sidebar from "./Sidebar";
 import { useAddToCartMutation } from "../../app/services/product";
 
 const DashboardLayout = ({ children }) => {
+    const [productSarch, setProductSarch] = useState('')
     const [sideOpen, setSideOpen] = useState(false)
     const [sideOpenMobile, setSideOpenMobille] = useState(false)
     const [AddToCart] = useAddToCartMutation()
     const productCartAdd = async (item) => {
         await AddToCart(item)
+        setProductSarch('')
     }
     return (
         <div>
@@ -21,6 +23,7 @@ const DashboardLayout = ({ children }) => {
                 <main className="main-wrap">
                     <Header productCartAdd={productCartAdd}
                         sideOpen={sideOpenMobile} setSideOpen={setSideOpenMobille}
+                        productSarch={productSarch} setProductSarch={setProductSarch}
                     />
                     <section className="content-main">
                         {children}

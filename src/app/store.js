@@ -25,7 +25,7 @@ export const store = configureStore({
     auth: authSlice
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
+    getDefaultMiddleware({serializableCheck: false}).concat([
       DepartmentApi.middleware,
       CategoriesApi.middleware,
       SubCategoriesApi.middleware,

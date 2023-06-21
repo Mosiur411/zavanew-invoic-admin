@@ -19,7 +19,7 @@ export default function DateCalendar({selectedDates,setSelectedDates}) {
     return (
         <div >
             <DatePicker
-                value={selectedDates}
+                defaultValue={selectedDates}
                 onChange={handleDateChange}
                 format="DD/MMM/YYYY"
                 sort

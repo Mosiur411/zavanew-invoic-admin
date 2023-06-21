@@ -85,7 +85,7 @@ function OrderEdit() {
                                                 />)}
 
                                                 <tr className="text-end">
-                                                    <td colspan="6">
+                                                    <td colSpan="6">
                                                         <article className="float-end">
                                                             <dl className="dlist">
                                                                 <dt>Total Quantity :</dt>
@@ -109,7 +109,7 @@ function OrderEdit() {
                                                     onChange={(e) => setBank(e.target.value)}
                                                 >
                                                     {
-                                                        paymentMethod?.map((data) => <option value={data?.data}
+                                                        paymentMethod?.map((data) => <option defaultValue={data?.data}
                                                             selected={data?.data == payment}
                                                         >{data?.name}</option>)
                                                     }

@@ -44,7 +44,7 @@ function SingleProductList({ data, open, setOpen, userRole }) {
                 <h3>+</h3>
                 <input style={{ width: '50px' }} type='number'
                     min="1"
-                    value={quantity}
+                    defaultValue={quantity}
                     onChange={handleQuantityChange}
                 />
                 <h3>-</h3>

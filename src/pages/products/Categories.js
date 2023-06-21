@@ -53,7 +53,7 @@ function Categories() {
                                         <label className="form-label">Department</label>
                                         <select className="form-select"  {...register("development_id")}>
                                             <option selected>Select Department</option>
-                                            {data?.development?.map(data => <option value={data?._id} key={data?._id}>{data?.name}</option>)}
+                                            {data?.development?.map(data => <option defaultValue={data?._id} key={data?._id}>{data?.name}</option>)}
                                         </select>
                                         {errors?.development_id && (
                                             <span className="form__error">{errors?.development_id.message}</span>
