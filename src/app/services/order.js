@@ -4,7 +4,7 @@ export const OrderApi = createApi({
     reducerPath: "orders",
     tagTypes: ['Order', 'dashboard', 'refund', 'shrinkage'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://zavanew-invoic-server.vercel.app/",
+        baseUrl: "http://localhost:5001/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -36,6 +36,24 @@ export const OrderApi = createApi({
             }),
             invalidatesTags: ["Order", "dashboard"],
         }),
+        /* dlete order */
+        deleteOrder: builder.mutation({
+            query: (id) => ({
+                url: `Order?_id=${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Order"],
+        }),
+
+        /* update order and Order itms delete,add */
+        deleteItemsOrder: builder.mutation({
+            query: ({ item_id, order_id }) => ({
+                url: `Order/update/items?item_id=${item_id}&order_id=${order_id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Order"],
+        }),
+
         /* refund  */
         addRefund: builder.mutation({
             query: (value) => ({
@@ -62,17 +80,19 @@ export const OrderApi = createApi({
             }),
             providesTags: ['dashboard'],
         }),
+
     }),
 
 });
 export const { useGetToOrderQuery, useGetRrecordQuery,
     useUpdateOrderMutation,
     useGetAllInvoceQuery,
-
+    useDeleteOrderMutation,
     /* refund  */
     useAddRefundMutation,
     /* addRhrinkage  */
-    useAddShrinkageMutation
+    useAddShrinkageMutation,
+    useDeleteItemsOrderMutation
 
 
 } = OrderApi;

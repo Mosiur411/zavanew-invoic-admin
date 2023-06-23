@@ -1,17 +1,9 @@
-import React, { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import React, {  } from 'react'
 import { useDeleteCoustomerMutation } from '../../../app/services/coustomer'
+import { handelClick } from '../../../utils/ConfirmDelete'
 function SingleCoustomer({ employeeEditModal, data, setEmployeeEditModal }) {
-    const [deleteCoustomer, { isSuccess, isLoading }] = useDeleteCoustomerMutation()
+    const [deleteContent, { isLoading }] = useDeleteCoustomerMutation()
 
-    const DeleteUser = async (id) => {
-        await deleteCoustomer(id)
-    }
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success('Delete Coustomer')
-        }
-    }, [isSuccess])
 
     return (
         <tr >
@@ -25,7 +17,7 @@ function SingleCoustomer({ employeeEditModal, data, setEmployeeEditModal }) {
                         onClick={() => setEmployeeEditModal({ type: !employeeEditModal.type, data: data })}
                         className="btn btn-sm font-sm rounded btn-brand"> <i className="material-icons md-edit"></i> Edit </a>
                     <a
-                        onClick={() => DeleteUser(data?._id)}
+                        onClick={() => handelClick(data?._id, deleteContent)}
                         style={{ cursor: isLoading ? 'no-drop' : 'pointer' }}
                         className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"
                         ></i> Delete </a>

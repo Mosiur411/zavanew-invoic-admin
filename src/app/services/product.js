@@ -4,7 +4,7 @@ export const ProductApi = createApi({
     reducerPath: "product",
     tagTypes: ['Product', 'Cart'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://zavanew-invoic-server.vercel.app/",
+        baseUrl: "http://localhost:5001/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -20,7 +20,7 @@ export const ProductApi = createApi({
                 url: `product?${pathname}`,
                 method: "GET",
             }),
-            providesTags: ['Product']
+            providesTags: ['Product','Cart']
         }),
         addProduct: builder.mutation({
             query: (product) => ({

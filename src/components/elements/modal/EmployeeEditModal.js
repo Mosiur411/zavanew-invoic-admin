@@ -28,7 +28,7 @@ function EmployeeEditModal({ modal, setOpen }) {
                         <div className="col-12">
                             <div className="content-header">
                                 <h2 className="content-title">Employees Edit</h2>
-                                <button onClick={() => setOpen({ type: false },reset())}>X</button>
+                                <button onClick={() => setOpen({ type: false }, reset())}>X</button>
                             </div>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,6 +80,17 @@ function EmployeeEditModal({ modal, setOpen }) {
                                                 />
                                             </div>
                                             <div className="col-lg-6 mb-3">
+                                                <label className="form-label">State</label>
+                                                <input className="form-control" type="text" placeholder="Zip code "
+                                                    defaultValue={data?.state}
+                                                    {...register("state")}
+
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="row gx-2">
+                                            <div className="col-lg-6 mb-3">
                                                 <label className="form-label">Zip Code</label>
                                                 <input className="form-control" type="text" placeholder="Zip code "
                                                     defaultValue={data?.zip_code}
@@ -87,14 +98,16 @@ function EmployeeEditModal({ modal, setOpen }) {
 
                                                 />
                                             </div>
+                                            <div className="col-lg-6 mb-3">
+                                                <label className="form-label">Country</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    defaultValue={data?.country}
+                                                    {...register("Country")}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="col-lg-12 mb-3">
-                                            <label className="form-label">Country</label>
-                                            <input className="form-control" type="text" placeholder="Type here"
-                                                defaultValue={data?.country}
-                                                {...register("Country")}
-                                            />
-                                        </div>
+
+
 
                                     </div>
                                 </div>

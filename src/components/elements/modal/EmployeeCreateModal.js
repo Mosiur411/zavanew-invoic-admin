@@ -110,24 +110,38 @@ function EmployeeCreateModal({ modal, setOpen }) {
                                                 )}
                                             </div>
                                             <div className="col-lg-6 mb-3">
+                                                <label className="form-label">State</label>
+                                                <input className="form-control" type="text" placeholder="State  "
+                                                    {...register("state")}
+                                                />
+                                                {errors?.state && (
+                                                    <span className="form__error">{errors?.state.message}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="row gx-2">
+
+                                            <div className="col-lg-6 mb-3">
                                                 <label className="form-label">Zip Code</label>
                                                 <input className="form-control" type="text" placeholder="Zip code "
                                                     {...register("zip_code")}
                                                 />
-                                                {errors?.city && (
-                                                    <span className="form__error">{errors?.city.message}</span>
+                                                {errors?.zip_code && (
+                                                    <span className="form__error">{errors?.zip_code.message}</span>
+                                                )}
+                                            </div>
+                                            <div className="col-lg-6 mb-3">
+                                                <label className="form-label">Country</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    {...register("country")}
+                                                />
+                                                {errors?.country && (
+                                                    <span className="form__error">{errors?.country.message}</span>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="col-lg-12 mb-3">
-                                            <label className="form-label">Country</label>
-                                            <input className="form-control" type="text" placeholder="Type here"
-                                                {...register("country")}
-                                            />
-                                            {errors?.country && (
-                                                <span className="form__error">{errors?.country.message}</span>
-                                            )}
-                                        </div>
+
+
 
                                     </div>
                                 </div>

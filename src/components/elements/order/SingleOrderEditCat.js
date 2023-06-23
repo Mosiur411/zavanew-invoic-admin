@@ -1,10 +1,12 @@
 import React from 'react'
+import { useDeleteItemsOrderMutation } from '../../../app/services/order';
+import { handelClick } from '../../../utils/ConfirmDelete';
 
 function SingleOrderEditCat({ _id, cartItem, setShrinkage, setRefund }) {
+    const [deleteContent] = useDeleteItemsOrderMutation()
     const { saleing_Price, quantity } = cartItem
     const { product_name } = cartItem?.product_id;
-    console.log(product_name)
-
+    const id = { order_id: _id, item_id: cartItem?._id }
 
 
     return (
@@ -28,7 +30,10 @@ function SingleOrderEditCat({ _id, cartItem, setShrinkage, setRefund }) {
             >
                 <a className="btn btn-sm font-sm rounded btn-brand"
                 > Add</a>
-                <a onClick={() => setRefund({
+                <a className="btn btn-sm font-sm btn-light rounded"
+                    onClick={() => handelClick(id, deleteContent)}
+                > <i className="material-icons md-delete_forever"></i>  </a>
+                {/* <a onClick={() => setRefund({
                     type: true,
                     data: { ...cartItem, id: _id }
                 })} className="btn btn-sm font-sm rounded btn-brand"
@@ -39,7 +44,7 @@ function SingleOrderEditCat({ _id, cartItem, setShrinkage, setRefund }) {
                         data: { ...cartItem, id: _id }
                     })}
                 > Shrinkage</a>
-                <a className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>
+                */}
             </td>
         </tr >
     )

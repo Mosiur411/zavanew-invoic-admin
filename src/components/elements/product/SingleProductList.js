@@ -2,23 +2,19 @@ import React, { useEffect, useState } from 'react'
 import item from '../../../assets/imgs/items/1.jpg'
 import { toast } from 'react-toastify'
 import { useAddToCartMutation, useDeleteProductMutation } from '../../../app/services/product'
+import { handelClick } from '../../../utils/ConfirmDelete'
 
 function SingleProductList({ data, open, setOpen, userRole }) {
 
-    const [deleteProduct, { isSuccess, isLoading }] = useDeleteProductMutation()
+    const [deleteContent, { isLoading }] = useDeleteProductMutation()
     const [AddToCart, { isLoading: addTOcartLoading, isSuccess: addTOcartSuccess }] = useAddToCartMutation()
 
-    const ProductDelete = async (id) => {
-        await deleteProduct(id)
-    }
     useEffect(() => {
-        if (isSuccess) {
-            toast.success('Product Delete !')
-        }
+
         if (addTOcartSuccess) {
             toast.success('Product Cart To Add ')
         }
-    }, [isSuccess, addTOcartSuccess])
+    }, [addTOcartSuccess])
     /* product card add  */
     const [quantity, setQuantity] = useState(1);
     const handleQuantityChange = (event) => {
@@ -58,7 +54,7 @@ function SingleProductList({ data, open, setOpen, userRole }) {
                 userRole == 'admin' && <td className="text-end">
                     <div className="text-end">
                         <a onClick={() => setOpen({ type: !open.type, data: data, extra: false })} className="btn btn-sm font-sm rounded btn-brand"> <i className="material-icons md-edit"></i> Edit </a>
-                        <a style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} onClick={() => ProductDelete(data?._id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i> Delete </a>
+                        <a style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} onClick={() => handelClick(data?._id, deleteContent)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i> Delete </a>
                     </div>
                 </td>
             }

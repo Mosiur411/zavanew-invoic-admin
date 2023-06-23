@@ -10,6 +10,7 @@ export const coustomerSchema = yup.object().shape({
     country: yup.string().required("country field can not be empty."),
     city: yup.string().required("city field can not be empty."),
     address: yup.string().required("address field can not be empty."),
-    zip_code: yup.string()
+    zip_code: yup.string(),
+    state: yup.string()
 })
 

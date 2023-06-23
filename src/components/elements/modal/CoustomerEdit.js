@@ -110,22 +110,33 @@ function CoustomerEdit({ modal, setOpen }) {
                                                 />
                                             </div>
                                             <div className="col-lg-6 mb-3">
-                                                <label className="form-label">Zip Code</label>
+                                                <label className="form-label">State</label>
                                                 <input className="form-control" type="text" placeholder="Type here"
-                                                    defaultValue={data?.zip_code}
-                                                    {...register("zip_code")}
+                                                    defaultValue={data?.state}
+                                                    {...register("state")}
                                                 />
 
                                             </div>
                                         </div>
 
-                                        <div className="col-lg-6 mb-3">
-                                            <label className="form-label">Country</label>
-                                            <input className="form-control" type="text" placeholder="Type here"
-                                                defaultValue={data?.country}
-                                                {...register("country")}
-                                            />
+                                        <div className="row gx-2">
+                                            <div className="col-lg-6 mb-3">
+                                                <label className="form-label">Zip Code</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    defaultValue={data?.zip_code}
+                                                    {...register("zip_code")}
+                                                />
+                                            </div>
+                                            <div className="col-lg-6 mb-3">
+                                                <label className="form-label">City</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    defaultValue={data?.country}
+                                                    {...register("country")}
+                                                />
+                                            </div>
                                         </div>
+
+
 
                                     </div>
                                 </div>

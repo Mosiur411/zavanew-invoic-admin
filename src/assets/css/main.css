@@ -4539,7 +4539,8 @@ footer.main-footer {
   background-color: #fefefe;
   padding: 10px;
   width: 400px;
-  height: fit-content;
+  height: 400px;
+  overflow-y: scroll;
   position: absolute;
   top: 70px;
   left: 0;
@@ -4594,6 +4595,7 @@ footer.main-footer {
   font-size: 13px;
   color: #383e50;
 }
+
 .next a {
   border: 0;
   padding: 0 10px;
@@ -4622,6 +4624,7 @@ footer.main-footer {
   background: #3BB77E !important;
   color: #fff;
 }
+
 /* pagination area  */
 .pagination {
   display: flex;
@@ -4666,6 +4669,7 @@ footer.main-footer {
   font-size: 13px;
   color: #383e50;
 }
+
 .next a {
   border: 0;
   padding: 0 10px;
@@ -4694,3 +4698,7 @@ footer.main-footer {
   background: #3BB77E !important;
   color: #fff;
 }
+
+/* product order in action  */
+
+

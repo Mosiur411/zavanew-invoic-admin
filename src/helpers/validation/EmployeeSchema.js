@@ -18,7 +18,8 @@ export const employeeSchema = yup.object().shape({
     country: yup.string(),
     city: yup.string(),
     address: yup.string(),
-    zip_code: yup.string()
+    zip_code: yup.string(),
+    state: yup.string()
 
 })
 export const employeeEditSchema = yup.object().shape({
@@ -30,6 +31,7 @@ export const employeeEditSchema = yup.object().shape({
     country: yup.string(),
     city: yup.string(),
     address: yup.string(),
-    zip_code: yup.string()
+    zip_code: yup.string(),
+    state: yup.string()
 
 })

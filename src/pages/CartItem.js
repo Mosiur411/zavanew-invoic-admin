@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { useDeleteToCartMutation, useUpdateToCartMutation } from '../app/services/product';
-
+import { handelClick } from '../utils/ConfirmDelete';
 function CartItem({ cartItem }) {
-    const [CartDelete, { isLoading: deleteIsLoading, isSuccess: deleteIsSuccess, isErrorDelete }] = useDeleteToCartMutation()
+    const [deleteContent] = useDeleteToCartMutation()
     const [CartUpdate, { isLoading: updateIsLoading, isSuccess: updateIsSuccess, isErrorUpdate }] = useUpdateToCartMutation()
     const { _id, product_id, saleing_Price } = cartItem;
     const [quantity, setQuantity] = useState(cartItem?.quantity);
@@ -19,22 +19,19 @@ function CartItem({ cartItem }) {
         const data = { quantity, _id, productPrices }
         await CartUpdate(data)
     }
-    /* card product delete  */
-    const CartDeletes = async (id) => {
-        await CartDelete(id)
-    }
 
     useEffect(() => {
         if (updateIsSuccess) {
             toast.success('Product Update')
         }
-        if (isErrorDelete || isErrorUpdate) {
+        if (isErrorUpdate) {
             toast.error('sorry  not add!')
         }
-        if (deleteIsSuccess) {
-            toast.success('Card Product Update ')
-        }
-    }, [deleteIsSuccess, updateIsSuccess])
+   
+    }, [updateIsSuccess])
+
+    console.log(quantity, product_id?.quantity)
+
 
     return (
         <tr>
@@ -63,11 +60,11 @@ function CartItem({ cartItem }) {
                 <a className="btn btn-sm font-sm rounded btn-brand"
                     style={{ cursor: updateIsLoading ? 'no-drop' : 'pointer' }}
                     onClick={() => CartUpdates(quantity, _id, productPrices)}
-                    hidden={quantity > product_id?.quantity ? true : quantity <= 0 ? true : false}
+                    hidden={quantity > product_id?.quantity + cartItem?.quantity ? true : quantity <= 0 ? true : false}
                 > Add</a>
                 <a
-                    style={{ cursor: deleteIsLoading ? 'no-drop' : 'pointer' }}
-                    onClick={() => CartDeletes(_id)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handelClick(_id, deleteContent)} className="btn btn-sm font-sm btn-light rounded"> <i className="material-icons md-delete_forever"></i>  </a>
             </td>
         </tr>
     )

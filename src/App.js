@@ -13,8 +13,6 @@ import OrderDetail from './pages/order/OrderDetail';
 import SellerCard from './pages/seller/SellerCard';
 import SellerList from './pages/seller/SellerList';
 import SellerProfile from './pages/seller/SellerProfile';
-import SettingSample1 from './pages/Setting/SettingSample1';
-import SettingSample2 from './pages/Setting/SettingSample2';
 import Forbidden from './pages/Forbidden';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -47,6 +45,10 @@ import OrderEdit from './components/elements/order/OrderEdit';
 import OrderCash from './pages/order/OrderCash';
 import OrderCheck from './pages/order/OrderCheck';
 import OrderDue from './pages/order/OrderDue';
+import Employee from './pages/user/Employee';
+import Customer from './pages/user/Customer';
+import Sales from './pages/sales/Sales';
+import Report from './pages/report/Report';
 function App() {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
@@ -92,13 +94,9 @@ function App() {
                 {/* product */}
                 <Route path="product">
                   <Route path="list" element={<List />} />
-                  <Route path="grid" element={<Grid />} />
-                  <Route path="grid2" element={<Grid2 />} />
-                  <Route path="categorie" element={<Categories />} />
-                  <Route path="department" element={<Department />} />
-                  <Route path="subcategorie" element={<SubCategories />} />
-                  <Route path="childsubcategory" element={<ChildSubCategory />} />
                 </Route>
+                <Route path="sale" element={<Sales />} />
+                <Route path="report" element={<Report />} />
                 {/* addProduct */}
                 <Route path="addproduct">
                   <Route path="1" element={<AddProduct1 />} />
@@ -136,12 +134,12 @@ function App() {
 
                 {/* settings  */}
 
-                <Route path='settings'>
+                <Route path='user'>
                   {
-                    userInfo.users?.role == 'admin' && <Route path='sample1' element={<SettingSample1 />} />
+                    userInfo.users?.role == 'admin' && <Route path='employee' element={<Employee />} />
                   }
 
-                  <Route path='sample2' element={<SettingSample2 />} />
+                  <Route path='customer' element={<Customer />} />
                 </Route>
 
 

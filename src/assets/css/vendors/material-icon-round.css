@@ -5321,6 +5321,9 @@
 .md-shopping_bag:after {
   content: '\e82e';
 }
+.md-shopping_report:after {
+  content: '\e160';
+}
 
 .md-smart_button:after {
   content: '\e830';

@@ -4,24 +4,24 @@ import { coustomerSchema } from '../../../helpers/validation/CoustomerSchema'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
-import {useAddCoustomerMutation} from '../../../app/services/coustomer'
+import { useAddCoustomerMutation } from '../../../app/services/coustomer'
 function CoustomerCreate({ modal, setOpen }) {
     const { type } = modal;
-     const [AddCoustomer, { isError, isLoading, isSuccess }] = useAddCoustomerMutation()
-     const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(coustomerSchema) });
-     const onSubmit = async (data) => {
-         await AddCoustomer(data)
-     }
-     useEffect(() => {
-         if (isSuccess) {
-             toast.success('Coustomer  Add ')
-             setOpen({ type: false })
-             reset()
-         }
-         if (isError) {
-             toast.error('sorry  not add!')
-         }
-     }, [isError, isSuccess]) 
+    const [AddCoustomer, { isError, isLoading, isSuccess }] = useAddCoustomerMutation()
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(coustomerSchema) });
+    const onSubmit = async (data) => {
+        await AddCoustomer(data)
+    }
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('Coustomer  Add ')
+            setOpen({ type: false })
+            reset()
+        }
+        if (isError) {
+            toast.error('sorry  not add!')
+        }
+    }, [isError, isSuccess])
 
     return (
         <>{
@@ -115,6 +115,19 @@ function CoustomerCreate({ modal, setOpen }) {
                                                 )}
                                             </div>
                                             <div className="col-lg-6 mb-3">
+                                                <label className="form-label">State</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    {...register("state")}
+                                                />
+                                                {errors?.state && (
+                                                    <span className="form__error">{errors?.state.message}</span>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                        <div className="row gx-2">
+
+                                            <div className="col-lg-6 mb-3">
                                                 <label className="form-label">Zip Code</label>
                                                 <input className="form-control" type="text" placeholder="Type here"
                                                     {...register("zip_code")}
@@ -123,17 +136,17 @@ function CoustomerCreate({ modal, setOpen }) {
                                                     <span className="form__error">{errors?.zip_code.message}</span>
                                                 )}
                                             </div>
+                                            <div className="col-lg-6 mb-3">
+                                                <label className="form-label">Country</label>
+                                                <input className="form-control" type="text" placeholder="Type here"
+                                                    {...register("country")}
+                                                />
+                                                {errors?.country && (
+                                                    <span className="form__error">{errors?.country.message}</span>
+                                                )}
+                                            </div>
                                         </div>
 
-                                        <div className="col-lg-6 mb-3">
-                                            <label className="form-label">Country</label>
-                                            <input className="form-control" type="text" placeholder="Type here"
-                                                {...register("country")}
-                                            />
-                                            {errors?.country && (
-                                                <span className="form__error">{errors?.country.message}</span>
-                                            )}
-                                        </div>
 
                                     </div>
                                 </div>

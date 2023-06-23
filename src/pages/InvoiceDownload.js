@@ -6,29 +6,19 @@ import { useParams } from 'react-router-dom';
 import { useGetToOrderQuery } from '../app/services/order';
 import PdfFile from '../helpers/pdfFile/PdfFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import moment from 'moment/moment';
 function InvoiceDownload() {
-  /*  date time  handel  */
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = currentDate.toLocaleString('default', { month: 'long' });
-  const day = currentDate.getDate();
-  /*  due handel  handel  */
-  const Duemonth = currentDate.setDate(currentDate.getDate() + 7);
-  const monthss = Duemonth.toLocaleString('default', { month: 'long' });
-
-  /* 
-    const month = currentDate.toLocaleString('default', { month: 'long' });
-
-  */
-  var finalDate = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear();
-
-
-
   const { Id } = useParams();
   const ref = React.createRef();
   const { data } = useGetToOrderQuery(`id=${Id}`)
   /* coustomerId data  */
   const printAreaRef = useRef(null);
+  /* data handel  */
+  const updatedDate = data?.order[0]?.updatedAt;
+  const updatedMoment = moment(updatedDate);
+  const formattedDate = updatedMoment.format("DD MMMM, YYYY");
+
+
 
   const handlePrint = () => {
     const printContent = printAreaRef.current.innerHTML;
@@ -160,7 +150,8 @@ function InvoiceDownload() {
 
   return (
     <DashboardLayout>
-      <button onClick={handlePrint}>Print</button>
+      <button onClick={handlePrint}> <i className="material-icons md-print"></i></button>
+
       <div ref={printAreaRef} className='order_container'>
         <div className='order_topContect'>
           <div>
@@ -178,45 +169,32 @@ function InvoiceDownload() {
             <div>
               <strong>{data?.order[0]?.coustomerId?.comphonyName}</strong><br />
               <span>{data?.order[0]?.coustomerId?.address}</span><br />
-              <span>{data?.order[0]?.coustomerId?.city} {data?.order[0]?.coustomerId?.zip_code}</span><br />
+              <span>{data?.order[0]?.coustomerId?.city} {data?.order[0]?.coustomerId?.state} {data?.order[0]?.coustomerId?.zip_code}</span><br />
               <span>{data?.order[0]?.coustomerId?.country}</span><br />
               <span>{data?.order[0]?.coustomerId?.phone}</span><br />
             </div>
           </div>
 
-          {/*  <div>
-            <strong>ORDER# </strong> <br />
-            <strong>FEIN# </strong> <br />
-            <strong>RESALE# </strong> <br />
-            <strong>TOBACCO#</strong><br />
-            <span>Email#</span><br />
-          </div> */}
-          {/*  <div>
-            <strong><span >{Id.slice(0, 10)}</span></strong> <br />
-            <strong><span>{data?.order[0]?.coustomerId?.etin}</span></strong> <br />
-            <strong> <span>{data?.order[0]?.coustomerId?.resale}</span></strong> <br />
-            <strong> <span>{data?.order[0]?.coustomerId?.tobacco}</span></strong><br />
-            <strong> <span>{data?.order[0]?.coustomerId?.email}</span></strong><br />
-          </div> */}
 
           <div>
 
             <img className='img_handel' src={logo} />
             <p><strong>Order by </strong> retwho.com</p>
+
           </div>
         </div>
         <div className="invoic_contect">
           <div>
-            <span><strong>ORDER</strong> # {Id.slice(-9)}</span> <br />
+            <span><strong>ORDER</strong> # {data?.order[0]?.orderId}</span> <br />
             <span><strong>Invoice</strong> # {Id}</span>
           </div>
           <div>
             <strong>Issue date</strong> <br />
-            <span>{`${day}  ${month},   ${year}`}</span>
+            <span>{formattedDate}</span>
           </div>
           <div>
             <strong>Due date</strong><br />
-            <span>{`${day}  ${month},   ${year}`}</span>
+            <span>{formattedDate}</span>
           </div>
         </div>
         <div>
@@ -290,8 +268,14 @@ function InvoiceDownload() {
                   </div>
                 }
               </div>
-
-
+            </div>
+            <div>
+              <div className="customersHisab">
+                <div>
+                  <strong>Past Due</strong>
+                  <span>0</span>
+                </div>
+              </div>
 
             </div>
             <div>
@@ -306,14 +290,6 @@ function InvoiceDownload() {
           </div>
         </div>
       </div >
-
-
-
-
-
-
-
-
       {/* <div>
                 <PDFDownloadLink document={<PdfFile data={data} Id={Id} />} filename="FORM">
                     {({ loading }) => (loading ? <button>Loading Document...</button> : <button>Download</button>)}

@@ -4,7 +4,21 @@ export const SideMenu = [
         id: 1,
         to: '/',
         link: "Dashboard",
-        icon: "icon material-icons md-home"
+        icon: "icon material-icons md-home",
+        children: [
+            {
+                id: 1,
+                _id: 1,
+                to: 'https://backmin.zavawholesale.com/',
+                link: "Zava",
+            },
+            {
+                id: 1,
+                _id: 2,
+                to: 'https://aizafgroup.web.app/dashboard',
+                link: "Retwho",
+            },
+        ]
     },
     {
         id: 2,
@@ -17,6 +31,22 @@ export const SideMenu = [
                 to: '/product/list',
                 link: "Product List",
             },
+        ]
+    },
+
+    {
+        id: 5,
+
+        link: "Add product",
+        icon: "icon material-icons md-add_box",
+        children: [
+            {
+                id: 5,
+                _id: 1,
+                to: '/addproduct/1',
+                link: "Add product 1",
+            },
+
         ]
     },
     {
@@ -51,35 +81,66 @@ export const SideMenu = [
         ]
     },
     {
-        id: 5,
-
-        link: "Add product",
-        icon: "icon material-icons md-add_box",
+        id: 11,
+        link: "Sales",
+        to: '/sale',
+        icon: "icon material-icons md-point_of_sale",
         children: [
             {
-                id: 5,
+                id: 11,
                 _id: 1,
-                to: '/addproduct/1',
-                link: "Add product 1",
+                to: '/order/all',
+                link: "All Sales",
             },
-
+            {
+                id: 11,
+                _id: 2,
+                to: '/order/check',
+                link: "Check",
+            },
+            {
+                id: 11,
+                _id: 3,
+                to: '/order/cash',
+                link: "Cash",
+            },
+            {
+                id: 11,
+                _id: 4,
+                to: '/order/cash',
+                link: "Online",
+            },
+            {
+                id: 11,
+                _id: 5,
+                to: '/order/cash',
+                link: "Offline",
+            },
         ]
+
+    },
+    {
+        id: 12,
+        link: "Report",
+        to: '/report',
+        icon: "icon material-icons md-shopping_report",
+
     },
     {
         id: 10,
         link: "User",
-        icon: "icon material-icons md-settings",
+        icon: "icon material-icons md-person_remove",
         children: [
             {
                 id: 10,
                 _id: 1,
-                to: '/settings/sample1',
+                to: '/user/employee',
                 link: "Employee",
             },
             {
                 id: 10,
                 _id: 2,
-                to: '/settings/sample2',
+                to: '/user/customer',
                 link: "Customer",
             }
         ]

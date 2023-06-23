@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { ProductSchema } from '../../../helpers/validation/ProductSchema';
+import {  ProductUpdateSchema } from '../../../helpers/validation/ProductSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useAddExtraCostMutation, useUpdateProductMutation } from '../../../app/services/product';
 import { toast } from 'react-toastify';
 
 function ProductModal({ modal, setOpen }) {
-    console.log(modal)
     const { type, data, extra } = modal;
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductSchema) });
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(ProductUpdateSchema) });
     const [UpdateProcut, { isSuccess, isLoading }] = useUpdateProductMutation()
     const [ExtraCostAdd, { isSuccess: extraSuccess, isLoading: extraLoading }] = useAddExtraCostMutation()
     const [cost, setCost] = useState(null)
@@ -92,14 +91,49 @@ function ProductModal({ modal, setOpen }) {
                                             </div>
                                         </div>
                                         <div className="row gx-2">
-                                            <div className="col-md-6 mb-3">
+                                            <div className="col-md-3 mb-3">
+                                                <label htmlFor="product_stock" className="form-label">Stock</label>
+                                                <input type="number" placeholder="product_stock" className="form-control" id="product_stock"
+                                                    defaultValue={data?.stock}
+                                                    {...register("stock")}
+                                                   /*  style={{ cursor: 'no-drop' }}
+                                                    disabled */
+
+                                                />
+                                            </div>
+                                            <div className="col-md-3 mb-3">
                                                 <label htmlFor="product_quantity" className="form-label">Quantity</label>
                                                 <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
                                                     defaultValue={data?.quantity}
                                                     {...register("quantity")}
+                                                   /*  style={{ cursor: 'no-drop' }}
+                                                    disabled */
                                                 />
                                             </div>
+                                            <div className="col-md-3 mb-3">
+                                                <label htmlFor="New_Quantity" className="form-label">New Quantity</label>
+                                                <input type="number" placeholder="New_Quantity" className="form-control" id="New_Quantity"
+                                                    {...register("new_quantity")}
+                                                    defaultValue={0}
+                                                />
+                                            </div>
+                                            <div className="col-md-3 mb-3">
+                                                <div className="mb-3">
+                                                    <label className="form-label">Quantity Action Type</label>
+                                                    <select className="form-select"
+                                                        {...register("quantity_action")}
+                                                    >
+                                                        <option value='+' selected>+</option>
+                                                        <option value='-'>-</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
+
+
+
+
+
                                     </div>
                                 </div>
                             </div>
