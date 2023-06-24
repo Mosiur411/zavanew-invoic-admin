@@ -1,24 +1,29 @@
-import React from 'react'
-import { useDeleteItemsOrderMutation } from '../../../app/services/order';
+import React, { useState } from 'react'
+import { useDeleteItemsOrderMutation, useUpdateItemsOrderMutation } from '../../../app/services/order';
 import { handelClick } from '../../../utils/ConfirmDelete';
+import { handelAddButton } from '../../../utils/ConfirmAdd';
 
 function SingleOrderEditCat({ _id, cartItem, setShrinkage, setRefund }) {
-    const [deleteContent] = useDeleteItemsOrderMutation()
     const { saleing_Price, quantity } = cartItem
+    const [addQuantity, setAddQuantity] = useState(cartItem?.quantity)
+    const [addPrices, setAddPrices] = useState(saleing_Price?.toFixed(2) / quantity)
+    const [deleteContent] = useDeleteItemsOrderMutation()
+    const [UpdateContent] = useUpdateItemsOrderMutation()
     const { product_name } = cartItem?.product_id;
     const id = { order_id: _id, item_id: cartItem?._id }
-
+    const idEdit = { order_id: _id, item_id: cartItem?._id, editQuantity: Number(addQuantity), editPrices: Number(addPrices) }
 
     return (
         <tr>
             <td>{product_name.toUpperCase()}</td>
             <td>
                 <input style={{ width: '50px' }} type='number'
+                    onChange={(e) => setAddPrices(e.target.value)}
                     defaultValue={saleing_Price?.toFixed(2) / quantity}
                 />
             </td>
             <td>
-                <input defaultValue={cartItem?.quantity} style={{ width: '50px' }} type='number'
+                <input onChange={(e) => setAddQuantity(e.target.value)} defaultValue={cartItem?.quantity} style={{ width: '50px' }} type='number'
                 />
             </td>
             <td >${saleing_Price?.toFixed(2)}</td>
@@ -29,6 +34,7 @@ function SingleOrderEditCat({ _id, cartItem, setShrinkage, setRefund }) {
                 }}
             >
                 <a className="btn btn-sm font-sm rounded btn-brand"
+                    onClick={() => handelAddButton(idEdit, UpdateContent)}
                 > Add</a>
                 <a className="btn btn-sm font-sm btn-light rounded"
                     onClick={() => handelClick(id, deleteContent)}

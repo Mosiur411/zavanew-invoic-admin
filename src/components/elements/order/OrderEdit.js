@@ -58,7 +58,7 @@ function OrderEdit() {
             <section className="content-main">
                 <div className="content-header">
                     <div>
-                        <h2 className="content-title card-title">Cart Details</h2>
+                        <h2 className="content-title card-title">Order Details</h2>
                     </div>
                 </div>
                 {

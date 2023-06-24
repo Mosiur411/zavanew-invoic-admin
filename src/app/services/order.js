@@ -53,6 +53,13 @@ export const OrderApi = createApi({
             }),
             invalidatesTags: ["Order"],
         }),
+        UpdateItemsOrder: builder.mutation({
+            query: ({ item_id, order_id, editQuantity,editPrices }) => ({
+                url: `Order/update/items?item_id=${item_id}&order_id=${order_id}&editQuantity=${editQuantity}&editPrices=${editPrices}`,
+                method: "PUT",
+            }),
+            invalidatesTags: ["Order"],
+        }),
 
         /* refund  */
         addRefund: builder.mutation({
@@ -92,8 +99,8 @@ export const { useGetToOrderQuery, useGetRrecordQuery,
     useAddRefundMutation,
     /* addRhrinkage  */
     useAddShrinkageMutation,
-    useDeleteItemsOrderMutation
-
+    useDeleteItemsOrderMutation,
+    useUpdateItemsOrderMutation
 
 } = OrderApi;
 
