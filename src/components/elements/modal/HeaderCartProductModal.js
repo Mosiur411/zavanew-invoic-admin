@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useAddToCartMutation } from '../../../app/services/product'
+import { useAddItemsOrderMutation } from '../../../app/services/order'
 
-function HeaderCartProductModal({ productData }) {
+function HeaderCartProductModal({ productData, action, order_id }) {
     const [AddToCart] = useAddToCartMutation()
+    const [AddToOrderItem] = useAddItemsOrderMutation()
     const addToCarts = async (id, price, name) => {
         const item = { product_id: id, quantity: 1, saleing_Price: price, product_name: name }
-        await AddToCart(item)
+        if (action) {
+            const data = { item, order_id: order_id }
+            await AddToOrderItem(data)
+        } else {
+            await AddToCart(item)
+        }
     }
     return (
         <div>

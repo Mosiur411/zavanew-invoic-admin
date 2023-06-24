@@ -12,6 +12,10 @@ import { toast } from 'react-toastify';
 const Header = ({ search, productCartAdd, sideOpen, setSideOpen, productSarch, setProductSarch }) => {
     const location = useLocation();
     const currentPath = location.pathname;
+    const action = currentPath.includes("/order/update")
+    const regex = /\/order\/update\/(\w+)/;
+    const match = currentPath.match(regex);
+    const order_id = match ? match[1] : null;
     const { data } = useGetToCartQuery()
     const [signOut, loading, error] = useSignOut(auth);
     const { dark, setDark, handelClick, setSandelClick } = useContext(ThemeContext)
@@ -32,7 +36,13 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen, productSarch, s
             if (productSarch == upcBox || upc) {
                 if (quantity && saleing_Price) {
                     const item = { product_id: id, quantity: 1, saleing_Price: saleing_Price, product_name: product_name }
-                    productCartAdd(item)
+                    if (action) {
+                        const item = { item, order_id: order_id }
+                        productCartAdd(item)
+                    } else {
+                        productCartAdd(item)
+                    }
+
                 } else {
                     toast.error('Product quantity ')
                 }
@@ -57,7 +67,7 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen, productSarch, s
                 </Link>
             </div> : <div className="col-search">
                 {
-                    currentPath == '/cart' && <div className="searchform">
+                    (currentPath == '/cart' || action) && <div className="searchform">{/* action */}
                         <div className="input-group">
                             <input onChange={(e) => setProductSarch(e.target.value)} type="text" className="form-control" placeholder="Search term"
                                 value={productSarch}
@@ -115,7 +125,7 @@ const Header = ({ search, productCartAdd, sideOpen, setSideOpen, productSarch, s
             </div>
             {/* product modal  start  */}
             {productSarch && <section className='header_modal_continer'>
-                <HeaderCartProductModal productData={ProductDatas} productSarch={productSarch} />
+                <HeaderCartProductModal productData={ProductDatas} productSarch={productSarch} action={action} order_id={order_id} />
             </section>}
 
 

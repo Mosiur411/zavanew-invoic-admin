@@ -3,14 +3,20 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { useAddToCartMutation } from "../../app/services/product";
+import { useAddItemsOrderMutation } from "../../app/services/order";
 
 const DashboardLayout = ({ children }) => {
     const [productSarch, setProductSarch] = useState('')
     const [sideOpen, setSideOpen] = useState(false)
     const [sideOpenMobile, setSideOpenMobille] = useState(false)
     const [AddToCart] = useAddToCartMutation()
+    const [AddToOrderItem] = useAddItemsOrderMutation()
     const productCartAdd = async (item) => {
-        await AddToCart(item)
+        if(item?.order_id){
+            await AddToOrderItem(item)
+        }else{
+            await AddToCart(item)
+        }
         setProductSarch('')
     }
     return (

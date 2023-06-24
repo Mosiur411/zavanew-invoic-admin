@@ -10,46 +10,60 @@ import { OrderSchema } from '../../../helpers/validation/OrderSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import CoustomerItm from '../../../pages/CoustomerItm';
+import { useGetCoustomerQuery } from '../../../app/services/coustomer';
 
 
 function OrderEdit() {
+    /* all state  */
     const [Loading, setLoading] = useState(true)
+    const [coustomerIdHandel, setCoustomerIdHandel] = useState(true)
+    const [coustomerId, setCoustomerId] = useState()
+    const [search, setSearchValue] = useState('')
+    const [{ pageIndex, pageSize }] = useState({ pageIndex: 0, pageSize: 10, });
+    const [refund, setRefund] = useState({ type: false, data: null })
+    const [shrinkage, setShrinkage] = useState({ type: false, data: null })
+    
+    /* pathName  */
     const { Id } = useParams();
-    const pathname = `id=${Id}`;
-    const { data, isLoading, isSuccess } = useGetToOrderQuery(pathname);
-    const { _id, item, totalPrice, payment, totalQuantity, checkProviderName, checkNumber } = useMemo(() => (data ? data?.order[0] : {}), [data]);
-    const [orderUpdate, { isLoading: orderLu, isSuccess: orderS }] = useUpdateOrderMutation()
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
-
-
-
-    useEffect(() => {
-        if (isSuccess) {
-            setLoading(false)
-        }
-        if (orderS) {
-            toast.success('Order Update')
-
-        }
-    }, [isLoading, orderS])
-
-    /* payment section  */
-    const [bank, setBank] = useState(payment)
+    const pathnames = `id=${Id}`;
+    const pathname = `page=${pageIndex}&limit=${pageSize}&search=${search}`;
+    /* fetch */
+    const { data, isLoading, isSuccess } = useGetToOrderQuery(pathnames);
+    const { data: coustomer } = useGetCoustomerQuery(pathname)
+    const [orderUpdate, { isLoading: orderLu, isSuccess: orders }] = useUpdateOrderMutation()
+    /* extra code  */
     const paymentMethod = [
         { name: 'CASH', data: 'cash' },
         { name: 'CHECK', data: 'check' },
         { name: 'DUE', data: 'due' },
     ]
+    /* fetch data modify */
+    const { _id, item, totalPrice, payment, totalQuantity, checkProviderName, checkNumber, coustomerId: coustomerIdGet } = useMemo(() => (data ? data?.order[0] : {}), [data]);
+    const coustomerData = useMemo(() => (coustomer ? coustomer?.coustomer : []), [
+        coustomer,
+        search,
+    ]);
+    /* from data schma  */
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
+    /* from submit */
     const onSubmit = async (value) => {
-        const data = { value, id: Id }
+        const data = { value, id: Id, coustomerId: coustomerId}
         await orderUpdate(data)
     }
+    /* useEffect  */
 
+    useEffect(() => {
+        if (isSuccess) {
+            setLoading(false)
+        }
+        if (orders) {
+            toast.success('Order Update')
 
-
-    /*  Refund */
-    const [refund, setRefund] = useState({ type: false, data: null })
-    const [shrinkage, setShrinkage] = useState({ type: false, data: null })
+        }
+    }, [isLoading, orders])
+    /* extra usersate add  */
+    const [bank, setBank] = useState(payment);
 
 
     return (
@@ -65,7 +79,7 @@ function OrderEdit() {
                     _id == undefined ? <h1>Not items Add</h1> : <div className="card">
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-lg-12">
+                                <div className="col-lg-7">
                                     <div className="table-responsive">
                                         <table className="table">
                                             <thead>
@@ -150,6 +164,23 @@ function OrderEdit() {
 
                                     </div>
                                 </div>
+                                <div className="col-lg-1"></div>
+                                <div className="col-lg-4">
+                                    <div className="box shadow-sm ">
+                                        <h6 className="mb-15">Coustomer info</h6>
+                                        <div className="col-lg-12 me-auto">
+                                            <input onChange={(e) => setSearchValue(e.target.value)} type="text" placeholder="Search..." className="form-control" />
+                                        </div>
+                                        {
+                                            coustomerData?.map((data) => <CoustomerItm key={data?._id} CoustomerItm={data}
+                                                coustomerId={coustomerId} setCoustomerId={setCoustomerId} coustomerIdGet={coustomerIdGet?._id}
+                                                setCoustomerIdHandel={setCoustomerIdHandel}
+                                                coustomerIdHandel={coustomerIdHandel}
+                                            />
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -161,7 +192,7 @@ function OrderEdit() {
             {/* refund  */}
             <Refund refund={refund} setRefund={setRefund} id={Id} />
             {/* Shrinkage */}
-            <Shrinkage shrinkage={shrinkage} setShrinkage={setShrinkage} id={Id}/>
+            <Shrinkage shrinkage={shrinkage} setShrinkage={setShrinkage} id={Id} />
 
         </DashboardLayout>
     )
