@@ -11,20 +11,14 @@ export const handelClick = async (id, deleteContent) => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             const result = await deleteContent(id)
+            console.log(result)
             if (result) {
                 Swal.fire(
                     'Deleted!',
                     `Your file has been deleted`,
                     'success'
                 )
-            } else {
-                Swal.fire(
-                    'Deleted!',
-                    `Your file has been not deleted`,
-                    'error'
-                )
-            }
-
+            } 
         }
     })
 

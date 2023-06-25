@@ -3,10 +3,10 @@ import DatePicker from 'react-multi-date-picker';
 import DatePanel from 'react-multi-date-picker/plugins/date_panel';
 import 'react-multi-date-picker/styles/colors/red.css';
 
-export default function DateCalendar({selectedDates,setSelectedDates}) {
-    
+export default function DateCalendar({ selectedDates, setSelectedDates }) {
+
     const handleDateChange = (date) => {
-        const formattedDates = date.map(date => date.format("DD/MMM/YYYY"));
+        const formattedDates = date?.map(date => date?.format("DD/MMM/YYYY"));
         if (date.length <= 2) {
             setSelectedDates(formattedDates);
         } else {
@@ -17,9 +17,10 @@ export default function DateCalendar({selectedDates,setSelectedDates}) {
         }
     };
     return (
-        <div >
+        <div                /*  className="btn btn-primary" */
+        >
             <DatePicker
-                defaultValue={selectedDates}
+                value={selectedDates}
                 onChange={handleDateChange}
                 format="DD/MMM/YYYY"
                 sort

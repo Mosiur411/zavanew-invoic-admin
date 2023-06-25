@@ -45,7 +45,7 @@ function OrderCash() {
                     <header className="card-header">
                         <div className="row gx-3">
                             <div className="col-lg-4 col-md-6 me-auto">
-                                <input  type="text" onChange={(e) => setSearchValue(e.target.value)} placeholder="Search..." className="form-control" />
+                                <input type="text" onChange={(e) => setSearchValue(e.target.value)} placeholder="Search..." className="form-control" />
                             </div>
                             <div className="col-lg-2 col-6 col-md-3">
                                 <select className="form-select">
@@ -68,17 +68,18 @@ function OrderCash() {
                         <div className="table-responsive">
                             <table className="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>#ID</th>
-                                        <th scope="col">Company Name</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Payment</th>
-                                        <th scope="col">quantity</th>
-                                        <th scope="col" className="text-end">Action</th>
-                                    </tr>
+                                    <th>#Id</th>
+                                    <th>Date</th>
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">QTY</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Payment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Distractions</th>
+                                    <th scope="col" className="text-end">Action</th>
                                 </thead>
                                 <tbody>
-                                    {Loading && <GetSpinner/>}
+                                    {Loading && <GetSpinner />}
                                     {invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
                                 </tbody>
                             </table>

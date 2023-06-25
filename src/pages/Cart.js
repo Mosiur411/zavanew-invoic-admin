@@ -11,6 +11,8 @@ import CoustomerItm from './CoustomerItm';
 import { useAddOrderMutation, useGetToCartQuery } from '../app/services/product';
 import { Navigate, useNavigate } from 'react-router-dom';
 function Cart() {
+    const [coustomerIdHandel, setCoustomerIdHandel] = useState(true)
+
     const navigate = useNavigate();
     const { data } = useGetToCartQuery()
     const [search, setSearchValue] = useState('')
@@ -154,6 +156,7 @@ function Cart() {
                                         {
                                             coustomerData?.map((data) => <CoustomerItm key={data?._id} CoustomerItm={data}
                                                 coustomerId={coustomerId} setCoustomerId={setCoustomerId}
+                                                setCoustomerIdHandel={setCoustomerIdHandel}
                                             />
                                             )
                                         }

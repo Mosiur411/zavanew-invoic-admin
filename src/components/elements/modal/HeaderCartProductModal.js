@@ -4,7 +4,7 @@ import { useAddToCartMutation } from '../../../app/services/product'
 import { useAddItemsOrderMutation } from '../../../app/services/order'
 
 function HeaderCartProductModal({ productData, action, order_id }) {
-    const [AddToCart] = useAddToCartMutation()
+    const [AddToCart, { isLoading, isSuccess }] = useAddToCartMutation()
     const [AddToOrderItem] = useAddItemsOrderMutation()
     const addToCarts = async (id, price, name) => {
         const item = { product_id: id, quantity: 1, saleing_Price: price, product_name: name }
@@ -15,6 +15,7 @@ function HeaderCartProductModal({ productData, action, order_id }) {
             await AddToCart(item)
         }
     }
+    useEffect(() => { if (isSuccess) { toast.success('Product Add !') } }, [isSuccess])
     return (
         <div>
             {
@@ -26,7 +27,7 @@ function HeaderCartProductModal({ productData, action, order_id }) {
                                 <p className="text-muted font-xs">{data?.quantity}</p>
                             </div>
                         </div>
-                        <a onClick={() => addToCarts(data?._id, data?.saleing_Price, data?.product_name)} className="btn btn-xs"><i className="material-icons md-add"></i> Add</a>
+                        <a style={{ cursor: isLoading ? 'no-drop' : 'pointer' }} onClick={() => addToCarts(data?._id, data?.saleing_Price, data?.product_name)} className="btn btn-xs"><i className="material-icons md-add"></i> Add</a>
                     </div>
                 )
             }

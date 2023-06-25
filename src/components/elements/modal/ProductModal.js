@@ -13,6 +13,7 @@ function ProductModal({ modal, setOpen }) {
     const [cost, setCost] = useState(null)
     const [quantity, setQuantity] = useState(null)
     const extraCostAdd = async (cost, quantity, _id) => {
+        console.log(cost, quantity, _id)
         if (cost && quantity && _id) {
             const data = { cost: cost, quantity: quantity, product_id: _id }
             await ExtraCostAdd(data)
@@ -160,7 +161,6 @@ function ProductModal({ modal, setOpen }) {
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="product_cost" className="form-label">Cost</label>
                                                 <input type="text" placeholder="Product_cost" className="form-control" id="product_cost"
-                                                    defaultValue={data?.cost}
                                                     onChange={(e) => setCost(e.target.value)}
                                                 />
                                             </div>
@@ -169,7 +169,6 @@ function ProductModal({ modal, setOpen }) {
                                             <div className="col-md-12 mb-3">
                                                 <label htmlFor="product_quantity" className="form-label">Quantity</label>
                                                 <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
-                                                    defaultValue={data?.quantity}
                                                     onChange={(e) => setQuantity(e.target.value)}
                                                 />
                                             </div>

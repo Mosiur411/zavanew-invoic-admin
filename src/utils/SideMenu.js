@@ -83,37 +83,36 @@ export const SideMenu = [
     {
         id: 11,
         link: "Sales",
-        to: '/sale',
         icon: "icon material-icons md-point_of_sale",
         children: [
             {
                 id: 11,
                 _id: 1,
-                to: '/order/all',
+                to: '/sale/all',
                 link: "All Sales",
             },
-            {
-                id: 11,
-                _id: 2,
-                to: '/order/check',
-                link: "Check",
-            },
-            {
-                id: 11,
-                _id: 3,
-                to: '/order/cash',
-                link: "Cash",
-            },
+            // {
+            //     id: 11,
+            //     _id: 2,
+            //     to: '/sale/check',
+            //     link: "Check",
+            // },
+            // {
+            //     id: 11,
+            //     _id: 3,
+            //     to: '/sale/cash',
+            //     link: "Cash",
+            // },
             {
                 id: 11,
                 _id: 4,
-                to: '/order/cash',
+                to: '/sale/online',
                 link: "Online",
             },
             {
                 id: 11,
                 _id: 5,
-                to: '/order/cash',
+                to: '/sale/offline',
                 link: "Offline",
             },
         ]

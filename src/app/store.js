@@ -10,6 +10,7 @@ import { AddToCartApi } from "./services/addToCart";
 import { OrderApi } from "./services/order";
 import { EmployeeApi } from "./services/employee";
 import { CoustomerApi } from "./services/coustomer";
+import { SalesApi } from "./services/sales";
 export const store = configureStore({
   reducer: {
     [DepartmentApi.reducerPath]: DepartmentApi.reducer,
@@ -22,6 +23,7 @@ export const store = configureStore({
     [OrderApi.reducerPath]: OrderApi.reducer,
     [EmployeeApi.reducerPath]: EmployeeApi.reducer,
     [CoustomerApi.reducerPath]: CoustomerApi.reducer,
+    [SalesApi.reducerPath]: SalesApi.reducer,
     auth: authSlice
   },
   middleware: (getDefaultMiddleware) =>
@@ -36,5 +38,6 @@ export const store = configureStore({
       OrderApi.middleware,
       EmployeeApi.middleware,
       CoustomerApi.middleware,
+      SalesApi.middleware,
     ]),
 });

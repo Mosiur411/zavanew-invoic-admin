@@ -19,6 +19,9 @@ const Home = () => {
     const { role } = userInfo.users;
 
 
+
+
+
     return (
         <DashboardLayout>
             <div className=" content-header">
@@ -30,7 +33,7 @@ const Home = () => {
                     <DateCalendar
                         selectedDates={selectedDates}
                         setSelectedDates={setSelectedDates}
-                        className="btn btn-primary" />
+                        />
                     {/* <a href="#" className="btn btn-primary"><i className="text-muted material-icons md-post_add"></i>Create report</a> */}
                 </div>
             </div>
@@ -42,7 +45,7 @@ const Home = () => {
                                 <span className="icon icon-sm rounded-circle bg-primary-light"><i className="text-primary material-icons md-monetization_on"></i></span>
                                 <div className="text">
                                     <h6 className="mb-1 card-title">Cost of Goods</h6>
-                                    <span>${record?.products?.[0]?.cost.toFixed(2)}</span>
+                                    <span>${record?.purchases?.[0]?.cost.toFixed(2)}</span>
                                 </div>
                             </article>
                         </div>
@@ -67,7 +70,7 @@ const Home = () => {
                                 <span className="icon icon-sm rounded-circle bg-warning-light"><i className="text-warning material-icons md-qr_code"></i></span>
                                 <div className="text">
                                     <h6 className="mb-1 card-title">In Stock</h6>
-                                    <span>{record?.products[0]?.quantity ? record?.products[0]?.quantity : 0}</span>
+                                    <span>{record?.purchases[0]?.quantity ? record?.purchases[0]?.quantity : 0}</span>
                                 </div>
                             </article>
                         </div>

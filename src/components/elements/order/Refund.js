@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useAddRefundMutation } from '../../../app/services/order';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { useAddRefundMutation } from '../../../app/services/sales';
 
 function Refund({ refund, setRefund, id }) {
     const { type, data } = refund;
@@ -9,24 +9,24 @@ function Refund({ refund, setRefund, id }) {
 
     /* porduct items refund  */
     const [RefundData, { isSuccess: refundAddSuccess, isLoading: refundAddLoading }] = useAddRefundMutation()
-    console.log(refundAddSuccess)
     const addRefundQuntity = async (quantity, data, id) => {
         const value = {
             quantity: Number(quantity),
             cost: data?.product_id?.cost,
             product_id: data?.product_id?._id,
             saleing_Price: data?.product_id?.saleing_Price,
-            order_id: id,
+            sales_id: id,
+            purchases_id: data?.purchases_id,
             item_id: data?._id,
         }
         await RefundData(value);
     }
     useEffect(() => {
         if (refundAddSuccess) {
-            console.log(refundAddSuccess)
+            refund({ type: false })
             toast.success("Refun Add!")
         }
-    }, [refundAddSuccess,refundAddLoading])
+    }, [refundAddSuccess, refundAddLoading])
 
     return (
         <>
@@ -48,9 +48,9 @@ function Refund({ refund, setRefund, id }) {
                                                 <div className="col-md-12 mb-3">
                                                     <label htmlFor="product_quantity" className="form-label">Quantity</label>
                                                     <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
-                                                        min='1'
-                                                        defaultValue={data?.quantity}
+                                                        value={data?.quantity}
                                                         onChange={(e) => setQuantity(e.target.value)}
+                                                        disabled
                                                     />
                                                 </div>
                                             </div>

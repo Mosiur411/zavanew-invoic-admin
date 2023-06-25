@@ -1,8 +1,8 @@
 import React from 'react'
-import { useAddShrinkageMutation } from '../../../app/services/order';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { useAddShrinkageMutation } from '../../../app/services/sales';
 
 function Shrinkage({ shrinkage, setShrinkage, id }) {
   const { type, data } = shrinkage;
@@ -14,13 +14,15 @@ function Shrinkage({ shrinkage, setShrinkage, id }) {
       cost: data?.product_id?.cost,
       product_id: data?.product_id?._id,
       saleing_Price: data?.product_id?.saleing_Price,
-      order_id: id,
+      sales_id: id,
       item_id: data?._id,
+      purchases_id: data?.purchases_id,
     }
     await ShrinkageData(value);
   }
   useEffect(() => {
     if (shrinkagedAddSuccess) {
+      shrinkage({ type: false })
       toast.success("Refun Add!")
     }
   }, [shrinkagedAddSuccess])

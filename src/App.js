@@ -49,6 +49,8 @@ import Employee from './pages/user/Employee';
 import Customer from './pages/user/Customer';
 import Sales from './pages/sales/Sales';
 import Report from './pages/report/Report';
+import SalesInvoiceDownload from './pages/SalesInvoiceDownload';
+import SalesEdit from './components/elements/sales/SalesEdit';
 function App() {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
@@ -112,14 +114,20 @@ function App() {
                   <Route path='cash' element={<OrderCash />} />
                   <Route path='check' element={<OrderCheck />} />
                   <Route path='due' element={<OrderDue />} />
-
-
-
-
                   <Route path='all/:Id' element={<InvoiceDownload />} />
                   <Route path='update/:Id' element={<OrderEdit />} />
                   <Route path='detail' element={<OrderDetail />} />
                 </Route>
+                {/* sale */}
+                <Route path='sale'>
+                  <Route path='all' element={<Sales />} />
+                  <Route path='online' element={<Sales />} />
+                  <Route path='offline' element={<Sales />} />
+                  <Route path='update/:Id' element={<SalesEdit />} />
+                  <Route path='all/:Id' element={<SalesInvoiceDownload />} />
+                </Route>
+
+
                 {/* seller  */}
                 <Route path='seller'>
                   <Route path='cards' element={<SellerCard />} />

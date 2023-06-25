@@ -61,6 +61,16 @@ export const OrderApi = createApi({
             }),
             invalidatesTags: ["Order"],
         }),
+        /* order Approved Shipped Delivered action */
+        removeOrderAddSales: builder.mutation({
+            query: ({ status, order_id }) => ({
+                url: `order/status?order_id=${order_id}&status=${status}`,
+                method: "POST",
+
+            }),
+            invalidatesTags: ["Order"],
+        }),
+
         UpdateItemsOrder: builder.mutation({
             query: ({ item_id, order_id, editQuantity, editPrices }) => ({
                 url: `Order/update/items?item_id=${item_id}&order_id=${order_id}&editQuantity=${editQuantity}&editPrices=${editPrices}`,
@@ -69,24 +79,7 @@ export const OrderApi = createApi({
             invalidatesTags: ["Order"],
         }),
 
-        /* refund  */
-        addRefund: builder.mutation({
-            query: (value) => ({
-                url: "refund",
-                method: "POST",
-                body: value
-            }),
-            invalidatesTags: ["Order", "dashboard"],
-        }),
-        /* Shrinkage  */
-        addShrinkage: builder.mutation({
-            query: (value) => ({
-                url: "shrinkage",
-                method: "POST",
-                body: value
-            }),
-            invalidatesTags: ["dashboard"],
-        }),
+     
         /* dashboard */
         getRrecord: builder.query({
             query: (date) => ({
@@ -104,10 +97,9 @@ export const { useGetToOrderQuery, useGetRrecordQuery,
     useGetAllInvoceQuery,
     useDeleteOrderMutation,
     useAddItemsOrderMutation,
+    useRemoveOrderAddSalesMutation,
     /* refund  */
-    useAddRefundMutation,
     /* addRhrinkage  */
-    useAddShrinkageMutation,
     useDeleteItemsOrderMutation,
     useUpdateItemsOrderMutation
 

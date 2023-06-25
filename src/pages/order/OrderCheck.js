@@ -30,14 +30,14 @@ function OrderCheck() {
 
     return (
         <DashboardLayout>
-              <section className="content-main">
+            <section className="content-main">
                 <div className="content-header">
                     <div>
                         <h2 className="content-title card-title">Ordered Invoice Check</h2>
                         <p></p>
                     </div>
                     <div>
-                        <input  type="text"  placeholder="Search order ID"  className="form-control bg-white" />
+                        <input type="text" placeholder="Search order ID" className="form-control bg-white" />
                     </div>
                 </div>
                 <div className="card mb-4">
@@ -67,24 +67,25 @@ function OrderCheck() {
                         <div className="table-responsive">
                             <table className="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>#ID</th>
-                                        <th scope="col">Company Name</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Payment</th>
-                                        <th scope="col">quantity</th>
-                                        <th scope="col" className="text-end">Action</th>
-                                    </tr>
+                                    <th>#Id</th>
+                                    <th>Date</th>
+                                    <th scope="col">Company Name</th>
+                                    <th scope="col">QTY</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Payment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Distractions</th>
+                                    <th scope="col" className="text-end">Action</th>
                                 </thead>
-                                 <tbody>
-                                 {Loading && <GetSpinner/>} 
+                                <tbody>
+                                    {Loading && <GetSpinner />}
                                     {invoice.map((data) => <SingleOrder data={data} key={data?._id} />)}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                  <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
+                <Pagination totalPages={data?.totalPages} setPagination={setPagination} />
             </section>
         </DashboardLayout>
     )
