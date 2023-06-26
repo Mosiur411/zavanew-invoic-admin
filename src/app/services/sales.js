@@ -36,6 +36,17 @@ export const SalesApi = createApi({
             }),
             invalidatesTags: ["Sales"],
         }),
+        /* payment update  */
+        salesPayment: builder.mutation({
+            query: ({ value, id }) => ({
+                url: `sales/payment?_id=${id}`,
+                method: "PUT",
+                body: value,
+            }),
+            invalidatesTags: ["Sales"],
+        }),
+
+
 
         /* refund */
         addRefund: builder.mutation({
@@ -59,5 +70,5 @@ export const SalesApi = createApi({
     }),
 
 });
-export const { useGetSalesQuery, useSalesSatatusMutation, useGetSingleSalesQuery, useAddRefundMutation,useAddShrinkageMutation} = SalesApi;
+export const { useGetSalesQuery, useSalesSatatusMutation, useGetSingleSalesQuery, useAddRefundMutation, useAddShrinkageMutation,useSalesPaymentMutation} = SalesApi;
 

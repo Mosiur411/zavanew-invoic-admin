@@ -16,7 +16,7 @@ function SalesInvoiceDownload() {
     /* coustomerId data  */
     const printAreaRef = useRef(null);
     /* data handel  */
-    const updatedDate = data?.updatedAt;
+    const updatedDate = data?.sales?.updatedAt;
     const updatedMoment = moment(updatedDate);
     const formattedDate = updatedMoment.format("DD MMMM, YYYY");
 
@@ -164,16 +164,16 @@ function SalesInvoiceDownload() {
                             </span><br />
                             <span>USA</span><br />
                         </div>
-                        <span>{data?.user?.name} : 9544495289</span><br />
+                        <span>{data?.sales?.user?.name} : 9544495289</span><br />
                     </div>
                     <div>
                         <strong>SOLD TO</strong>
                         <div>
-                            <strong>{data?.coustomerId?.comphonyName}</strong><br />
-                            <span>{data?.coustomerId?.address}</span><br />
-                            <span>{data?.coustomerId?.city} {data?.coustomerId?.state} {data?.coustomerId?.zip_code}</span><br />
-                            <span>{data?.coustomerId?.country}</span><br />
-                            <span>{data?.coustomerId?.phone}</span><br />
+                            <strong>{data?.sales?.coustomerId?.comphonyName}</strong><br />
+                            <span>{data?.sales?.coustomerId?.address}</span><br />
+                            <span>{data?.sales?.coustomerId?.city} {data?.sales?.coustomerId?.state} {data?.sales?.coustomerId?.zip_code}</span><br />
+                            <span>{data?.sales?.coustomerId?.country}</span><br />
+                            <span>{data?.sales?.coustomerId?.phone}</span><br />
                         </div>
                     </div>
 
@@ -187,7 +187,7 @@ function SalesInvoiceDownload() {
                 </div>
                 <div className="invoic_contect">
                     <div>
-                        <span><strong>ORDER</strong> # {data?.orderId}</span> <br />
+                        <span><strong>ORDER</strong> # {data?.sales?.orderId}</span> <br />
                         <span><strong>Invoice</strong> # {Id}</span>
                     </div>
                     <div>
@@ -207,7 +207,7 @@ function SalesInvoiceDownload() {
                             <th>Unit Price</th>
                             <th>Amount</th>
                         </tr>
-                        {data?.item?.map(data => <tr>
+                        {data?.sales?.item?.map(data => <tr>
                             <td>{data?.product_name}</td>
                             <td>{data?.quantity}</td>
                             <td>${data?.saleing_Price / data?.quantity}</td>
@@ -217,7 +217,7 @@ function SalesInvoiceDownload() {
                             <td style={{ textAlign: 'end' }}
                                 className='totalQuantity'
                             >Total Qty</td>
-                            <td>{data?.totalQuantity}</td>
+                            <td>{data?.sales?.totalQuantity}</td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -227,12 +227,12 @@ function SalesInvoiceDownload() {
                     </table>
                 </div>
                 <div className='invoicPayment'>
-                    <p style={{ textTransform: 'uppercase' }}>PAID BY # {data?.payment}</p>
+                    <p style={{ textTransform: 'uppercase' }}>PAID BY # {data?.sales?.payment}</p>
                     <div className="customersHisabContct">
                         <div className="customersHisab">
                             <div className="customersHisab">
                                 {
-                                    data?.payment == 'cash' && <div>
+                                    data?.sales?.payment == 'cash' && <div>
 
                                         <div className="paymentTypeStyles">
                                             <p>CASH</p>
@@ -240,42 +240,42 @@ function SalesInvoiceDownload() {
                                         </div>
                                         <div className="paymentTypeStyles">
                                             <p>RECEIVED  BY :</p>
-                                            <p>{data?.checkProviderName}</p>
+                                            <p>{data?.sales?.checkProviderName}</p>
                                         </div>
                                     </div>
                                 }
 
                                 {
-                                    data?.payment == 'check' && <div>
+                                    data?.sales?.payment == 'check' && <div>
                                         <div className="paymentTypeStyles">
                                             <p>CHECK NO :</p>
-                                            <p >{data?.checkNumber}</p>
+                                            <p >{data?.sales?.checkNumber}</p>
                                         </div>
                                         <div className="paymentTypeStyles">
                                             <p>RECEIVED  BY :</p>
-                                            <p>{data?.checkProviderName}</p>
+                                            <p>{data?.sales?.checkProviderName}</p>
                                         </div>
                                     </div>
                                 }
                                 {
-                                    data?.payment == 'due' && <div>
+                                    data?.sales?.payment == 'due' && <div>
                                         <div className="paymentTypeStyles">
                                             <p>DUE</p>
                                             <p ></p>
                                         </div>
                                         <div className="paymentTypeStyles">
                                             <p>RECEIVED  BY :</p>
-                                            <p>{data?.checkProviderName}</p>
+                                            <p>{data?.sales?.checkProviderName}</p>
                                         </div>
                                     </div>
                                 }
                             </div>
                         </div>
-                        <div>
+                    <div>
                             <div className="customersHisab">
                                 <div>
                                     <strong>Past Due</strong>
-                                    <span>0</span>
+                                    <span>{data?.sumTotaloldPrices.toFixed(2)}</span>
                                 </div>
                             </div>
 
@@ -284,7 +284,7 @@ function SalesInvoiceDownload() {
                             <div className="customersHisab">
                                 <div>
                                     <strong>Invoice total</strong>
-                                    <span>${data?.totalPrice.toFixed(2)}</span>
+                                    <span>${data?.sales?.totalPrice.toFixed(2)}</span>
                                 </div>
                             </div>
 

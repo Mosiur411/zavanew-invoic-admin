@@ -29,7 +29,7 @@ function SingleSales({ data }) {
             <td>{data?.coustomerId?.comphonyName}</td>
             <td>{data?.totalQuantity} </td>
             <td>{data?.totalPrice?.toFixed(2)}</td>
-            <td><span style={{ color: data?.payment == 'due' ? 'red' : 'green', fontWeight: 'bold' }}>{data?.payment}</span></td>
+            <td style={{ textTransform: "uppercase" }}><span style={{ color: data?.payment == 'due' ? 'red' : 'green', fontWeight: 'bold' }}>{data?.payment}</span></td>
             <td style={{ color: '#B72506', fontWeight: 'bold' }}>{data?.status} </td>
             <td>{data?.distractions} </td>
             <td className="text-end">

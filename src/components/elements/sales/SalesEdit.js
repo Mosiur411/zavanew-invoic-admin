@@ -10,10 +10,18 @@ import { useGetCoustomerQuery } from '../../../app/services/coustomer';
 import SingleSalesCart from './SingleSalesCart';
 import Refund from '../order/Refund';
 import Shrinkage from '../order/Shrinkage';
-import { useGetSingleSalesQuery } from '../../../app/services/sales';
+import { useGetSingleSalesQuery, useSalesPaymentMutation } from '../../../app/services/sales';
+import { OrderSchema } from '../../../helpers/validation/OrderSchema';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 
 function SalesEdit() {
+    const paymentMethod = [
+        { name: 'cash', data: 'cash' },
+        { name: 'check', data: 'check' },
+        { name: 'due', data: 'due' },
+    ]
     /* all state  */
     const [Loading, setLoading] = useState(true)
     const [refund, setRefund] = useState({ type: false, data: null })
@@ -24,17 +32,29 @@ function SalesEdit() {
     const pathnames = `id=${Id}`;
     /* fetch */
     const { data, isLoading, isSuccess } = useGetSingleSalesQuery(pathnames);
-    /* fetch data modify */
-    const { _id, item, totalPrice, payment, totalQuantity, checkProviderName, checkNumber, coustomerId: coustomerIdGet } = useMemo(() => (data ? data : {}), [data]);
-
-
+    const [PaymentTypeAdd, { isSuccess: PaymentToaster, isLoading: PaymentLoading }] = useSalesPaymentMutation();
     useEffect(() => {
         if (isSuccess) {
             setLoading(false)
         }
-    }, [isLoading])
-    /* extra usersate add  */
+        if (PaymentToaster) {
+            toast.success("Payment Info Update")
+        }
+    }, [isLoading, PaymentToaster])
+    /* fetch data modify */
+    const { _id, item, totalPrice, payment, totalQuantity, checkProviderName, checkNumber } = useMemo(() => (data ? data?.sales : {}), [data]);
 
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
+    /* from submit */
+    const onSubmit = async (value) => {
+        const data = { value, id: Id }
+        await PaymentTypeAdd(data)
+    }
+
+    const [bank, setBank] = useState(payment);
+    useEffect(() => {
+        setBank(payment);
+    }, [payment]);
 
     return (
         <DashboardLayout>
@@ -87,7 +107,56 @@ function SalesEdit() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col-lg-12">
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <div className="box shadow-sm bg-light">
+                                        <h6 className="mb-15">Payment info</h6>
+                                        <select className="form-select" {...register("payment")}
+                                            onChange={(e) => setBank(e.target.value)}
+                                        >
+                                            {
+                                                paymentMethod?.map((data, index) => <option key={index} defaultValue={data?.data}
+                                                    selected={data?.data == payment}
+                                                >{data?.name}</option>)
+                                            }
+                                            {errors?.payment && (
+                                                <span className="form__error">{errors?.payment.message}</span>
+                                            )}
+                                        </select>
+                                        {bank === 'check' ? <div>
+                                            <input type="text" placeholder="Check Number" className="form-control"
+                                                defaultValue={checkNumber}
+                                                {...register("checkNumber")}
+                                            />
+                                            <input type="text" placeholder="Your Check Names" className="form-control"
+                                                {...register("checkProviderName")}
+                                                defaultValue={checkProviderName}
+                                            />
+                                        </div> : ''}
+                                        {bank === 'cash' ? <div>
+                                            <input type="text" placeholder="Your Cash Names" className="form-control"
+                                                {...register("checkProviderName")}
+                                                defaultValue={checkProviderName}
+                                            />
+                                        </div> : ''}
+                                        {bank === 'due' ? <div>
+                                            <input type="text" placeholder="Your Due Names" className="form-control"
+                                                {...register("checkProviderName")}
+                                                defaultValue={checkProviderName}
+                                            />
+                                        </div> : ''}
+
+
+                                    </div>
+                                    <div className="h-25 pt-4">
+                                        <button style={{ cursor: PaymentLoading ? 'no-drop' : 'pointer' }} className="btn btn-primary">Sale Update</button>
+
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
+
 
                     </div>
                 }

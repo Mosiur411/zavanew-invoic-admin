@@ -46,6 +46,5 @@ function SingleOrder({ data }) {
         </tr>
     )
 }
-
 export default SingleOrder;
 

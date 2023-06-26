@@ -273,7 +273,7 @@ function InvoiceDownload() {
               <div className="customersHisab">
                 <div>
                   <strong>Past Due</strong>
-                  <span>0</span>
+                  <span>=${data?.sumTotaloldPrices.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -282,7 +282,7 @@ function InvoiceDownload() {
               <div className="customersHisab">
                 <div>
                   <strong>Invoice total</strong>
-                  <span>${data?.order[0]?.totalPrice.toFixed(2)}</span>
+                  <span>=${data?.order[0]?.totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 

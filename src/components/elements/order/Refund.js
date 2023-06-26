@@ -20,10 +20,12 @@ function Refund({ refund, setRefund, id }) {
             item_id: data?._id,
         }
         await RefundData(value);
+        setRefund({ type: false })
+        
     }
     useEffect(() => {
         if (refundAddSuccess) {
-            refund({ type: false })
+            setRefund({ type: false })
             toast.success("Refun Add!")
         }
     }, [refundAddSuccess, refundAddLoading])
@@ -48,9 +50,8 @@ function Refund({ refund, setRefund, id }) {
                                                 <div className="col-md-12 mb-3">
                                                     <label htmlFor="product_quantity" className="form-label">Quantity</label>
                                                     <input type="number" placeholder="Product_quantity" className="form-control" id="product_quantity"
-                                                        value={data?.quantity}
+                                                        defaultValue={data?.quantity}
                                                         onChange={(e) => setQuantity(e.target.value)}
-                                                        disabled
                                                     />
                                                 </div>
                                             </div>

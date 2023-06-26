@@ -19,10 +19,11 @@ function Shrinkage({ shrinkage, setShrinkage, id }) {
       purchases_id: data?.purchases_id,
     }
     await ShrinkageData(value);
+    setShrinkage({ type: false })
   }
   useEffect(() => {
     if (shrinkagedAddSuccess) {
-      shrinkage({ type: false })
+      setShrinkage({ type: false })
       toast.success("Refun Add!")
     }
   }, [shrinkagedAddSuccess])

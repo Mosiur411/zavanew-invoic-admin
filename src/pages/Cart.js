@@ -28,8 +28,10 @@ function Cart() {
 
     /* data post  */
     const onSubmit = async (value) => {
+       
         if (coustomerId) {
             const items = { ...value, totalPrice: data?.totalPrice, coustomerId: coustomerId }
+            console.log(items)
             const result = await PorductOder(items)
             navigate(`/order/all/${result?.data._id}`);
         } else {

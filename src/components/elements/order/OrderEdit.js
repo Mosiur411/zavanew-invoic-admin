@@ -23,7 +23,7 @@ function OrderEdit() {
     const [{ pageIndex, pageSize }] = useState({ pageIndex: 0, pageSize: 10, });
     const [refund, setRefund] = useState({ type: false, data: null })
     const [shrinkage, setShrinkage] = useState({ type: false, data: null })
-    
+
     /* pathName  */
     const { Id } = useParams();
     const pathnames = `id=${Id}`;
@@ -34,9 +34,9 @@ function OrderEdit() {
     const [orderUpdate, { isLoading: orderLu, isSuccess: orders }] = useUpdateOrderMutation()
     /* extra code  */
     const paymentMethod = [
-        { name: 'CASH', data: 'cash' },
-        { name: 'CHECK', data: 'check' },
-        { name: 'DUE', data: 'due' },
+        { name: 'cash', data: 'cash' },
+        { name: 'check', data: 'check' },
+        { name: 'due', data: 'due' },
     ]
     /* fetch data modify */
     const { _id, item, totalPrice, payment, totalQuantity, checkProviderName, checkNumber, coustomerId: coustomerIdGet } = useMemo(() => (data ? data?.order[0] : {}), [data]);
@@ -48,7 +48,7 @@ function OrderEdit() {
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(OrderSchema) });
     /* from submit */
     const onSubmit = async (value) => {
-        const data = { value, id: Id, coustomerId: coustomerId}
+        const data = { value, id: Id, coustomerId: coustomerId }
         await orderUpdate(data)
     }
     /* useEffect  */
@@ -62,8 +62,12 @@ function OrderEdit() {
 
         }
     }, [isLoading, orders])
-    /* extra usersate add  */
-    const [bank, setBank] = useState(payment);
+    /* extra usersate add*/
+    var [bank, setBank] = useState(payment);
+    useEffect(() => {
+        setBank(payment);
+    }, [payment]);
+
 
 
     return (
@@ -123,7 +127,7 @@ function OrderEdit() {
                                                     onChange={(e) => setBank(e.target.value)}
                                                 >
                                                     {
-                                                        paymentMethod?.map((data) => <option defaultValue={data?.data}
+                                                        paymentMethod?.map((data, index) => <option key={index} defaultValue={data?.data}
                                                             selected={data?.data == payment}
                                                         >{data?.name}</option>)
                                                     }
