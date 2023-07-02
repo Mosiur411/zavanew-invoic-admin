@@ -4,7 +4,7 @@ export const SalesApi = createApi({
     reducerPath: "sales",
     tagTypes: ['Sales'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5001/",
+        baseUrl: "https://zavanew-invoic-server.vercel.app/",
         prepareHeaders: (headers, { getState }) => {
             const { userInfo: user } = getState().auth;
             if (user?.user?.accessToken) {
@@ -45,8 +45,6 @@ export const SalesApi = createApi({
             }),
             invalidatesTags: ["Sales"],
         }),
-
-
 
         /* refund */
         addRefund: builder.mutation({
